@@ -17,3 +17,4 @@ class Cryptocurrency(db.Model):
         }
 
     transactions = db.relationship("Transaction", back_populates="crypto")
+    portfolio = db.relationship("Portfolio", back_populates="crypto")
