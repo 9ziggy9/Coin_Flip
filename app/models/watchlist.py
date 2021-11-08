@@ -9,9 +9,9 @@ class Watchlist(db.Model):
 
     def to_dict(self):
         return {
-            "id": self.id
-            "name": self.name
-            "user_id": self.user_id
+            "id": self.id,
+            "name": self.name,
+            "user_id": self.user_id,
             "crypto_id": self.crypto_id
         }
 
