@@ -1,9 +1,8 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import login_required
 from app.models import Cryptocurrency
 
 cryptocurrency_routes = Blueprint('cryptocurrency', __name__)
-
 
 @cryptocurrency_routes.route('/')
 @login_required

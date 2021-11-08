@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef } from "react";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 const Navigation = () => {
   const nav = useRef(null);
@@ -6,6 +8,7 @@ const Navigation = () => {
   const arrow2 = useRef(null);
   const arrow3 = useRef(null);
   const [num, setNum] = useState(0);
+  const user = useSelector((state) => state.session.user);
 
   useEffect(() => {
     if (num === 0) {
@@ -53,8 +56,9 @@ const Navigation = () => {
           className="nav-img"
         />
         <img
-        className="nav-coin"
-        src="https://thumbs.gfycat.com/SkinnyAccomplishedBoa-size_restricted.gif" />
+          className="nav-coin"
+          src="https://thumbs.gfycat.com/SkinnyAccomplishedBoa-size_restricted.gif"
+        />
         <div className="navlinks">
           <p className="links products" onClick={() => arrowUp(1)}>
             Products{" "}
@@ -77,8 +81,14 @@ const Navigation = () => {
           </p>
         </div>
         <div className="nav-right">
-          <p className="login">Log In</p>
-          <p className="signup">Sign Up</p>
+          {!user ? (
+            <>
+              <NavLink to="/login" className="login">Log In</NavLink>
+              <NavLink to="/signup" className="signup">Sign Up</NavLink>
+            </>
+          ) : (
+            <NavLink to="/home" className="signup">My Account</NavLink>
+          )}
         </div>
       </div>
       <div className="bottom-nav" ref={nav}>
