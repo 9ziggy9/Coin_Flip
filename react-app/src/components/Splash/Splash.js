@@ -19,7 +19,7 @@ const Splash = () => {
                 <p className="landing-right-scan">Scan to get the app</p>
                 <img
                   className="landing-right-img"
-                  src="../../images/qr.png"
+                  src="images/qr.png"
                 />
               </div>
             </div>
