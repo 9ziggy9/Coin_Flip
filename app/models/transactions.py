@@ -4,7 +4,9 @@ class Transaction(db.Model):
     __tablename__ = 'transactions'
 
     id = db.Column(db.Integer, primary_key=True)
-    crypto_id = db.Column(db.Integer, nullable=False)
+    crypto_id = db.Column(db.Integer,
+                        db.ForeignKey("cryptocurrency.id"),
+                        nullable=False)
     user_id = db.Column(db.Integer,
                         db.ForeignKey("users.id"),
                         nullable=False)
@@ -26,3 +28,5 @@ class Transaction(db.Model):
 
 
     user = db.relationship("User", back_populates="transactions")
+
+    crypto = db.relationship("Cryptocurrency", back_populates="transactions")
