@@ -9,6 +9,8 @@ from .models import db, User, Transaction
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.transaction_routes import transaction_routes
+from .api.cryptocurrency_routes import cryptocurrency_routes
+from .api.portfolio_routes import portfolio_routes
 
 from .seeds import seed_commands
 
@@ -33,6 +35,8 @@ app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(transaction_routes, url_prefix='/api/transactions')
+app.register_blueprint(cryptocurrency_routes, url_prefix='/api/cryptocurrencies')
+app.register_blueprint(portfolio_routes, url_prefix='/api/portfolios')
 db.init_app(app)
 Migrate(app, db)
 
