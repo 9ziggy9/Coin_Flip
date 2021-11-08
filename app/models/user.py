@@ -27,3 +27,5 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'email': self.email
         }
+
+    transactions = db.relationship("Transaction", back_populates="user")
