@@ -34,9 +34,8 @@ const HelloPlot = () => {
   const user = useSelector(state => state.session.user)
   const delay = time => new Promise(resolve => setTimeout(resolve,time));
 
-  const domain = [];
-  let L = 31;
-  while(L--) domain.unshift(L);
+  const sim = new Simulation(100, 10, x => 2*x);
+  const {domain,range} = sim.run()
 
   if(user) {
     return (
@@ -44,12 +43,12 @@ const HelloPlot = () => {
         data={[
           {
             x: domain,
-            y: domain,
+            y: range,
             type: 'scatter',
             mode: 'lines+markers',
             marker: {color: 'red'},
           },
-          {type: 'contour', x: domain, y: domain},
+          {type: 'contour', x: domain, y: range},
         ]}
         layout={{width: 1200, height: 800, title: 'Test Plot'}}
       />
