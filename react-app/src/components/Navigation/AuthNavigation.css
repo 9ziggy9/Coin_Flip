@@ -1,3 +1,10 @@
+.nav-main {
+  display: flex;
+  width: 100%;
+  position: sticky;
+  margin: 20px 0 20px 0;
+}
+
 .search-container {
   position: relative;
   flex: 0 0 10%;
@@ -26,6 +33,12 @@
   border-radius: 4px;
   outline: grey;
   width: 220px;
+  height: 34px;
+  padding: 0px 0px 0px 12px;
+}
+
+input.search-bar {
+  padding: 1px 12px 1px 2px;
 }
 
 .search-bar:focus,
@@ -41,4 +54,9 @@
   width: 200px;
   padding: 20px 0;
   overflow: hidden;
+}
+
+.right-nav {
+  display: flex;
+  margin-left: auto;
 }

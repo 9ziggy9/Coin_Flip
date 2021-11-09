@@ -4,6 +4,8 @@ body {
     BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: black;
+  color: white;
 }
 
 * {
@@ -85,7 +87,6 @@ body {
 .landing-top {
   display: flex;
   justify-content: center;
-  /* background-color: rgb(195, 245, 60); */
   background-color: rgb(62, 67, 112);
   height: 650px;
   border-bottom: 1px solid black;
