@@ -42,13 +42,6 @@ const HelloPlot = () => {
   const user = useSelector(state => state.session.user)
   const delay = (time) => new Promise(resolve => setTimeout(resolve,time));
 
-  async function runSimulation(sim,time) {
-    while(sim.interval <= sim.stop) {
-        console.log(sim.proceed());
-        await delay(time);
-    }
-  }
-
   const rand_walk = x => {
     const sgn = Math.pow(-1, Math.floor(2*Math.random()));
     const step = sgn * Math.floor(4*Math.random());
@@ -56,20 +49,32 @@ const HelloPlot = () => {
   }
 
   const test_sim = new Simulation(30,10, x => rand_walk(x));
-  const {domain, range} = test_sim.proceed();
+  test_sim.proceed();
+
+  const [X, setDomain] = useState(test_sim.domain);
+  const [Y, setRange] = useState(test_sim.range);
+
+  useEffect(() => {
+    const intervalPointer = setInterval(() => {
+      test_sim.proceed();
+      setDomain(test_sim.domain);
+      setRange(test_sim.range);
+    }, 1000)
+    return () => clearInterval(intervalPointer);
+  }, [setDomain])
 
   if(user) {
     return (
       <Plot
         data={[
           {
-            x: domain,
-            y: range,
+            x: X,
+            y: Y,
             type: 'scatter',
             mode: 'lines+markers',
             marker: {color: 'red'},
           },
-          {type: 'contour', x: domain, y: range},
+          {type: 'contour', x: X, y: Y},
         ]}
         layout={{width: 1200, height: 800, title: 'Test Plot'}}
       />
