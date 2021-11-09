@@ -2,6 +2,7 @@ from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .transactions import seed_transactions, undo_transactions
 from .cryptocurrency import seed_cryptocurrency, undo_cryptocurrency
+from .portfolio import seed_portfolios, undo_portfolios
 
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`
@@ -14,6 +15,7 @@ def seed():
     seed_users()
     seed_cryptocurrency()
     seed_transactions()
+    seed_portfolios()
     # Add other seed functions here
 
 
@@ -23,6 +25,7 @@ def undo():
     undo_users()
     undo_cryptocurrency()
     undo_transactions()
+    undo_portfolios()
     # Add other undo functions here
 
 # When reseeding, make sure to flask seed undo before flask seed all

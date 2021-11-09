@@ -18,4 +18,4 @@ class Portfolio(db.Model):
         }
 
     user = db.relationship("User", back_populates="portfolio")
-    cryptocurrency = db.relationship("Cryptocurrency", back_populates="porfolio")
+    cryptocurrency = db.relationship("Cryptocurrency", back_populates="portfolio")
