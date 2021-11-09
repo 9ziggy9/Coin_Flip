@@ -16,5 +16,5 @@ class Cryptocurrency(db.Model):
             'price': self.price
         }
 
-    transactions = db.relationship("Transaction", back_populates="crypto")
-    portfolio = db.relationship("Portfolio", back_populates="crypto")
+    transactions = db.relationship("Transaction", back_populates="cryptocurrency")
+    portfolio = db.relationship("Portfolio", back_populates="cryptocurrency")
