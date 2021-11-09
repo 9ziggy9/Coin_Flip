@@ -1,9 +1,11 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import session from './session'
+import cryptocurrencyReducer from './purchaseCrypto';
 
 const rootReducer = combineReducers({
   session,
+  cryptocurrencyReducer
 });
 
 

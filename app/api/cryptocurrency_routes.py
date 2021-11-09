@@ -9,3 +9,8 @@ cryptocurrency_routes = Blueprint('cryptocurrency', __name__)
 def cryptocurrency():
     cryptocurrencies = Cryptocurrency.query.all()
     return {'cryptocurrency': [cryptocurrency.to_dict() for cryptocurrency in cryptocurrencies]}
+
+@cryptocurrency_routes.route('/<int:id>')
+def getOneCryptocurrency(id):
+    crypto = Cryptocurrency.query.get(id).one()
+    return {"k":[crypto.to_dict()]}

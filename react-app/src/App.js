@@ -10,6 +10,7 @@ import User from "./components/User";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Splash/Navigation";
 import Splash from "./components/Splash/Splash";
+import PurchaseCryptoPage from "./components/PurchaseCryptoPage";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -52,6 +53,10 @@ function App() {
           <NavBar />
           <h1>My Home Page</h1>
         </ProtectedRoute>
+        <Route path="/purchaseCrypto/:id" exact={true}>
+          <NavBar />
+          <PurchaseCryptoPage />
+        </Route>
       </Switch>
     </BrowserRouter>
   );
