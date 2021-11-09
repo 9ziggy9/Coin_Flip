@@ -1,20 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { findCrypto } from "../../store/crypto";
 import "./Navigation.css";
 
 const AuthNavigation = ({ cryptos }) => {
-  let arr;
+  const dispatch = useDispatch();
+  const [search, setSearch] = useState();
+  const searchResults = useSelector((state) => state.crypto.searchRes);
 
-  const searchCrypto = (params) => {
-    let filtered = cryptos?.filter(
-      (crypto) =>
-        crypto.name?.toLowerCase().startsWith(params.toLowerCase()) ||
-        crypto.symbol?.toLowerCase().startsWith(params.toLowerCase())
-    );
-
-    arr = filtered;
-    console.log(arr);
-  };
+  useEffect(() => {
+      dispatch(findCrypto(search));
+  }, [search, dispatch]);
 
   return (
     <div className="nav-main">
@@ -23,22 +20,17 @@ const AuthNavigation = ({ cryptos }) => {
         <input
           placeholder="Search"
           className="search-bar"
-          onChange={(e) => searchCrypto(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
         />
         <div className="search-results">
-          {cryptos &&
-            cryptos.map((a) => (
-              <>
-                {arr?.find(
-                  (ar) => a.name === ar.name || a.symbol == ar.symbol
-                ) ? (
-                  <>
-                    <div>{a.symbol}</div>
-                    <div>{a.name}</div>
-                  </>
-                ) : null}
-              </>
-            ))}
+          {searchResults?.length > 0 && search?.length > 0
+            ? searchResults.map((result, i) => (
+                <div key={i}>
+                  <div>{result.symbol}</div>
+                  <div>{result.name}</div>
+                </div>
+              ))
+            : null}
         </div>
       </div>
       <div className="right-nav">
