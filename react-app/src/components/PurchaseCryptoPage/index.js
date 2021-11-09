@@ -8,9 +8,9 @@ const PurchaseCryptoPage = () => {
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.session.user);
 
-    // const crypto = useSelector(state => {
-    //     return state.cryptocurrency.getOneCryptocurrency;
-    // })
+    const crypto = useSelector(state => {
+        return state.cryptocurrency.getOneCryptocurrency;
+    })
 
     // const allCrypto = useSelector(state => {
     //     return state.cryptocurrency.getAllCryptocurrency;
