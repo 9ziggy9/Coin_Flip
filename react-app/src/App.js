@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
@@ -8,18 +8,25 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
 import { authenticate } from "./store/session";
+import { getAllCrypto } from "./store/crypto"
 import Navigation from "./components/Splash/Navigation";
 import Splash from "./components/Splash/Splash";
 import Portfolio from "./components/Portfolio"
+import AuthNavigation from "./components/Navigation/AuthNavigation";
+import Home from "./components/Home/Home";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
+  const cryptos = useSelector((state) => state.crypto?.crypto);
 
   useEffect(() => {
     (async () => {
       await dispatch(authenticate());
       setLoaded(true);
+    })();
+    (async () => {
+      await dispatch(getAllCrypto())
     })();
   }, [dispatch]);
 
@@ -50,8 +57,8 @@ function App() {
           <User />
         </ProtectedRoute>
         <ProtectedRoute path="/home" exact={true}>
-          <NavBar />
-          <h1>My Home Page</h1>
+          <AuthNavigation cryptos={cryptos} />
+          <Home />
         </ProtectedRoute>
         <Route path="/portfolios/:userid" exact={true}>
           <Portfolio />
