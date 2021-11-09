@@ -8,7 +8,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
 import { authenticate } from "./store/session";
-import { findAllCrypto } from "./store/crypto"
+import { getAllCrypto } from "./store/crypto"
 import Navigation from "./components/Splash/Navigation";
 import Splash from "./components/Splash/Splash";
 import AuthNavigation from "./components/Navigation/Navigation";
@@ -25,7 +25,7 @@ function App() {
       setLoaded(true);
     })();
     (async () => {
-      await dispatch(findAllCrypto())
+      await dispatch(getAllCrypto())
     })();
   }, [dispatch]);
 
