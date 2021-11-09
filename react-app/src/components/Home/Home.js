@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useSelector } from 'react-redux';
 import { Redirect } from "react-router";
-import "./Home.css"
+
 
 const Home = () => {
     const user = useSelector(state => state.session.user)
@@ -9,7 +9,7 @@ const Home = () => {
     if(user) {
         return (
             <div className="home-main">
-                Test
+                Welcome to home page
             </div>
             )
         } else {
