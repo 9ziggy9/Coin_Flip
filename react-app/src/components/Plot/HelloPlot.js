@@ -1,4 +1,5 @@
 import React from 'react';
+import {useState, useEffect} from 'react';
 import Plot from 'react-plotly.js';
 import { useSelector } from 'react-redux';
 import { Redirect } from "react-router";
@@ -9,33 +10,53 @@ class Simulation {
     this.stop = stop;
     this.interval = interval;
     this.fn = fn;
+    this.domain = [...Array(interval).keys()];
+    this.range = [];
   }
 
   map_domain(domain) {
     return domain.map(x => this.fn(x))
   }
 
-  run() {
+  proceed() {
+    if(this.start === 0) this.range = this.map_domain(this.domain);
+
+    const live = this.range[this.range.length-1];
+
     const domain = [];
 
     for(let x = this.start; x < this.interval; x++)
       domain.push(x);
 
-    const range = this.map_domain(domain);
+    this.domain = domain;
+    this.range = [...this.range.slice(1), this.fn(live)];
 
     this.start++;
     this.interval++;
 
-    return {domain, range}
+    return {domain: this.domain, range: this.range}
   }
 }
 
 const HelloPlot = () => {
   const user = useSelector(state => state.session.user)
-  const delay = time => new Promise(resolve => setTimeout(resolve,time));
+  const delay = (time) => new Promise(resolve => setTimeout(resolve,time));
 
-  const sim = new Simulation(100, 10, x => 2*x);
-  const {domain,range} = sim.run()
+  async function runSimulation(sim,time) {
+    while(sim.interval <= sim.stop) {
+        console.log(sim.proceed());
+        await delay(time);
+    }
+  }
+
+  const rand_walk = x => {
+    const sgn = Math.pow(-1, Math.floor(2*Math.random()));
+    const step = sgn * Math.floor(4*Math.random());
+    return x + step < 0 ? 0 : x + step;
+  }
+
+  const test_sim = new Simulation(30,10, x => rand_walk(x));
+  const {domain, range} = test_sim.proceed();
 
   if(user) {
     return (
