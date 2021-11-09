@@ -35,14 +35,13 @@ const AuthNavigation = () => {
 
   const colorChange = () => {
     if (results.current.classList.contains("hidden")) {
-      searchBar.current.style.backgroundColor = "black"
+      searchBar.current.style.backgroundColor = "black";
     }
-  }
+  };
 
   useEffect(() => {
-    dispatch(findCrypto(search));
-
     if (search?.length > 0) {
+      dispatch(findCrypto(search));
       results.current.classList.remove("hidden");
       searchBar.current.style.borderBottom = "none";
     } else {
