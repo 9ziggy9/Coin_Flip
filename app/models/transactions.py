@@ -29,4 +29,4 @@ class Transaction(db.Model):
 
     user = db.relationship("User", back_populates="transactions")
 
-    crypto = db.relationship("Cryptocurrency", back_populates="transactions")
+    cryptocurrency = db.relationship("Cryptocurrency", back_populates="transactions")
