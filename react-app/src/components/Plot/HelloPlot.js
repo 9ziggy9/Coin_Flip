@@ -48,7 +48,7 @@ const HelloPlot = () => {
     return x + step < 0 ? 0 : x + step;
   }
 
-  const test_sim = new Simulation(30,10, x => rand_walk(x));
+  const test_sim = new Simulation(1000,100, x => rand_walk(x));
   test_sim.proceed();
 
   const [X, setDomain] = useState(test_sim.domain);
