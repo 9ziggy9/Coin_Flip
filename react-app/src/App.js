@@ -13,6 +13,7 @@ import Navigation from "./components/Splash/Navigation";
 import Splash from "./components/Splash/Splash";
 import AuthNavigation from "./components/Navigation/Navigation";
 import Home from "./components/Home/Home";
+import HelloPlot from "./components/Plot/HelloPlot"
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -58,6 +59,9 @@ function App() {
         <ProtectedRoute path="/home" exact={true}>
           <AuthNavigation cryptos={cryptos} />
           <Home />
+        </ProtectedRoute>
+        <ProtectedRoute path="/hello-plot" exact={true}>
+          <HelloPlot />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>
