@@ -11,7 +11,7 @@ import { authenticate } from "./store/session";
 import { getAllCrypto } from "./store/crypto"
 import Navigation from "./components/Splash/Navigation";
 import Splash from "./components/Splash/Splash";
-import AuthNavigation from "./components/Navigation/Navigation";
+import AuthNavigation from "./components/Navigation/AuthNavigation";
 import Home from "./components/Home/Home";
 import HelloPlot from "./components/Plot/HelloPlot"
 
