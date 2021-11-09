@@ -10,6 +10,7 @@ import User from "./components/User";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Splash/Navigation";
 import Splash from "./components/Splash/Splash";
+import Portfolio from "./components/Portfolio"
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -52,6 +53,9 @@ function App() {
           <NavBar />
           <h1>My Home Page</h1>
         </ProtectedRoute>
+        <Route path="/portfolios/:userid" exact={true}>
+          <Portfolio />
+        </Route>
       </Switch>
     </BrowserRouter>
   );
