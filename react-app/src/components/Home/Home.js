@@ -1,15 +1,21 @@
 import { useState, useEffect } from "react"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from "react-router";
-import "./Home.css"
+import { userPortfolios } from "../../store/portfolio";
+
 
 const Home = () => {
+    const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
+
+    useEffect(() => {
+        dispatch(userPortfolios(user?.id))
+    }, [dispatch]);
 
     if(user) {
         return (
             <div className="home-main">
-                Test
+                Welcome to home page
             </div>
             )
         } else {
