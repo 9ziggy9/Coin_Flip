@@ -56,7 +56,7 @@ function App() {
           <User />
         </ProtectedRoute>
         <ProtectedRoute path="/home" exact={true}>
-          <AuthNavigation cryptos={cryptos} />
+          <AuthNavigation />
           <Home />
         </ProtectedRoute>
       </Switch>
