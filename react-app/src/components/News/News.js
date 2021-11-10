@@ -4,17 +4,9 @@ const News = () => {
   const [news, setNews] = useState([]);
 
   const data = async () => {
-    // const res = await fetch(
-    //   "https://cryptopanic.com/api/v1/posts/?auth_token=10753ce58e826fb61d74ed6360c3f7c97e4f7372&public=true",
-    //   {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-    // const d = await res.json();
-    // console.log(d);
+    const res = await fetch("/api/cryptocurrencies/news");
+    const d = await res.json();
+    setNews(d.news);
   };
 
   useEffect(() => {
@@ -25,11 +17,12 @@ const News = () => {
     <div className="news-main">
       {news &&
         news.slice(0, 10).map((n) => (
-          <>
+          <div>
             <a href={n.url} target="_blank">
-              {n.title}
+              {n.headline}
+              <img src={n.image} />
             </a>
-          </>
+          </div>
         ))}
     </div>
   );
