@@ -5,6 +5,7 @@ import { userPortfolios } from "../../store/portfolio";
 // for testing purposes
 import { newPortfolio } from "../../store/portfolio";
 import { changePortfolio } from "../../store/portfolio";
+import News from "../News/News";
 
 
 const Home = () => {
@@ -61,6 +62,7 @@ const Home = () => {
                         </li>
                     )): ""}
                 </ul>
+                <News />
             </div>
             )
         } else {
