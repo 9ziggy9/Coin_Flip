@@ -24,10 +24,12 @@ const PurchaseCryptoPage = () => {
     }, [dispatch, uniqueCryptoId])
 
     return (
-        <>
-            <h1>Hi</h1>
-            <div className="test">crypto name: {singleCrypto?.name}</div>
-        </>
+        <div className="pageContainer">
+            <div className="cryptoInfoContainer">
+                <div className="cryptoName">{singleCrypto?.name}</div>
+                <div className="cryptoPrice">${singleCrypto?.price.toLocaleString("en-US")}</div>
+            </div>
+        </div>
     )
 }
 

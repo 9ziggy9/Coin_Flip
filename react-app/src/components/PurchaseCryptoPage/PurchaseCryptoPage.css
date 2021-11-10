@@ -1,0 +1,10 @@
+.pageContainer {
+    display: flex;
+}
+
+.cryptoInfoContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+    font-size: 40px;
+}
