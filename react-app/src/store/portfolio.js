@@ -13,8 +13,8 @@ const getPortfolios = (portfolios) => {
 export const userPortfolios = (id) => async (dispatch) => {
     const res = await fetch(`/api/portfolios/${id}`);
     const portfoliosData = await res.json();
-    console.log(portfoliosData);
-    // dispatch(getPortfolios(portfoliosData));
+    // console.log(portfoliosData.portfolio);
+    dispatch(getPortfolios(portfoliosData.portfolio));
 }
 
 // Reducer function
