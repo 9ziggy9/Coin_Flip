@@ -38,7 +38,7 @@ def test_api():
     data = res.json()
     return {"news":[news for news in data]}
 
-@cryptocurrency_routes.route('/coins')
+@cryptocurrency_routes.route('/prices')
 def get_coins():
 
     coins = cg.get_coins_list()
@@ -68,4 +68,4 @@ def get_coins():
 
     price = cg.get_price(ids=joined, vs_currencies="USD")
 
-    return {"list": [coin for coin in coins if coin["name"].lower() in items], "price": price}
+    return {"price": price}
