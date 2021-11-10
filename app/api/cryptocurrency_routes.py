@@ -2,6 +2,9 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required
 from app.models import Cryptocurrency
 import requests
+from pycoingecko import CoinGeckoAPI
+
+cg = CoinGeckoAPI()
 
 cryptocurrency_routes = Blueprint('cryptocurrency', __name__)
 
@@ -34,3 +37,35 @@ def test_api():
     res = requests.get(api_url)
     data = res.json()
     return {"news":[news for news in data]}
+
+@cryptocurrency_routes.route('/coins')
+def get_coins():
+
+    coins = cg.get_coins_list()
+
+    top = [
+    "Bitcoin",
+    "Ethereum",
+    "Binance Coin",
+    "Cardano",
+    "Tether",
+    "Solana",
+    "XRP",
+    "Polkadot",
+    "Dogecoin",
+    "USD Coin",
+    "SHIBA INU",
+    "Terra",
+    "Litecoin",
+    "Avalanche"
+    ]
+
+    items = [item.lower() for item in top]
+
+    final = [coin["id"] for coin in coins if coin["name"].lower() in items]
+
+    joined = ", ".join(final)
+
+    price = cg.get_price(ids=joined, vs_currencies="USD")
+
+    return {"list": [coin for coin in coins if coin["name"].lower() in items], "price": price}
