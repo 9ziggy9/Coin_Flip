@@ -1,5 +1,6 @@
 const GET_CRYPTO = "crypto/GET_CRYPTO";
-const SEARCH_CRYPTO = "crypto/SEARCH_CRYPTO"
+const SEARCH_CRYPTO = "crypto/SEARCH_CRYPTO";
+const GET_PRICES = "crypto/GET_PRICES";
 
 const getCrypto = (crypto) => ({
   type: GET_CRYPTO,
@@ -9,7 +10,12 @@ const getCrypto = (crypto) => ({
 const searchCrypto = (crypto) => ({
   type: SEARCH_CRYPTO,
   crypto,
-})
+});
+
+const getCryptoPrices = (prices) => ({
+  type: GET_PRICES,
+  prices,
+});
 
 export const getAllCrypto = () => async (dispatch) => {
   const res = await fetch("/api/cryptocurrencies");
@@ -23,15 +29,23 @@ export const findCrypto = (results) => async (dispatch) => {
   const res = await fetch("/api/cryptocurrencies/", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({results})
-  })
-    if(res.ok) {
-      const data = await res.json()
-      dispatch(searchCrypto(data))
-    }
-}
+    body: JSON.stringify({ results }),
+  });
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(searchCrypto(data));
+  }
+};
+
+export const getPrice = () => async (dispatch) => {
+  const res = await fetch("/api/cryptocurrencies/prices");
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(getCryptoPrices(data));
+  }
+};
 
 const initialState = { crypto: null };
 
@@ -40,7 +54,9 @@ export default function reducer(state = initialState, action) {
     case GET_CRYPTO:
       return { ...state, crypto: action.crypto.cryptocurrency };
     case SEARCH_CRYPTO:
-      return {...state, searchRes: action.crypto.search}
+      return { ...state, searchRes: action.crypto.search };
+    case GET_PRICES:
+      return {...state, prices: action.prices.price}
     default:
       return state;
   }
