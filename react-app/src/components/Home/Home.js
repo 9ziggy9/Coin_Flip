@@ -2,7 +2,11 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from "react-router";
 import { userPortfolios } from "../../store/portfolio";
+// for testing purposes
+import { newPortfolio } from "../../store/portfolio";
+import { changePortfolio } from "../../store/portfolio";
 import News from "../News/News";
+
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -14,10 +18,26 @@ const Home = () => {
         dispatch(userPortfolios(user?.id))
     }, [dispatch]);
 
-    if(user) {
+    // const handleButton = async (e) => {
+    //     e.preventDefault();
+
+    //     const portfolioPayload = {
+    //         userId: user?.id,
+    //         cryptoId: 1,
+    //         quantity: 500,
+    //         purchasePrice: 27
+    //     }
+    // //     // await dispatch(newPortfolio(portfolioPayload));
+    //     await dispatch(changePortfolio(portfolioPayload));
+    // }
+
+    if (user) {
         return (
             <div className="home-main">
                 <h1>Welcome to Home Page</h1>
+                {/* testing post and update routes */}
+                {/* <button type="button" onClick={handleButton}>New Portfolio</button> */}
+                {/* <button type="button" onClick={handleButton}>Update Portfolio</button> */}
                 <ul>
                     {portfolios ? portfolios.map(portfolio =>(
 
