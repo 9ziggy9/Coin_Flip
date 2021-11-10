@@ -109,6 +109,10 @@ span {
   text-decoration-color: rgb(255, 80, 0) !important;
 }
 
+.account-word:hover {
+  color: rgb(255, 80, 0) !important;
+}
+
 .account-name {
   margin: 10px 20px 10px 20px;
   font-size: 15px;

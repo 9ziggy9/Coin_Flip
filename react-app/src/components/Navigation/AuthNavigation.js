@@ -59,6 +59,7 @@ const AuthNavigation = () => {
   const showDropdown = () => {
     dropdown.current.classList.remove("hidden");
     account.current.style.textDecoration = "underline"
+    account.current.style.color = "rgb(255, 80, 0)"
   };
 
   useEffect(() => {
@@ -80,6 +81,7 @@ const AuthNavigation = () => {
         if (ref.current && !ref.current.contains(e.target)) {
           dropdown.current.classList.add("hidden");
           account.current.style.textDecoration = "none"
+          account.current.style.color = "white"
         }
       };
 
