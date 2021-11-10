@@ -4,7 +4,7 @@ from datetime import datetime
 
 # Adds porfolios
 def seed_portfolios():
-    # portfolio_1 = Portfolio(user_id=1, crypto_id=1, quantity=100, purchase_price=0.69)
+    portfolio_1 = Portfolio(user_id=1, crypto_id=1, quantity=100, purchase_price=0.69)
     portfolio_2 = Portfolio(user_id=1, crypto_id=2, quantity=50, purchase_price=69420.00)
     portfolio_3 = Portfolio(user_id=1, crypto_id=3, quantity=20.4, purchase_price=4200.00)
     portfolio_5 = Portfolio(user_id=2, crypto_id=2, quantity=96, purchase_price=69420.00)
@@ -13,7 +13,7 @@ def seed_portfolios():
     portfolio_8 = Portfolio(user_id=3, crypto_id=2, quantity=5.25, purchase_price=69420.00)
     portfolio_9 = Portfolio(user_id=3, crypto_id=3, quantity=32.9, purchase_price=4200.00)
 
-    # db.session.add(portfolio_1)
+    db.session.add(portfolio_1)
     db.session.add(portfolio_2)
     db.session.add(portfolio_3)
     db.session.add(portfolio_5)

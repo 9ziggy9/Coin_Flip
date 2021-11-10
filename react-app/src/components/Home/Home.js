@@ -18,26 +18,26 @@ const Home = () => {
         dispatch(userPortfolios(user?.id))
     }, [dispatch]);
 
-    const handleButton = async (e) => {
-        e.preventDefault();
+    // const handleButton = async (e) => {
+    //     e.preventDefault();
 
-        const portfolioPayload = {
-            userId: user?.id,
-            cryptoId: 1,
-            quantity: 234,
-            purchasePrice: 4320
-        }
-        await dispatch(newPortfolio(portfolioPayload));
-        // await dispatch(changePortfolio(portfolioPayload));
-    }
+    //     const portfolioPayload = {
+    //         userId: user?.id,
+    //         cryptoId: 1,
+    //         quantity: 500,
+    //         purchasePrice: 27
+    //     }
+    // //     // await dispatch(newPortfolio(portfolioPayload));
+    //     await dispatch(changePortfolio(portfolioPayload));
+    // }
 
     if (user) {
         return (
             <div className="home-main">
                 <h1>Welcome to Home Page</h1>
                 {/* testing post and update routes */}
-                <button type="button" onClick={handleButton}>New Portfolio</button>
                 {/* <button type="button" onClick={handleButton}>New Portfolio</button> */}
+                {/* <button type="button" onClick={handleButton}>Update Portfolio</button> */}
                 <ul>
                     {portfolios ? portfolios.map(portfolio =>(
 
