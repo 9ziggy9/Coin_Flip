@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
+import { Redirect } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { findCrypto } from "../../store/crypto";
 import "./AuthNavigation.css";
@@ -12,11 +13,22 @@ const AuthNavigation = () => {
   const searchResults = useSelector((state) => state.crypto.searchRes);
   const regex = new RegExp(search, "gi");
 
+  const removeBorder = () => {
+    searchBar.current.style.borderBottomLeftRadius = "0px";
+    searchBar.current.style.borderBottomRightRadius = "0px";
+  };
+
+  const addBorder = () => {
+    searchBar.current.style.borderBottomLeftRadius = "4px";
+    searchBar.current.style.borderBottomRightRadius = "4px";
+  };
+
   const hide = (e) => {
     if (!e.currentTarget.contains(e.relatedTarget)) {
       results.current.classList.add("hidden");
       searchBar.current.style.backgroundColor = "black";
       searchBar.current.style.borderBottom = "0.5px solid grey";
+      addBorder();
     } else {
       searchBar.current.style.backgroundColor = "rgb(42, 47, 51)";
       searchBar.current.style.borderBottom = "none";
@@ -28,6 +40,7 @@ const AuthNavigation = () => {
     if (e.target.value.length > 0) {
       results.current.classList.remove("hidden");
       searchBar.current.style.borderBottom = "none";
+      removeBorder();
     } else {
       searchBar.current.style.borderBottom = "0.5px solid grey";
     }
@@ -44,17 +57,20 @@ const AuthNavigation = () => {
       dispatch(findCrypto(search));
       results.current.classList.remove("hidden");
       searchBar.current.style.borderBottom = "none";
+      removeBorder();
     } else {
       results.current.classList.add("hidden");
       searchBar.current.style.borderBottom = "0.5px solid grey";
+      addBorder();
     }
   }, [search, dispatch]);
 
   return (
     <div className="nav-main" onBlur={(e) => hide(e)}>
       <img
-        className="nav-coin"
+        className="nav-coin-auth"
         src="https://thumbs.gfycat.com/SkinnyAccomplishedBoa-size_restricted.gif"
+        onClick={() => <Redirect to="/home" />}
       />
       <div className="search-container">
         <input
@@ -107,7 +123,11 @@ const AuthNavigation = () => {
       </div>
       <div className="right-nav">
         <NavLink to="/messaages">Messages</NavLink>
-        <div className="account">Account</div>
+        <div className="account">Account
+        <div className="account-dropdown">
+          Test
+        </div>
+        </div>
       </div>
     </div>
   );
