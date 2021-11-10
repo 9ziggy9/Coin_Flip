@@ -13,7 +13,8 @@ const getPortfolios = (portfolios) => {
 export const userPortfolios = (id) => async (dispatch) => {
     const res = await fetch(`/api/portfolios/${id}`);
     const portfoliosData = await res.json();
-    dispatch(getPortfolios(portfoliosData));
+    // console.log(portfoliosData.portfolio);
+    dispatch(getPortfolios(portfoliosData.portfolio));
 }
 
 // Reducer function
@@ -25,7 +26,10 @@ const portfolioReducer = (state = {}, action) => {
             action.portfolios.forEach(portfolio => {
                 newState[portfolio.id] = portfolio
             })
+            return newState;
+        default:
+            return state;
     }
 }
 
-export default portfolioReducer
+export default portfolioReducer;

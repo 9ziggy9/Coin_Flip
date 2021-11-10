@@ -1,0 +1,102 @@
+.nav-main {
+  display: flex;
+  width: 100%;
+  position: sticky;
+  margin: 20px 0 20px 0;
+  align-items: center;
+}
+
+.nav-coin-auth {
+  height: 38px;
+  width: 38px;
+  align-self: center;
+  margin-left: 40px;
+  cursor: pointer;
+}
+
+.search-container {
+  position: relative;
+  width: 476px;
+  flex: 0 0 10%;
+  margin: 0 auto;
+}
+
+.search-bar {
+  cursor: text;
+  margin: 0em;
+  height: 1.5rem;
+  background-color: black;
+  color: rgba(225, 217, 209, 1);
+  font-family: inherit;
+  border: 0.5px solid grey;
+  outline: grey;
+  width: 436px;
+  height: 34px;
+  padding: 1px 20px 1px 20px;
+  font-size: 14px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.search-bar:focus,
+.search-bar:hover {
+  background-color: rgb(42, 47, 51);
+}
+
+.search-bar:focus {
+  border-bottom: none;
+  background-color: rgb(42, 47, 51) !important;
+}
+
+.search-results {
+  position: absolute;
+  background-color: rgb(42, 47, 51);
+  width: inherit;
+  overflow: hidden;
+  border-top: 0 !important;
+  border: 0.5px solid grey;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  font-size: 14px;
+  padding: 20px 0;
+}
+
+.right-nav {
+  display: flex;
+  margin-left: auto;
+  margin-right: 40px;
+  gap: 20px;
+}
+
+.result {
+  display: flex;
+  gap: 60px;
+  padding: 5px 20px;
+  margin: 0;
+}
+
+.result:hover {
+  background-color: rgba(59, 66, 71, 0.966);
+}
+
+span {
+  display: inline-block;
+  border: 0;
+  margin: 0;
+  color: rgb(255, 80, 0);
+}
+
+.account-dropdown {
+  position: absolute;
+  background-color: rgb(42, 47, 51);
+  width: 150px;
+  overflow: hidden;
+  border-top: 0 !important;
+  border: 0.5px solid grey;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  font-size: 14px;
+  right: 0;
+}

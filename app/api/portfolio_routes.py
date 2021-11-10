@@ -5,7 +5,7 @@ from app.models import Portfolio
 portfolio_routes = Blueprint('portfolio', __name__)
 
 
-@portfolio_routes.route('/<int:user_id>')
+@portfolio_routes.route('/<int:user_id>', methods=['GET', 'POST', 'PUT'])
 @login_required
 def portfolio(user_id):
     portfolios = Portfolio.query.filter_by(user_id= user_id).all()

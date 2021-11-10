@@ -12,7 +12,6 @@ import { getAllCrypto } from "./store/crypto"
 import Navigation from "./components/Splash/Navigation";
 import Splash from "./components/Splash/Splash";
 import PurchaseCryptoPage from "./components/PurchaseCryptoPage";
-import Portfolio from "./components/Portfolio"
 import AuthNavigation from "./components/Navigation/AuthNavigation";
 import Home from "./components/Home/Home";
 
@@ -58,15 +57,12 @@ function App() {
           <User />
         </ProtectedRoute>
         <ProtectedRoute path="/home" exact={true}>
-          <AuthNavigation cryptos={cryptos} />
+          <AuthNavigation />
           <Home />
         </ProtectedRoute>
         <Route path="/purchaseCrypto/:id" exact={true}>
           <NavBar />
           <PurchaseCryptoPage />
-        </Route>
-        <Route path="/portfolios/:userid" exact={true}>
-          <Portfolio />
         </Route>
       </Switch>
     </BrowserRouter>
