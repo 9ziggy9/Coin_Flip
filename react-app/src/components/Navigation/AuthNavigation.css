@@ -105,9 +105,8 @@ span {
 .account-word {
   font-weight: 600;
   cursor: pointer;
-  text-decoration: underline;
   text-underline-offset: 12px;
-  text-decoration-color: rgb(255, 80, 0);
+  text-decoration-color: rgb(255, 80, 0) !important;
 }
 
 .account-name {

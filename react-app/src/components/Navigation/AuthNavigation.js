@@ -8,9 +8,11 @@ import "./AuthNavigation.css";
 
 const AuthNavigation = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const results = useRef(null);
   const searchBar = useRef(null);
-  const dispatch = useDispatch();
+  const dropdown = useRef(null);
+  const account = useRef(null)
   const [search, setSearch] = useState();
   const searchResults = useSelector((state) => state.crypto.searchRes);
   const regex = new RegExp(search, "gi");
@@ -54,6 +56,11 @@ const AuthNavigation = () => {
     }
   };
 
+  const showDropdown = () => {
+    dropdown.current.classList.remove("hidden");
+    account.current.style.textDecoration = "underline"
+  };
+
   useEffect(() => {
     if (search?.length > 0) {
       dispatch(findCrypto(search));
@@ -66,6 +73,25 @@ const AuthNavigation = () => {
       addBorder();
     }
   }, [search, dispatch]);
+
+  const RemoveOutside = (ref) => {
+    useEffect(() => {
+      const handleClick = (e) => {
+        if (ref.current && !ref.current.contains(e.target)) {
+          dropdown.current.classList.add("hidden");
+          account.current.style.textDecoration = "none"
+        }
+      };
+
+      document.addEventListener("mousedown", handleClick);
+
+      return () => {
+        document.removeEventListener("mousedown", handleClick);
+      };
+    }, [ref]);
+  };
+
+  RemoveOutside(dropdown);
 
   return (
     <div className="nav-main" onBlur={(e) => hide(e)}>
@@ -126,8 +152,12 @@ const AuthNavigation = () => {
       <div className="right-nav">
         <NavLink to="/messaages">Messages</NavLink>
         <div className="account">
-          <div className="account-word">Account</div>
-            <AccountNav />
+          <div className="account-word" onClick={() => showDropdown()} ref={account}>
+            Account
+          </div>
+          <div className="account-dropdown hidden" ref={dropdown}>
+            <AccountNav dropdown={dropdown} />
+          </div>
         </div>
       </div>
     </div>
