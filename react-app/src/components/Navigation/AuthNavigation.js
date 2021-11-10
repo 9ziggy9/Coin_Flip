@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { Redirect } from "react-router";
+import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { findCrypto } from "../../store/crypto";
+import AccountNav from "./AccountNav";
 import "./AuthNavigation.css";
 
 const AuthNavigation = () => {
+  const history = useHistory();
   const results = useRef(null);
   const searchBar = useRef(null);
   const dispatch = useDispatch();
@@ -70,7 +72,7 @@ const AuthNavigation = () => {
       <img
         className="nav-coin-auth"
         src="https://thumbs.gfycat.com/SkinnyAccomplishedBoa-size_restricted.gif"
-        onClick={() => <Redirect to="/home" />}
+        onClick={() => history.push("/home")}
       />
       <div className="search-container">
         <input
@@ -123,10 +125,9 @@ const AuthNavigation = () => {
       </div>
       <div className="right-nav">
         <NavLink to="/messaages">Messages</NavLink>
-        <div className="account">Account
-        <div className="account-dropdown">
-          Test
-        </div>
+        <div className="account">
+          <div className="account-word">Account</div>
+            <AccountNav />
         </div>
       </div>
     </div>
