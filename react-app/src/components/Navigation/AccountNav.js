@@ -1,10 +1,11 @@
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { logout } from "../../store/session";
 
-const AccountNav = () => {
+const AccountNav = ({ dropdown }) => {
   const user = useSelector((state) => state.session.user);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const logoutUser = async () => {
@@ -13,7 +14,7 @@ const AccountNav = () => {
   };
 
   return (
-    <div className="account-dropdown">
+  <>
       <div className="account-name">{user.username}</div>
       <div className="portfolio-details">
         <div className="portfolio-info">
@@ -49,7 +50,7 @@ const AccountNav = () => {
           Log Out
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
