@@ -162,12 +162,13 @@ span {
   align-items: center;
   padding-left: 20px;
   padding-right: 20px;
-  padding-top: 8px;
-  padding-bottom: 4px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   cursor: pointer;
 }
 
-.account-link:hover, .account-logout:hover {
+.account-link:hover,
+.account-logout:hover {
   background-color: rgba(59, 66, 71, 0.966);
 }
 
@@ -183,4 +184,8 @@ span {
   height: 24px;
   width: 24px;
   margin-right: 10px;
+}
+
+.nav-messages:hover {
+  color: rgb(255, 80, 0);
 }
