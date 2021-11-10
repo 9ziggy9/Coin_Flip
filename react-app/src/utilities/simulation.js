@@ -1,7 +1,6 @@
 export class Simulation {
-  constructor(stop,interval,fn=x=>x) {
+  constructor(interval,fn=x=>x) {
     this.start = 0;
-    this.stop = stop;
     this.interval = interval;
     this.fn = fn;
     this.domain = [...Array(interval).keys()];
@@ -32,9 +31,41 @@ export class Simulation {
   }
 }
 
+export class LiveCrypto {
+  constructor(interval,api) {
+    this.start = 0;
+    this.interval = interval;
+    this.api = api;
+    this.domain = [...Array(interval).keys()];
+    this.range = [];
+  }
+
+  proceed() {
+    if(this.start === 0) this.range = this.domain;
+
+    const domain = [];
+
+    for(let x = this.start; x < this.interval; x++)
+      domain.push(x);
+
+    this.domain = domain;
+    this.range = [...this.range.slice(1), this.api()];
+
+    this.start++;
+    this.interval++;
+
+    return {domain: this.domain, range: this.range}
+  }
+}
+
 export function gauss_boxmuller() {
   let x = 0;
   let y = 0;
   while(x===0) x = Math.random();
   while(y===0) y = Math.random();
+  return Math.sqrt(-2.0 * Math.log(x)) * Math.cos(2.0 * Math.PI * y);
+}
+
+export function log_normal() {
+  return Math.log(gauss_boxmuller());
 }
