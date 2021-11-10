@@ -20,8 +20,13 @@ def search_crypto():
 
 @cryptocurrency_routes.route('/<int:id>')
 def getOneCryptocurrency(id):
-    crypto = Cryptocurrency.query.get(id).one()
-    return {"k":[crypto.to_dict()]}
+    crypto = Cryptocurrency.query.get(id)
+    d = crypto.to_dict()
+    api_url = f'https://finnhub.io/api/v1/company-news?symbol={d["symbol"]}&from=2021-09-01&to=2021-09-09&token=c65is3aad3i9pn79rgfg'
+    res = requests.get(api_url)
+    data = res.json()
+
+    return {"k":[crypto.to_dict()], "news": [news for news in data]}
 
 @cryptocurrency_routes.route('/news')
 def test_api():
