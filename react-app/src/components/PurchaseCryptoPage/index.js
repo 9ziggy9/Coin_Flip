@@ -12,7 +12,7 @@ const PurchaseCryptoPage = () => {
     const { pathname } = history.location;
 
     const singleCrypto = useSelector(state => {
-        return state.crypto.getOneCrypto;
+        return state.crypto.getOneCrypto[0];
     })
 
     const uniqueCryptoId = pathname.split("/")[2]
