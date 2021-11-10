@@ -19,5 +19,10 @@ def search_crypto():
 
 @cryptocurrency_routes.route('/<int:id>')
 def getOneCryptocurrency(id):
-    crypto = Cryptocurrency.query.get(id).one()
-    return {"k":[crypto.to_dict()]}
+    crypto = Cryptocurrency.query.get(id)
+    return {"k":crypto.to_dict()}
+
+@cryptocurrency_routes.route('/', methods=["GET"])
+def return_all_crypto():
+    allCrypto = Cryptocurrency.query.all()
+    return {'allCrypto': [crypto.to_dict() for crypto in allCrypto]}
