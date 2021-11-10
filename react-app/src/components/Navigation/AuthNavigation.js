@@ -1,14 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { Redirect } from "react-router";
+import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { findCrypto } from "../../store/crypto";
+import AccountNav from "./AccountNav";
 import "./AuthNavigation.css";
 
 const AuthNavigation = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const results = useRef(null);
   const searchBar = useRef(null);
-  const dispatch = useDispatch();
+  const dropdown = useRef(null);
+  const account = useRef(null)
   const [search, setSearch] = useState();
   const searchResults = useSelector((state) => state.crypto.searchRes);
   const regex = new RegExp(search, "gi");
@@ -52,6 +56,12 @@ const AuthNavigation = () => {
     }
   };
 
+  const showDropdown = () => {
+    dropdown.current.classList.remove("hidden");
+    account.current.style.textDecoration = "underline"
+    account.current.style.color = "rgb(255, 80, 0)"
+  };
+
   useEffect(() => {
     if (search?.length > 0) {
       dispatch(findCrypto(search));
@@ -65,12 +75,32 @@ const AuthNavigation = () => {
     }
   }, [search, dispatch]);
 
+  const RemoveOutside = (ref) => {
+    useEffect(() => {
+      const handleClick = (e) => {
+        if (ref.current && !ref.current.contains(e.target)) {
+          dropdown.current.classList.add("hidden");
+          account.current.style.textDecoration = "none"
+          account.current.style.color = "white"
+        }
+      };
+
+      document.addEventListener("mousedown", handleClick);
+
+      return () => {
+        document.removeEventListener("mousedown", handleClick);
+      };
+    }, [ref]);
+  };
+
+  RemoveOutside(dropdown);
+
   return (
     <div className="nav-main" onBlur={(e) => hide(e)}>
       <img
         className="nav-coin-auth"
         src="https://thumbs.gfycat.com/SkinnyAccomplishedBoa-size_restricted.gif"
-        onClick={() => <Redirect to="/home" />}
+        onClick={() => history.push("/home")}
       />
       <div className="search-container">
         <input
@@ -122,11 +152,14 @@ const AuthNavigation = () => {
         </div>
       </div>
       <div className="right-nav">
-        <NavLink to="/messaages">Messages</NavLink>
-        <div className="account">Account
-        <div className="account-dropdown">
-          Test
-        </div>
+        <NavLink to="/messages" className="nav-messages">Messages</NavLink>
+        <div className="account">
+          <div className="account-word" onClick={() => showDropdown()} ref={account}>
+            Account
+          </div>
+          <div className="account-dropdown hidden" ref={dropdown}>
+            <AccountNav dropdown={dropdown} />
+          </div>
         </div>
       </div>
     </div>

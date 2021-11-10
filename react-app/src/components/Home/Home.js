@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from "react-router";
 import { userPortfolios } from "../../store/portfolio";
-
+import News from "../News/News";
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -42,6 +42,7 @@ const Home = () => {
                         </li>
                     )): ""}
                 </ul>
+                <News />
             </div>
             )
         } else {

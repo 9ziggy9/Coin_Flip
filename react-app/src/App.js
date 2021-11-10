@@ -14,6 +14,7 @@ import Splash from "./components/Splash/Splash";
 import PurchaseCryptoPage from "./components/PurchaseCryptoPage";
 import AuthNavigation from "./components/Navigation/AuthNavigation";
 import Home from "./components/Home/Home";
+import HelloPlot from "./components/Plot/HelloPlot"
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -59,6 +60,9 @@ function App() {
         <ProtectedRoute path="/home" exact={true}>
           <AuthNavigation />
           <Home />
+        </ProtectedRoute>
+        <ProtectedRoute path="/hello-plot" exact={true}>
+          <HelloPlot />
         </ProtectedRoute>
         <Route path="/purchaseCrypto/:id" exact={true}>
           <NavBar />

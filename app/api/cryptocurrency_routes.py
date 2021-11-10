@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
 from app.models import Cryptocurrency
+import requests
 
 cryptocurrency_routes = Blueprint('cryptocurrency', __name__)
 
@@ -26,3 +27,10 @@ def getOneCryptocurrency(id):
 def return_all_crypto():
     allCrypto = Cryptocurrency.query.all()
     return {'allCrypto': [crypto.to_dict() for crypto in allCrypto]}
+
+@cryptocurrency_routes.route('/news')
+def test_api():
+    api_url = 'https://finnhub.io/api/v1/news?category=crypto&token=c65is3aad3i9pn79rgfg'
+    res = requests.get(api_url)
+    data = res.json()
+    return {"news":[news for news in data]}
