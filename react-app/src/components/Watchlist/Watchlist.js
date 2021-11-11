@@ -63,6 +63,17 @@ const Watchlist = () => {
 
   RemoveOutside(dropdown);
 
+  const hideList = (listId) => {
+    const list = document.getElementById(`list-${listId}`);
+    if (!list.classList.contains("hidden")) {
+      list.classList.add("hidden");
+      btn.current.innerText = "▼"
+    } else {
+      list.classList.remove("hidden");
+      btn.current.innerText = "▲"
+    }
+  };
+
   return (
     <div className="watch-main">
       <div className="watch-cryptos">Cryptocurrencies</div>
@@ -121,19 +132,27 @@ const Watchlist = () => {
                     <div className="watchlist-text">Test</div>
                   </div>
                 </div>
-                <div className="watchlist-open" onClick={show} ref={btn}>
-                  {w?.cryptos?.length > 0 ? "▲" :   "▼"   }
+                <div
+                  className="watchlist-open"
+                  onClick={() => hideList(w.id)}
+                  ref={btn}
+                >
+                  {w?.cryptos?.length > 0 ? "▲" : "▼"}
                 </div>
               </div>
-              {w?.cryptos?.map(crypto => (
-                <div className="watchlist-cryptos">
-                  <div className="watchlist-crypto-name">{crypto.symbol}</div>
-                  <div className="watchlist-crypto-right">
-                    <div className="watchlist-crypto-price">${crypto.price.toFixed(2).toLocaleString()}</div>
-                    <div className="watchlist-crypto-change">0.25%</div>
+              <div className="watchlist-crypto-all" id={`list-${w.id}`}>
+                {w?.cryptos?.map((crypto) => (
+                  <div className="watchlist-cryptos">
+                    <div className="watchlist-crypto-name">{crypto.symbol}</div>
+                    <div className="watchlist-crypto-right">
+                      <div className="watchlist-crypto-price">
+                        ${crypto.price.toFixed(2).toLocaleString()}
+                      </div>
+                      <div className="watchlist-crypto-change">0.25%</div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           ))}
       </div>

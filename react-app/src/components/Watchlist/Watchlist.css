@@ -62,6 +62,7 @@
   height: 16px;
   width: 16px;
   cursor: pointer;
+  user-select: none;
 }
 
 .watch-list-right:hover {
@@ -163,7 +164,8 @@
 }
 
 .watchlist-open {
-  font-size: 16px;
+  font-size: 14px;
+  user-select: none;
 }
 
 .watchlist-open:hover {
@@ -176,6 +178,7 @@
   margin-left: 80px;
   display: none;
   text-underline-offset: 5px;
+  user-select: none;
 }
 
 .watchlist-options:hover {
