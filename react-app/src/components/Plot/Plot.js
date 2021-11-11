@@ -10,7 +10,8 @@ import { log_normal } from "../../utilities/statistics.js";
 // Finnhub API
 
 const SimPlot = () => {
-  const user = useSelector(state => state.session.user)
+  const [market, setMarket] = useState([]);
+
   const mock_history = [
     {time: 1636664211, price: 12.22},
     {time: 1636664212, price: 12.22},
@@ -27,13 +28,14 @@ const SimPlot = () => {
     {time: 1636664223, price: 12.22},
   ];
 
-  const data = async () => {
-    const res = await fetch("/api/cryptocurrencies/prices");
-    const d = await res.json();
-    console.log(d);
-  };
+  // const data = async () => {
+  //   const res = await fetch("/api/cryptocurrencies/prices");
+  //   const d = await res.json();
+  //   setMarket(d);
+  // };
 
-  useEffect(() => {data()}, []);
+  // useEffect(() => {data()}, []);
+  // console.log(market)
 
   // mu = mean value; sigma = standard deviation
   const test_sim = new Simulation(mock_history, log_normal, 200, 2);
@@ -41,25 +43,27 @@ const SimPlot = () => {
 
   const [X, setDomain] = useState(test_sim.domain);
   const [Y, setRange] = useState(test_sim.range);
+  let i = 0;
 
   useEffect(() => {
     const intervalPointer = setInterval(() => {
+      i++;
+      console.log(i);
       test_sim.proceed();
       setDomain(test_sim.domain);
       setRange(test_sim.range);
-    }, 4000)
+    }, 1000)
     return () => clearInterval(intervalPointer);
   }, [setDomain])
 
-  if(user) {
+  if(true) {
 
     const layout = {
       autosize: true,
       plot_bgcolor: 'black',
       paper_bgcolor: 'black',
-      scene: [{align:'left', bordercolor:'green',
-               font: {color:'white'},
-               text:'HELLO WORLD'}]
+      title: 'Lognormal',
+      font: {color: 'white'}
     }
 
     return (
@@ -80,8 +84,6 @@ const SimPlot = () => {
         useResizeHandler={true}
       />
     )
-  } else {
-    return <Redirect to="/" />
   }
 }
 
