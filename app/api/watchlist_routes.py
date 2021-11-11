@@ -10,10 +10,10 @@ def get_watchlist(user_id):
 
     return {'watchlists': [item.to_dict() for item in watchlist]}
 
-# @watchlist_routes.route('/user/<int:user_id>', methods=['POST'])
-# def new_watchlist(user_id):
+    # @watchlist_routes.route('/user/<int:user_id>', methods=['POST'])
+    # def new_watchlist(user_id):
 
-#     data =
+    #     data =
 
 # @watchlist_routes.route('/<int:watchlist_id>')
 # def populate_watchlist(watchlist_id):
