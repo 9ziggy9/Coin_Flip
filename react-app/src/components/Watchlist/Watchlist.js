@@ -125,6 +125,15 @@ const Watchlist = () => {
                   ^
                 </div>
               </div>
+              {w?.cryptos?.map(crypto => (
+                <div className="watchlist-cryptos">
+                  <div className="watchlist-crypto-name">{crypto.symbol}</div>
+                  <div className="watchlist-crypto-right">
+                    <div className="watchlist-crypto-price">${crypto.price}</div>
+                    <div className="watchlist-crypto-change">0.25%</div>
+                  </div>
+                </div>
+              ))}
             </div>
           ))}
       </div>
