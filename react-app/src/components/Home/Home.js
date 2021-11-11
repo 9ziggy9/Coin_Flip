@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from "react-router";
 import { userPortfolios } from "../../store/portfolio";
+import Plot from "../Plot/Plot"
 import News from "../News/News";
 import "./Home.css"
 
@@ -35,7 +36,7 @@ const Home = () => {
                     </div>
                     <div className="porfolio_chart_container">
                         <div className="plotly_placeholder">
-                            *Plotly Graph*
+                          <Plot />
                         </div>
                     </div>
                     <div className="buying_power_container">

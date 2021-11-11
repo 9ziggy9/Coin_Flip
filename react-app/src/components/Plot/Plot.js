@@ -52,7 +52,7 @@ const HelloPlot = () => {
           },
           {type: 'contour', x: X, y: Y},
         ]}
-        layout={{width: 1200, height: 800, title: 'Gauss Coin'}}
+        layout={{autosize: true,  title:'Gauss Coin'}}
       />
     )
   } else {
