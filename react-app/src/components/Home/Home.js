@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from "react-router";
 import { userPortfolios } from "../../store/portfolio";
 import News from "../News/News";
+import Watchlist from "../Watchlist/Watchlist";
 import "./Home.css"
 
 
@@ -62,6 +63,8 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="home_container_right">
+                    <Watchlist />
+
                     <ul className="portfolio_list">
                         {portfolios ? portfolios.map(portfolio =>(
 
