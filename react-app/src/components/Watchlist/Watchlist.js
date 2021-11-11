@@ -122,14 +122,14 @@ const Watchlist = () => {
                   </div>
                 </div>
                 <div className="watchlist-open" onClick={show} ref={btn}>
-                  ^
+                  {w?.cryptos?.length > 0 ? "▲" :   "▼"   }
                 </div>
               </div>
               {w?.cryptos?.map(crypto => (
                 <div className="watchlist-cryptos">
                   <div className="watchlist-crypto-name">{crypto.symbol}</div>
                   <div className="watchlist-crypto-right">
-                    <div className="watchlist-crypto-price">${crypto.price}</div>
+                    <div className="watchlist-crypto-price">${crypto.price.toFixed(2).toLocaleString()}</div>
                     <div className="watchlist-crypto-change">0.25%</div>
                   </div>
                 </div>
