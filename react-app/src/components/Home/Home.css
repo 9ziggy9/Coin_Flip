@@ -9,7 +9,8 @@
     /* sponge 1 */
     background-color:blue;
     height: 100%;
-    width: 70%;
+    width: 720px;
+    margin-right: 2.15em;
 }
 
 .cash_container {
@@ -65,7 +66,7 @@
     padding-top: .5em;
     border-bottom: 1px solid rgba(59, 66, 71, 0.966);
     height: 4.7em;
-    width: 50em;
+    width: 100%;
 }
 
 .buying_power_label_container {
@@ -81,13 +82,58 @@
     justify-content: flex-end;
 }
 
-.home_container_right{
-    background-color:orange;
+.add_funds_container {
     display: flex;
+    flex-direction: column;
+    margin-top: 5em;
+    margin-bottom: 0em;
+    padding: 1.5em;
+    height: 8em;
+    border: 1px solid rgba(59, 66, 71, 0.966);
+    border-radius: 5px
 }
 
-/* Ziggy was here */
-/* sponge 2 */
+.add_funds_label_container {
+    display: flex;
+    align-items: center;
+    height: 1.5em;
+    width: 20%;
+    padding-bottom: .2em;
+}
+
+.add_funds_label{
+    margin-top: .2em;
+    color: grey;
+}
+
+.add_funds_description{
+    display: flex;
+    align-items: flex-end;
+    height: 2em;
+    margin-bottom: 1em;
+
+}
+
+.funds_description {
+    margin-top: .5em;
+    font-size: 16px;
+}
+
+.add_funds_button {
+    display: flex;
+    align-items: center;
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+    /* background-color: rgba(0,0,0,0); */
+    background-color: rgba(0,0,0,0);
+    margin-top: 2.35em;
+    padding: 0;
+    width: 15%;
+    height: 2em;
+}
+
 .total_cash_container {
     background-color:green;
 }
@@ -101,4 +147,40 @@
     background-color:white;
 }
 
-/* Ziggy was here */
+.add_funds_button_text{
+    font-size: 13px;
+    color:rgba(38,208,43,1)
+}
+
+.add_funds_static_nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3em;
+    font-weight: bold;
+}
+
+.arrow_left {
+    display: inline-block;
+    color: rgba(128, 132, 135, 0.966);
+    transform: rotate(-90deg);
+    font-size: 14px;
+    margin-right: 1.25em;
+}
+
+.add_funds_page_counter{
+    font-size: 12px;
+}
+
+.arrow_right {
+    display: inline-block;
+    color: rgba(128, 132, 135, 0.966);
+    transform: rotate(90deg);
+    font-size: 14px;
+    margin-left: 1.25em;
+}
+
+.news_label {
+    margin-left: 7px;
+}

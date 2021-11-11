@@ -11,7 +11,6 @@ const Home = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
     const portfolios = useSelector(state => Object.values(state.portfolio))
-    console.log(user.cash)
 
     useEffect(() => {
         dispatch(userPortfolios(user?.id))
@@ -53,38 +52,25 @@ const Home = () => {
                         <div className="add_funds_label_container">
                             <h5 className="add_funds_label">Fund Your Account</h5>
                         </div>
-                        <div className=""></div>
+                        <div className="add_funds_description">
+                            <p className="funds_description">Your bank account is ready! Fund your Robinhood account to begin trading.</p>
+                        </div>
+                        <button type="button" className="add_funds_button">
+                            <h4 className="add_funds_button_text">Add Funds</h4>
+                            </button>
                     </div>
+                        <div className="add_funds_static_nav">
+                            <p><i className="arrow_left">⌃</i></p>
+                            <p className="add_funds_page_counter">1 of 1</p>
+                            <p><i className="arrow_right">⌃</i></p>
+                        </div>
                     <div className="news_container">
-                        <h2>News</h2>
+                        <h2 className="news_label">News</h2>
                         <News />
                     </div>
                 </div>
                 <div className="home_container_right">
-                    <ul className="portfolio_list">
-                        {portfolios ? portfolios.map(portfolio =>(
 
-                            <li className={`${portfolio.id}`}>
-                                <div className="crypto_id">
-                                    <h3>
-                                        {`Crypto ID ${portfolio.crypto_id}`}
-                                    </h3>
-                                </div>
-                                <div className="purchase_price_container">
-                                    <h3>
-
-                                        {`Purchased @ $${portfolio.purchase_price}`}
-                                    </h3>
-                                </div>
-                                <div className="quantity_container">
-                                    <h3>
-
-                                        {`Quantity ${portfolio.quantity}`}
-                                    </h3>
-                                </div>
-                            </li>
-                        )): ""}
-                    </ul>
                 </div>
             </div>
             )
