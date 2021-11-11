@@ -1,0 +1,139 @@
+.watch-main {
+  border: 0.5px solid grey;
+  height: 80vh;
+  width: 276px;
+  background-color: rgb(42, 47, 51);
+  border-radius: 6px;
+  overflow-y: auto;
+  overflow-x: none;
+  word-break: break-all;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 90px;
+}
+
+.watch-cryptos {
+  padding: 15px 20px;
+  font-weight: 600;
+  border-bottom: 0.5px solid grey;
+}
+
+.watch-crypto {
+  font-size: 14px;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  border-bottom: 0.5px solid grey;
+}
+
+.watch-crypto:hover {
+  background-color: rgba(59, 66, 71, 0.966);
+}
+
+.watch-crypto-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.watch-crypto-card-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.watch-crypto-name {
+  margin-bottom: 3px;
+}
+
+.watch-list {
+  padding: 5px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  border-bottom: 0.5px solid grey;
+}
+
+.watch-list-right {
+  margin-bottom: 20px;
+  font-size: 24px;
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+}
+
+.watch-list-right:hover {
+  color: rgba(42, 233, 64, 0.872);
+}
+
+.create-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.list-input {
+  cursor: text;
+  margin: 0em;
+  height: 1.5rem;
+  color: white;
+  font-family: inherit;
+  border: 0.5px solid grey;
+  background-color: rgba(59, 66, 71, 0.966);
+  outline: grey;
+  width: 160px;
+  height: 34px;
+  padding: 1px 20px 1px 20px;
+  font-size: 14px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.list-input:focus,
+.list-input:hover {
+  background-color: inherit;
+}
+
+.list-input:focus {
+  border: 0.5px solid rgb(255, 80, 0);
+}
+
+.list-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  width: 200px;
+}
+
+.list-cancel {
+  margin-right: 5px;
+  height: 36px;
+  width: 96px;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  border: 0.5px solid rgb(255, 80, 0);
+  color: rgb(255, 80, 0);
+  background-color: rgba(59, 66, 71, 0.966);
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.list-submit {
+  height: 36px;
+  width: 112px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: rgb(255, 80, 0);
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  color: rgb(48, 48, 48);
+}
