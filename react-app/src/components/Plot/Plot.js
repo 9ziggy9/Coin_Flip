@@ -54,7 +54,7 @@ const SimPlot = () => {
       <Plot
         data={[
           {
-            x: X,
+            x: X.map(x => {let t = new Date(x); return t.toLocaleString();}),
             y: Y,
             type: 'scatter',
             showlegend: true,
