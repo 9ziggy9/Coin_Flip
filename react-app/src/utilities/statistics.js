@@ -8,6 +8,10 @@ export class Simulation {
     this.range = this.realtime.map(datapoint => datapoint.price);
   }
 
+  initialize() {
+    return
+  }
+
   proceed() {
     const uTime = Date.now()
     this.realtime = [...this.realtime.slice(1),
@@ -18,9 +22,31 @@ export class Simulation {
 
     return {domain: this.domain, range: this.range}
   }
+
+  zip() {
+    return JSON.stringify(
+      this.domain.map((timestamp, t) => ({time:timestamp, price:this.range[t]})));
+  }
 }
 
-export class LiveCrypto {
+export class Crypto {
+  constructor(history, api_call) {
+    this.realtime = [...history];
+    this.api_call = api_call;
+    this.domain = this.realtime.map(datapoint => datapoint.time);
+    this.range = this.realtime.map(datapoint => datapoint.price);
+  }
+
+  proceed() {
+    const uTime = Date.now()
+    this.realtime = [...this.realtime.slice(1),
+                     {time: uTime, price: this.api_call()}];
+
+    this.domain = this.realtime.map(datapoint => datapoint.time);
+    this.range = this.realtime.map(datapoint => datapoint.price);
+
+    return {domain: this.domain, range: this.range}
+  }
 }
 
 // This is the Box-Muller transform implemented in JavaScript. For a mean value
