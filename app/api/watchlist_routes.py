@@ -10,12 +10,15 @@ def get_watchlist(user_id):
 
     return {'watchlists': [item.to_dict() for item in watchlist]}
 
-# @watchlist_routes.route('/new/<int:user_id>/<int:watchlist_id>', methods=['POST'])
-# def new_watchlist(user_id, watchlist_id):
+@watchlist_routes.route('/new/<int:user_id>', methods=['POST'])
+def new_watchlist(user_id):
+    data = request.json
 
-#     data =
+    watchlist = Watchlist(name=data['name'], user_id=data['user_id'])
+    db.session.add(watchlist)
+    db.session.commit()
 
-#     return {"cryptos"}
+    return {'msg': 'ok'}
 
 @watchlist_routes.route('/add/<int:watchlist_id>', methods=['PUT'])
 def add_crypto(watchlist_id):
@@ -30,7 +33,4 @@ def add_crypto(watchlist_id):
     db.session.add(watchlist)
     db.session.commit()
 
-    li = Watchlist.query.filter_by(user_id=user_id).all()
-
-
-    return {'watchlists': [item.to_dict() for item in li]}
+    return {'msg': 'ok'}
