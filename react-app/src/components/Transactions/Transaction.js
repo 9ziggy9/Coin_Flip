@@ -14,7 +14,18 @@ const Transactions = () => {
 
     if (user) {
         return (
-            <h1>Welcome to the Transactions Page</h1>
+            <div className="transaction_main">
+                <h1>Welcome to the Transactions Page</h1>
+                <div className="transaction_container_left">
+                    <div className="crypto_title_container">
+                        <h2 className="crypto_text">Crypto</h2>
+                    </div>
+                    <ul className="user_crypto_list">
+                    
+                    </ul>
+                </div>
+                <div className="transaction_container_right"></div>
+            </div>
         )
     }
 

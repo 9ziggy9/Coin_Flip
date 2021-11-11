@@ -14,6 +14,7 @@ import Splash from "./components/Splash/Splash";
 import PurchaseCryptoPage from "./components/PurchaseCryptoPage";
 import AuthNavigation from "./components/Navigation/AuthNavigation";
 import Home from "./components/Home/Home";
+import Transactions from "./components/Transactions/Transaction";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -63,6 +64,9 @@ function App() {
         <Route path="/purchaseCrypto/:id" exact={true}>
           <NavBar />
           <PurchaseCryptoPage />
+        </Route>
+        <Route path="/transactions" exact={true}>
+          <Transactions />
         </Route>
       </Switch>
     </BrowserRouter>
