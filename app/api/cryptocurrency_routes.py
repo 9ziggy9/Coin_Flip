@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import Cryptocurrency
+from app.models import Cryptocurrency, db
 import requests
 from pycoingecko import CoinGeckoAPI
 
@@ -44,20 +44,20 @@ def get_coins():
     coins = cg.get_coins_list()
 
     top = [
-    "Bitcoin",
-    "Ethereum",
-    "Binance Coin",
-    "Cardano",
+    "USD Coin",
     "Tether",
+    "Terra",
     "Solana",
+    "SHIBA INU",
     "XRP",
     "Polkadot",
-    "Dogecoin",
-    "USD Coin",
-    "SHIBA INU",
-    "Terra",
     "Litecoin",
-    "Avalanche"
+    "Ethereum",
+    "Dogecoin",
+    "Cardano",
+    "Bitcoin",
+    "Binance Coin",
+    "Avalanche",
     ]
 
     items = [item.lower() for item in top]
@@ -68,4 +68,23 @@ def get_coins():
 
     price = cg.get_price(ids=joined, vs_currencies="USD")
 
+    all_cryptos = Cryptocurrency.query.order_by(Cryptocurrency.name.asc()).all()
+
+    price_list = [price[item]['usd'] for item in price]
+
+    crypto_list = [crypto.to_dict() for crypto in all_cryptos]
+
+    for crypto in crypto_list:
+        one_crypto = Cryptocurrency.query.filter_by(id=crypto['id']).one()
+        one_crypto.price = price_list[crypto_list.index(crypto)]
+        db.session.commit()
+
     return {"price": price}
+
+def update_price():
+
+    coins = Cryptocurrency.query.all()
+
+    items = get_coins()
+
+    print(items)

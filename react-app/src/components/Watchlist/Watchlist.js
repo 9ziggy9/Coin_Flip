@@ -30,6 +30,8 @@ const Watchlist = () => {
     };
 
     dispatch(newUserList(obj)).then(() => dispatch(getUserList(user.id)));
+    setInput('')
+    listInput.current.classList.add('hidden')
   };
 
   const cancel = (e) => {

@@ -10,6 +10,7 @@ class Cryptocurrency(db.Model):
     symbol = db.Column(db.String(15), nullable=False)
     price = db.Column(db.Float, nullable=False)
     history = db.Column(db.String())
+    gecko = db.Column(db.String())
 
     def to_dict(self):
         return {
@@ -17,7 +18,8 @@ class Cryptocurrency(db.Model):
             'name': self.name,
             'symbol': self.symbol,
             'price': self.price,
-            'history': self.history
+            'history': self.history,
+            'gecko': self.gecko
         }
 
     transactions = db.relationship("Transaction", back_populates="cryptocurrency")
