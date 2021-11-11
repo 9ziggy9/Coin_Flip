@@ -84,7 +84,7 @@
   border: 0.5px solid grey;
   background-color: rgba(59, 66, 71, 0.966);
   outline: grey;
-  width: 150px;
+  width: 160px;
   height: 34px;
   padding: 1px 20px 1px 20px;
   font-size: 14px;
@@ -99,12 +99,41 @@
   background-color: inherit;
 }
 
+.list-input:focus {
+  border: 0.5px solid rgb(255, 80, 0);
+}
+
 .list-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-top: 10px;
+  width: 200px;
 }
 
 .list-cancel {
-    margin-right: 5px;
-    height: 30px;
-    font-size: 16px;
+  margin-right: 5px;
+  height: 36px;
+  width: 96px;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  border: 0.5px solid rgb(255, 80, 0);
+  color: rgb(255, 80, 0);
+  background-color: rgba(59, 66, 71, 0.966);
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.list-submit {
+  height: 36px;
+  width: 112px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: rgb(255, 80, 0);
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  color: rgb(48, 48, 48);
 }

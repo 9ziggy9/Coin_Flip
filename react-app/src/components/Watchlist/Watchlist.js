@@ -1,12 +1,22 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import "./Watchlist.css";
 
 const Watchlist = () => {
-    const listInput = useRef(null)
+  const [input, setInput] = useState()
+  const listInput = useRef(null);
 
-    const show = () => {
-        listInput.current.classList.remove('hidden')
-    }
+  const submit = (e) => {
+    e.preventDefault();
+  };
+
+  const cancel = (e) => {
+    e.preventDefault()
+    listInput.current.classList.add("hidden")
+  }
+
+  const show = () => {
+    listInput.current.classList.remove("hidden");
+  };
 
   return (
     <div className="watch-main">
@@ -25,15 +35,19 @@ const Watchlist = () => {
       </div>
       <div className="watch-list">
         <div className="watch-list-left">Lists</div>
-        <div className="watch-list-right" onClick={show}>+</div>
+        <div className="watch-list-right" onClick={show}>
+          +
+        </div>
       </div>
-      <div className="create-list hidden" ref={listInput}>
-          <input className="list-input" placeholder="List Name" />
-          <div className="list-buttons">
-              <button className="list-cancel">Cancel</button>
-              <button className="list-submit">Create List</button>
-          </div>
-      </div>
+      <form className="create-list hidden" ref={listInput}>
+        <input className="list-input" placeholder="List Name" onChange={(e) => setInput(e.target.value)} required />
+        <div className="list-buttons">
+          <button onClick={(e) => cancel(e)}className="list-cancel">Cancel</button>
+          <button onClick={(e) => submit(e)} className="list-submit">
+            Create List
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
