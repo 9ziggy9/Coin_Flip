@@ -31,7 +31,15 @@ export const getAllCrypto = () => async (dispatch) => {
   }
 };
 
+export const getOneCrypto = (id) => async dispatch => {
+  const response = await fetch(`/api/cryptocurrencies/${id}`);
 
+  if (response.ok) {
+      const cryptocurrencyDetail = await response.json();
+      dispatch(load_one(cryptocurrencyDetail))
+      return cryptocurrencyDetail;
+  }
+}
 
 export const findCrypto = (results) => async (dispatch) => {
   const res = await fetch("/api/cryptocurrencies/", {
