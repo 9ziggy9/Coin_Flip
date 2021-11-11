@@ -6,23 +6,11 @@ import { Redirect } from "react-router";
 // Simulation class
 import { Simulation } from "../../utilities/statistics.js";
 // Transformation from uniform -> normal distributions
-import { gauss_boxmuller } from "../../utilities/statistics.js";
+import { gaussian } from "../../utilities/statistics.js";
 // Finnhub API
 
 const SimPlot = () => {
   const user = useSelector(state => state.session.user)
-
-  const rand_walk = x => {
-    const sgn = Math.pow(-1, Math.floor(2*Math.random()));
-    const step = sgn * Math.floor(4*Math.random());
-    return x + step < 0 ? 0 : x + step;
-  }
-
-  const gaussian = x => {
-    const sgn = Math.pow(-1, Math.floor(2*Math.random()));
-    const step = sgn * gauss_boxmuller();
-    return x + 0.5 * step;
-  }
 
   const test_sim = new Simulation(60, x => gaussian(x));
   test_sim.proceed();

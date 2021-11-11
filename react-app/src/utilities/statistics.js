@@ -69,3 +69,15 @@ export function gauss_boxmuller() {
 export function log_normal() {
   return Math.log(gauss_boxmuller());
 }
+
+export const rand_walk = x => {
+    const sgn = Math.pow(-1, Math.floor(2*Math.random()));
+    const step = sgn * Math.floor(4*Math.random());
+    return x + step < 0 ? 0 : x + step;
+}
+
+export const gaussian = x => {
+    const sgn = Math.pow(-1, Math.floor(2*Math.random()));
+    const step = sgn * gauss_boxmuller();
+    return x + 0.5 * step;
+}
