@@ -32,3 +32,4 @@ class User(db.Model, UserMixin):
 
     transactions = db.relationship("Transaction", back_populates="user")
     portfolio = db.relationship("Portfolio", back_populates="user")
+    watchlist = db.relationship("Watchlist")

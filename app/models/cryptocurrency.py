@@ -1,7 +1,9 @@
 from .db import db
 
+from .watchlist import association_table
+
 class Cryptocurrency(db.Model):
-    __table__name="cryptocurrency"
+    __tablename__="cryptocurrency"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
@@ -18,3 +20,4 @@ class Cryptocurrency(db.Model):
 
     transactions = db.relationship("Transaction", back_populates="cryptocurrency")
     portfolio = db.relationship("Portfolio", back_populates="cryptocurrency")
+    watchlist = db.relationship("Watchlist", secondary=association_table, back_populates="cryptocurrency")
