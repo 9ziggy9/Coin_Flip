@@ -60,12 +60,16 @@ export function gaussianNoise_boxmuller(mu, sigma) {
   while(x===0) x = Math.random();
   while(y===0) y = Math.random();
   const magnitude = sigma * Math.sqrt(-2.0 * Math.log(x))
-  return magnitude * (Math.sqrt(-2.0 * Math.log(x)) * Math.cos(2.0 * Math.PI * y)) + mu;
+  return (magnitude * (Math.sqrt(-2.0 * Math.log(x)) * Math.cos(2.0 * Math.PI * y))) + mu;
 }
 
 // By definition, a variable has a lognormal distribution if
 export function log_normal(mu, sigma) {
-  return Math.exp(gaussianNoise_boxmuller(mu, sigma));
+  //You need to convert to the variance space of the log distribution.
+  //https://www.quora.com/How-do-I-transform-between-log-normal-distribution-and-normal-distribution
+  const sigma_log = Math.sqrt(Math.log(1 + (sigma/mu)*(sigma/mu)))
+  const mu_log = Math.log(mu) - (1/2)*sigma_log*sigma_log
+  return Math.exp(gaussianNoise_boxmuller(mu_log, sigma_log));
 }
 
 export const rand_walk = x => {

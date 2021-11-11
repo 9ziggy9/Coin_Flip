@@ -12,19 +12,23 @@ import { log_normal } from "../../utilities/statistics.js";
 const SimPlot = () => {
   const user = useSelector(state => state.session.user)
   const mock_history = [
-    12.22,
-    13.45,
-    14.87,
-    11.24,
-    13.10,
-    12.07,
-    10.88,
-    9.10,
-    8.2,
-    7.3
+    {time: 1636664211, price: 12.22},
+    {time: 1636664212, price: 12.22},
+    {time: 1636664213, price: 12.22},
+    {time: 1636664214, price: 12.22},
+    {time: 1636664215, price: 12.22},
+    {time: 1636664216, price: 12.22},
+    {time: 1636664217, price: 12.22},
+    {time: 1636664218, price: 12.22},
+    {time: 1636664219, price: 12.22},
+    {time: 1636664220, price: 12.22},
+    {time: 1636664221, price: 12.22},
+    {time: 1636664222, price: 12.22},
+    {time: 1636664223, price: 12.22},
   ];
 
-  const test_sim = new Simulation(mock_history, log_normal, 1, 1);
+  // mu = mean value; sigma = standard deviation
+  const test_sim = new Simulation(mock_history, log_normal, 200, 0.25);
   test_sim.proceed();
 
   const [X, setDomain] = useState(test_sim.domain);
@@ -35,7 +39,7 @@ const SimPlot = () => {
       console.log(test_sim.proceed());
       setDomain(test_sim.domain);
       setRange(test_sim.range);
-    }, 1000)
+    }, 4000)
     return () => clearInterval(intervalPointer);
   }, [setDomain])
 
