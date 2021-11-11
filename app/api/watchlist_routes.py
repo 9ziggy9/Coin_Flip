@@ -15,8 +15,8 @@ def get_watchlist(user_id):
 
 #     data =
 
-@watchlist_routes.route('/<int:watchlist_id>')
-def populate_watchlist(watchlist_id):
-    watchlist = Watchlist_Crypto.query.filter_by(watchlist_id=watchlist_id).all()
+# @watchlist_routes.route('/<int:watchlist_id>')
+# def populate_watchlist(watchlist_id):
+#     watchlist = Watchlist_Crypto.query.filter_by(watchlist_id=watchlist_id).all()
 
-    return {'cryptos': [item.to_dict()["crypto_id"] for item in watchlist]}
+#     return {'cryptos': [item.to_dict()["crypto_id"] for item in watchlist]}

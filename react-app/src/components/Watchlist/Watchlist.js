@@ -4,24 +4,24 @@ import { getUserList } from "../../store/watchlist";
 import "./Watchlist.css";
 
 const Watchlist = () => {
-  const [input, setInput] = useState()
+  const [input, setInput] = useState();
   const listInput = useRef(null);
-  const dispatch = useDispatch()
-  const watchlists = useSelector(state => state.watchlist.watchlist)
-  const user = useSelector(state => state.session.user)
+  const dispatch = useDispatch();
+  const watchlists = useSelector((state) => state.watchlist.watchlist);
+  const user = useSelector((state) => state.session.user);
 
   useEffect(() => {
-    dispatch(getUserList(user.id))
-  }, [])
+    dispatch(getUserList(user.id));
+  }, []);
 
   const submit = (e) => {
     e.preventDefault();
   };
 
   const cancel = (e) => {
-    e.preventDefault()
-    listInput.current.classList.add("hidden")
-  }
+    e.preventDefault();
+    listInput.current.classList.add("hidden");
+  };
 
   const show = () => {
     listInput.current.classList.remove("hidden");
@@ -48,15 +48,29 @@ const Watchlist = () => {
           +
         </div>
       </div>
-      <form className="create-list hidden" ref={listInput} onSubmit={(e) => submit(e)}>
-        <input className="list-input" placeholder="List Name" onChange={(e) => setInput(e.target.value)} required />
+      <form
+        className="create-list hidden"
+        ref={listInput}
+        onSubmit={(e) => submit(e)}
+      >
+        <input
+          className="list-input"
+          placeholder="List Name"
+          onChange={(e) => setInput(e.target.value)}
+          required
+        />
         <div className="list-buttons">
-          <button onClick={(e) => cancel(e)}className="list-cancel">Cancel</button>
-          <button className="list-submit">
-            Create List
+          <button onClick={(e) => cancel(e)} className="list-cancel">
+            Cancel
           </button>
+          <button className="list-submit">Create List</button>
         </div>
       </form>
+      <div className="watchlists">
+        {watchlists && watchlists?.map((w) => (
+          <div>{w.name}</div>
+        ))}
+      </div>
     </div>
   );
 };
