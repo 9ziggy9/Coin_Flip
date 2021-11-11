@@ -16,7 +16,9 @@ class Watchlist(db.Model):
             "id": self.id,
             "name": self.name,
             "user_id": self.user_id,
+            "cryptos": [crypto.to_dict() for crypto in self.cryptocurrency]
         }
 
     user = db.relationship("User", back_populates="watchlist")
     cryptocurrency = db.relationship("Cryptocurrency", secondary=association_table, back_populates="watchlist")
+

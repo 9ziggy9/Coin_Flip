@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserList } from "../../store/watchlist";
+import { getUserList, updateUserList } from "../../store/watchlist";
 import "./Watchlist.css";
 
 const Watchlist = () => {
@@ -8,7 +8,7 @@ const Watchlist = () => {
   const listInput = useRef(null);
   const options = useRef(null);
   const dropdown = useRef(null);
-  const btn = useRef(null)
+  const btn = useRef(null);
   const dispatch = useDispatch();
   const watchlists = useSelector((state) => state.watchlist.watchlist);
   const user = useSelector((state) => state.session.user);
@@ -37,7 +37,7 @@ const Watchlist = () => {
       options.current.style.textDecoration = "underline";
       options.current.style.color = "rgb(255, 80, 0)";
     } else {
-      return
+      return;
     }
   };
 
@@ -45,7 +45,7 @@ const Watchlist = () => {
     useEffect(() => {
       const handleClick = (e) => {
         if (ref.current && !ref.current.contains(e.target)) {
-          console.log(ref.current.classList)
+          console.log(ref.current.classList);
           dropdown.current.classList.add("hidden");
           options.current.style.textDecoration = "none";
           options.current.style.color = "white";
