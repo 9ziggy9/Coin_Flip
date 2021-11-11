@@ -176,10 +176,18 @@
   color: rgb(255, 80, 0);
 }
 
+.watchlist-details-right {
+  display: flex;
+  flex-direction: row;
+  text-align: right;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
 .watchlist-options {
   margin-top: -10px;
   font-size: 24px;
-  margin-left: 80px;
   display: none;
   text-underline-offset: 5px;
   user-select: none;

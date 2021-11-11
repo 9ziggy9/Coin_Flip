@@ -1,13 +1,17 @@
 import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserList, newUserList, updateUserList } from "../../store/watchlist";
+import {
+  getUserList,
+  newUserList,
+  updateUserList,
+} from "../../store/watchlist";
 import "./Watchlist.css";
 
 const Watchlist = () => {
   const [input, setInput] = useState();
   const listInput = useRef(null);
-  const options = useRef(null);
-  const dropdown = useRef(null);
+  const options = useRef([]);
+  const dropdown = useRef([]);
   const btn = useRef(null);
   const dispatch = useDispatch();
   const watchlists = useSelector((state) => state.watchlist.watchlist);
@@ -22,10 +26,10 @@ const Watchlist = () => {
 
     const obj = {
       name: input,
-      user_id: user.id
-    }
+      user_id: user.id,
+    };
 
-    dispatch(newUserList(obj)).then(() => dispatch(getUserList(user.id)))
+    dispatch(newUserList(obj)).then(() => dispatch(getUserList(user.id)));
   };
 
   const cancel = (e) => {
@@ -37,12 +41,12 @@ const Watchlist = () => {
     listInput.current.classList.remove("hidden");
   };
 
-  const showDropdown = () => {
-    if (options.current.style.display === "none") {
-      dropdown.current.classList.remove("hidden");
-      options.current.style.display = "flex";
-      options.current.style.textDecoration = "underline";
-      options.current.style.color = "rgb(255, 80, 0)";
+  const showDropdown = (i) => {
+    if (options.current[i].style.display === "none") {
+      dropdown.current[i].classList.remove("hidden");
+      options.current[i].style.display = "flex";
+      options.current[i].style.textDecoration = "underline";
+      options.current[i].style.color = "rgb(255, 80, 0)";
     } else {
       return;
     }
@@ -51,13 +55,14 @@ const Watchlist = () => {
   const RemoveOutside = (ref) => {
     useEffect(() => {
       const handleClick = (e) => {
-        if (ref.current && !ref.current.contains(e.target)) {
-          console.log(ref.current.classList);
-          dropdown.current.classList.add("hidden");
-          options.current.style.textDecoration = "none";
-          options.current.style.color = "white";
-          options.current.style.display = "none";
-        }
+        ref.current.forEach((r, i) => {
+          if (ref.current[i] && !ref.current[i].contains(e.target)) {
+            dropdown.current[i].classList.add("hidden");
+            options.current[i].style.textDecoration = "none";
+            options.current[i].style.color = "white";
+            options.current[i].style.display = "none";
+          }
+        });
       };
 
       document.addEventListener("mousedown", handleClick);
@@ -72,12 +77,14 @@ const Watchlist = () => {
 
   const hideList = (listId) => {
     const list = document.getElementById(`list-${listId}`);
+    const icon = document.getElementById(`open-${listId}`);
+
     if (!list.classList.contains("hidden")) {
       list.classList.add("hidden");
-      btn.current.innerText = "▼";
+      icon.innerText = "▼";
     } else {
       list.classList.remove("hidden");
-      btn.current.innerText = "▲";
+      icon.innerText = "▲";
     }
   };
 
@@ -123,28 +130,36 @@ const Watchlist = () => {
       </form>
       <div className="watchlists">
         {watchlists &&
-          watchlists?.map((w) => (
+          watchlists?.map((w, i) => (
             <div className="watchlist-card">
               <div className="watchlist-details">
-                <div className="watchlist-name">{w.name}</div>
-                <div className="watchlist-options-fill">
-                  <div
-                    className="watchlist-options"
-                    ref={options}
-                    onClick={showDropdown}
-                  >
-                    ...
-                  </div>
-                  <div className="watchlist-dropdown hidden" ref={dropdown}>
-                    <div className="watchlist-text">Test</div>
-                  </div>
+                <div className="watchlist-name">
+                  {w.name.slice(0, 16)}
+                  {w.name.length > 16 ? "..." : null}
                 </div>
-                <div
-                  className="watchlist-open"
-                  onClick={() => hideList(w.id)}
-                  ref={btn}
-                >
-                  {w?.cryptos?.length > 0 ? "▲" : "▼"}
+                <div className="watchlist-details-right">
+                  <div className="watchlist-options-fill">
+                    <div
+                      className="watchlist-options"
+                      ref={(el) => (options.current[i] = el)}
+                      onClick={() => showDropdown(i)}
+                    >
+                      ...
+                    </div>
+                    <div
+                      className="watchlist-dropdown hidden"
+                      ref={(el) => (dropdown.current[i] = el)}
+                    >
+                      <div className="watchlist-text">Test</div>
+                    </div>
+                  </div>
+                  <div
+                    className="watchlist-open"
+                    onClick={() => hideList(w.id)}
+                    id={`open-${w.id}`}
+                  >
+                    {w?.cryptos?.length > 0 ? "▲" : "▼"}
+                  </div>
                 </div>
               </div>
               <div className="watchlist-crypto-all" id={`list-${w.id}`}>
