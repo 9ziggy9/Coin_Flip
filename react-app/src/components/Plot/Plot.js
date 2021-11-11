@@ -24,7 +24,7 @@ const SimPlot = () => {
     7.3
   ];
 
-  const test_sim = new Simulation(mock_history, () => log_normal());
+  const test_sim = new Simulation(mock_history, log_normal, 1, 1);
   test_sim.proceed();
 
   const [X, setDomain] = useState(test_sim.domain);

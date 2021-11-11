@@ -1,5 +1,7 @@
 export class Simulation {
-  constructor(history, fn=x=>x) {
+  constructor(history, fn, mu, sigma) {
+    this.mu = mu;
+    this.sigma = sigma;
     this.realtime = [...history];
     this.interval = this.realtime.length;
     this.fn = fn;
@@ -13,8 +15,9 @@ export class Simulation {
 
   proceed() {
     const uTime = Date.now()
+    const test = this.fn();
     this.realtime = [...this.realtime.slice(1),
-                     {time: uTime, price: this.fn(Math.floor(uTime / 1000))}];
+                     {time: uTime, price: this.fn(this.mu, this.sigma)}];
 
     this.domain = this.realtime.map(datapoint => datapoint.time);
     this.range = this.realtime.map(datapoint => datapoint.price);
@@ -48,16 +51,21 @@ export class LiveCrypto {
   }
 }
 
-export function gauss_boxmuller() {
+// This is the Box-Muller transform implemented in JavaScript. For a mean value
+// mu and standard deviation sigma, we transform as follows
+// https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
+export function gaussianNoise_boxmuller(mu, sigma) {
   let x = 0;
   let y = 0;
   while(x===0) x = Math.random();
   while(y===0) y = Math.random();
-  return Math.sqrt(-2.0 * Math.log(x)) * Math.cos(2.0 * Math.PI * y);
+  const magnitude = sigma * Math.sqrt(-2.0 * Math.log(x))
+  return magnitude * (Math.sqrt(-2.0 * Math.log(x)) * Math.cos(2.0 * Math.PI * y)) + mu;
 }
 
-export function log_normal() {
-  return Math.exp(gauss_boxmuller());
+// By definition, a variable has a lognormal distribution if
+export function log_normal(mu, sigma) {
+  return Math.exp(gaussianNoise_boxmuller(mu, sigma));
 }
 
 export const rand_walk = x => {
