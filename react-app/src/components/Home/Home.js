@@ -10,7 +10,6 @@ const Home = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
     const portfolios = useSelector(state => Object.values(state.portfolio))
-    console.log(user.cash)
 
     useEffect(() => {
         dispatch(userPortfolios(user?.id))
@@ -72,7 +71,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="home_container_right">
-                    
+
                 </div>
             </div>
             )
