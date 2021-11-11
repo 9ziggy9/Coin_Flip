@@ -4,9 +4,9 @@ import Plot from 'react-plotly.js';
 import { useSelector } from 'react-redux';
 import { Redirect } from "react-router";
 // Simulation class
-import { Simulation } from "../../utilities/simulation.js";
+import { Simulation } from "../../utilities/statistics.js";
 // Transformation from uniform -> normal distributions
-import { gauss_boxmuller } from "../../utilities/simulation.js";
+import { gauss_boxmuller } from "../../utilities/statistics.js";
 // Finnhub API
 
 const HelloPlot = () => {
