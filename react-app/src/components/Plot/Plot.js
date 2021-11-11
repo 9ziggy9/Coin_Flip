@@ -28,7 +28,7 @@ const SimPlot = () => {
   ];
 
   // mu = mean value; sigma = standard deviation
-  const test_sim = new Simulation(mock_history, log_normal, 200, 0.25);
+  const test_sim = new Simulation(mock_history, log_normal, 200, 2);
   test_sim.proceed();
 
   const [X, setDomain] = useState(test_sim.domain);
