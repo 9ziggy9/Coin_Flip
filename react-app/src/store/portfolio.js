@@ -35,6 +35,8 @@ export const userPortfolios = (userId) => async (dispatch) => {
     dispatch(getPortfolios(portfoliosData.portfolio));
 }
 
+
+
 export const newPortfolio = (newPorfolioObj) => async (dispatch) => {
     const { userId, cryptoId, quantity, purchasePrice } = newPorfolioObj;
     const res = await fetch(`/api/portfolios/${userId}`, {
