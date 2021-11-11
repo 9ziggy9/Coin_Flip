@@ -27,6 +27,14 @@ const SimPlot = () => {
     {time: 1636664223, price: 12.22},
   ];
 
+  const data = async () => {
+    const res = await fetch("/api/cryptocurrencies/prices");
+    const d = await res.json();
+    console.log(d);
+  };
+
+  useEffect(() => {data()}, []);
+
   // mu = mean value; sigma = standard deviation
   const test_sim = new Simulation(mock_history, log_normal, 200, 2);
   test_sim.proceed();
@@ -36,7 +44,7 @@ const SimPlot = () => {
 
   useEffect(() => {
     const intervalPointer = setInterval(() => {
-      console.log(test_sim.proceed());
+      test_sim.proceed();
       setDomain(test_sim.domain);
       setRange(test_sim.range);
     }, 4000)
