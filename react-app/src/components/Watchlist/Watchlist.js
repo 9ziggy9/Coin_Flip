@@ -57,6 +57,7 @@ const Watchlist = () => {
           className="list-input"
           placeholder="List Name"
           onChange={(e) => setInput(e.target.value)}
+          value={input}
           required
         />
         <div className="list-buttons">
