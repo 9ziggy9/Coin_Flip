@@ -92,6 +92,7 @@ span {
 }
 
 .account-dropdown {
+  z-index: 1;
   position: absolute;
   background-color: rgb(42, 47, 51);
   width: 284px;
