@@ -11,6 +11,7 @@ from .api.auth_routes import auth_routes
 from .api.transaction_routes import transaction_routes
 from .api.cryptocurrency_routes import cryptocurrency_routes
 from .api.portfolio_routes import portfolio_routes
+from .api.watchlist_routes import watchlist_routes
 
 from .seeds import seed_commands
 
@@ -37,6 +38,8 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(transaction_routes, url_prefix='/api/transactions')
 app.register_blueprint(cryptocurrency_routes, url_prefix='/api/cryptocurrencies')
 app.register_blueprint(portfolio_routes, url_prefix='/api/portfolios')
+app.register_blueprint(watchlist_routes, url_prefix='/api/watchlist')
+
 db.init_app(app)
 Migrate(app, db)
 
