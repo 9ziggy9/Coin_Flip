@@ -9,7 +9,7 @@ import { Simulation } from "../../utilities/statistics.js";
 import { gauss_boxmuller } from "../../utilities/statistics.js";
 // Finnhub API
 
-const HelloPlot = () => {
+const SimPlot = () => {
   const user = useSelector(state => state.session.user)
 
   const rand_walk = x => {
@@ -42,9 +42,7 @@ const HelloPlot = () => {
   if(user) {
 
     const layout = {
-      autosize: false,
-      margin: {autoexpand: true},
-      height: 'auto',
+      autosize: true,
       plot_bgcolor: '#303030',
       paper_bgcolor: '#303030',
     };
@@ -62,7 +60,8 @@ const HelloPlot = () => {
           {type: 'contour', x: X, y: Y},
         ]}
         layout={layout}
-        style={{'width':'100%'}}
+        style={{'width':'100%', height:'100%'}}
+        useResizeHandler = {true}
       />
     )
   } else {
@@ -70,4 +69,4 @@ const HelloPlot = () => {
   }
 }
 
-export default HelloPlot
+export default SimPlot

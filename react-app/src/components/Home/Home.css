@@ -1,5 +1,4 @@
 .home_main {
-    background-color:teal;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -7,7 +6,6 @@
 
 .home_container_left{
     /* sponge 1 */
-    background-color:blue;
     height: 100%;
     width: 720px;
     margin-right: 2.15em;
@@ -56,7 +54,6 @@
     /* sponge 3 */
     width:100%;
     height:100%;
-    background-color: pink;
 }
 
 .buying_power_container {
@@ -135,7 +132,6 @@
 }
 
 .total_cash_container {
-    background-color:green;
 }
 
 .plotly_placeholder {
