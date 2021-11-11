@@ -6,7 +6,7 @@ const getUserWatchlist = (watchlist) => ({
 });
 
 export const getUserList = (userId) => async (dispatch) => {
-  const res = await fetch(`/api/watchlist/${userId}`);
+  const res = await fetch(`/api/watchlist/user/${userId}`);
   if (res.ok) {
     const data = await res.json();
     dispatch(getUserWatchlist(data));

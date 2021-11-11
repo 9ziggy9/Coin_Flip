@@ -68,9 +68,7 @@ const Watchlist = () => {
         </div>
       </form>
       <div className="watchlists">
-        {watchlists && watchlists?.map((w) => (
-          <div>{w.name}</div>
-        ))}
+        {watchlists && watchlists?.map((w) => <div>{w.name}</div>)}
       </div>
     </div>
   );
