@@ -35,6 +35,7 @@ const PurchaseCryptoPage = () => {
         })
         document.getElementById(history).style.color = "orangered"
     }
+    
     const handleSubmit = async (e) => {
         e.preventDefault()
 
