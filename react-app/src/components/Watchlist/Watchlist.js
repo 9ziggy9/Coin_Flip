@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserList, updateUserList } from "../../store/watchlist";
+import { getUserList, newUserList, updateUserList } from "../../store/watchlist";
 import "./Watchlist.css";
 
 const Watchlist = () => {
@@ -19,6 +19,13 @@ const Watchlist = () => {
 
   const submit = (e) => {
     e.preventDefault();
+
+    const obj = {
+      name: input,
+      user_id: user.id
+    }
+
+    dispatch(newUserList(obj)).then(() => dispatch(getUserList(user.id)))
   };
 
   const cancel = (e) => {
@@ -67,10 +74,10 @@ const Watchlist = () => {
     const list = document.getElementById(`list-${listId}`);
     if (!list.classList.contains("hidden")) {
       list.classList.add("hidden");
-      btn.current.innerText = "▼"
+      btn.current.innerText = "▼";
     } else {
       list.classList.remove("hidden");
-      btn.current.innerText = "▲"
+      btn.current.innerText = "▲";
     }
   };
 
@@ -146,7 +153,7 @@ const Watchlist = () => {
                     <div className="watchlist-crypto-name">{crypto.symbol}</div>
                     <div className="watchlist-crypto-right">
                       <div className="watchlist-crypto-price">
-                        ${crypto.price.toFixed(2).toLocaleString()}
+                        ${crypto.price.toLocaleString()}
                       </div>
                       <div className="watchlist-crypto-change">0.25%</div>
                     </div>
