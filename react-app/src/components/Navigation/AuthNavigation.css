@@ -104,6 +104,7 @@ span {
   text-align: left;
   margin-right: 50px;
   margin-top: 10px;
+  z-index: 50;
 }
 
 .account-word {

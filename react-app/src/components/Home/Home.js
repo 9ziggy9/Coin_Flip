@@ -23,7 +23,7 @@ const Home = () => {
                 <div className="home_container_left">
                     <div className="total_cash_container">
                         <div className="cash_container">
-                            <h2 className="cash">{`$${user.cash}`}</h2>
+                            <h2 className="cash">{`$${user.cash.toLocaleString()}`}</h2>
                         </div>
                         <div className="today_tracker">
                             <h5 className="today_values">$0.00 (0.00%)</h5>
@@ -45,7 +45,7 @@ const Home = () => {
                         </div>
                         <div className="buying_power">
                             <h4 className="buying_power_label">
-                                {`$${user.cash}`}
+                                {`$${user.cash.toLocaleString()}`}
                             </h4>
                         </div>
                     </div>

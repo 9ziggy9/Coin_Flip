@@ -65,7 +65,7 @@
 }
 
 .watch-list-right:hover {
-  color: rgba(42, 233, 64, 0.872);
+  color: rgb(255, 80, 0);
 }
 
 .create-list {
@@ -136,4 +136,63 @@
   border-radius: 4px;
   font-weight: 600;
   color: rgb(48, 48, 48);
+}
+
+.watchlist-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.watchlist-details {
+  width: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  cursor: pointer;
+  align-items: center;
+}
+
+.watchlist-details:hover {
+  background-color: rgba(59, 66, 71, 0.966);
+}
+
+.watchlist-details:hover .watchlist-options {
+  background-color: rgba(59, 66, 71, 0.966);
+  display: flex !important;
+}
+
+.watchlist-open {
+  font-size: 24px;
+  margin-bottom: -5px;
+}
+
+.watchlist-open:hover {
+  color: rgb(255, 80, 0);
+}
+
+.watchlist-options {
+  margin-top: -10px;
+  font-size: 24px;
+  margin-left: 80px;
+  display: none;
+  text-underline-offset: 5px;
+}
+
+.watchlist-options:hover {
+  color: rgb(255, 80, 0) !important;
+}
+
+.watchlist-dropdown {
+  position: absolute;
+  background-color: rgb(42, 47, 51);
+  width: 168px;
+  height: 180px;
+  border-radius: 4px;
+  font-size: 14px;
+  right: 0;
+  text-align: left;
+  margin-right: 40px;
+  margin-top: 3px;
+  box-shadow: 0px 12px 24px black;
 }
