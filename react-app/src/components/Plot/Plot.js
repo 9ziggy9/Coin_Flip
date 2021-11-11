@@ -45,7 +45,10 @@ const SimPlot = () => {
       autosize: true,
       plot_bgcolor: 'black',
       paper_bgcolor: 'black',
-    };
+      scene: [{align:'left', bordercolor:'green',
+               font: {color:'white'},
+               text:'HELLO WORLD'}]
+    }
 
     return (
       <Plot
@@ -61,7 +64,7 @@ const SimPlot = () => {
         ]}
         layout={layout}
         style={{'width':'100%', height:'100%'}}
-        useResizeHandler = {true}
+        useResizeHandler={true}
       />
     )
   } else {
