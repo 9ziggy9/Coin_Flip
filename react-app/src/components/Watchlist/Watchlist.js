@@ -1,9 +1,18 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserList } from "../../store/watchlist";
 import "./Watchlist.css";
 
 const Watchlist = () => {
   const [input, setInput] = useState()
   const listInput = useRef(null);
+  const dispatch = useDispatch()
+  const watchlists = useSelector(state => state.watchlist.watchlist)
+  const user = useSelector(state => state.session.user)
+
+  useEffect(() => {
+    dispatch(getUserList(user.id))
+  }, [])
 
   const submit = (e) => {
     e.preventDefault();
@@ -39,11 +48,11 @@ const Watchlist = () => {
           +
         </div>
       </div>
-      <form className="create-list hidden" ref={listInput}>
+      <form className="create-list hidden" ref={listInput} onSubmit={(e) => submit(e)}>
         <input className="list-input" placeholder="List Name" onChange={(e) => setInput(e.target.value)} required />
         <div className="list-buttons">
           <button onClick={(e) => cancel(e)}className="list-cancel">Cancel</button>
-          <button onClick={(e) => submit(e)} className="list-submit">
+          <button className="list-submit">
             Create List
           </button>
         </div>
