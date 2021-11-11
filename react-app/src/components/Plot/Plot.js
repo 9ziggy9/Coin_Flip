@@ -6,7 +6,7 @@ import { Redirect } from "react-router";
 // Simulation class
 import { Simulation } from "../../utilities/statistics.js";
 // Transformation from uniform -> normal distributions
-import { gaussian } from "../../utilities/statistics.js";
+import { log_normal } from "../../utilities/statistics.js";
 // Finnhub API
 
 const SimPlot = () => {
@@ -24,7 +24,7 @@ const SimPlot = () => {
     7.3
   ];
 
-  const test_sim = new Simulation(mock_history, x => gaussian(x));
+  const test_sim = new Simulation(mock_history, () => log_normal());
   test_sim.proceed();
 
   const [X, setDomain] = useState(test_sim.domain);
@@ -32,7 +32,7 @@ const SimPlot = () => {
 
   useEffect(() => {
     const intervalPointer = setInterval(() => {
-      test_sim.proceed();
+      console.log(test_sim.proceed());
       setDomain(test_sim.domain);
       setRange(test_sim.range);
     }, 1000)
