@@ -35,9 +35,7 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="porfolio_chart_container">
-                        <div className="plotly_placeholder">
                           <Plot />
-                        </div>
                     </div>
                     <div className="buying_power_container">
                         <div className="buying_power_label_container">

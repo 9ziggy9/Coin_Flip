@@ -1,12 +1,13 @@
 .home_main {
+    background-color:teal;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
 .home_container_left{
-    display: flex;
-    flex-direction: column;
+    /* sponge 1 */
+    background-color:blue;
     height: 100%;
     width: 70%;
 }
@@ -51,12 +52,10 @@
 }
 
 .porfolio_chart_container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 13.5em;
-    width: 50em;
-    border-bottom: 2px solid rgba(42, 233, 64, 0.872);
+    /* sponge 3 */
+    width:100%;
+    height:100%;
+    background-color: pink;
 }
 
 .buying_power_container {
@@ -83,5 +82,23 @@
 }
 
 .home_container_right{
+    background-color:orange;
     display: flex;
 }
+
+/* Ziggy was here */
+/* sponge 2 */
+.total_cash_container {
+    background-color:green;
+}
+
+.plotly_placeholder {
+    width: 100%;
+    height: 100%;
+}
+
+.news_container {
+    background-color:white;
+}
+
+/* Ziggy was here */

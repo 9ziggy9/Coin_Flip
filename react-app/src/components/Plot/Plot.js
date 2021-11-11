@@ -40,6 +40,15 @@ const HelloPlot = () => {
   }, [setDomain])
 
   if(user) {
+
+    const layout = {
+      autosize: false,
+      margin: {autoexpand: true},
+      height: 'auto',
+      plot_bgcolor: '#303030',
+      paper_bgcolor: '#303030',
+    };
+
     return (
       <Plot
         data={[
@@ -52,7 +61,8 @@ const HelloPlot = () => {
           },
           {type: 'contour', x: X, y: Y},
         ]}
-        layout={{autosize: true,  title:'Gauss Coin'}}
+        layout={layout}
+        style={{'width':'100%'}}
       />
     )
   } else {
