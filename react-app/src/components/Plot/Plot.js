@@ -4,16 +4,16 @@ import Plot from 'react-plotly.js';
 import { useSelector } from 'react-redux';
 import { Redirect } from "react-router";
 // Simulation class
-import { Simulation } from "../../utilities/simulation.js";
+import { Simulation } from "../../utilities/statistics.js";
 // Transformation from uniform -> normal distributions
-import { gauss_boxmuller } from "../../utilities/simulation.js";
+import { gauss_boxmuller } from "../../utilities/statistics.js";
 // Finnhub API
 // const finnhub = require('finnhub');
 // const api_key = finnhub.ApiClient.instance.authentications['api_key'];
 // api_key.apiKey = 'sandbox_c65h2eqad3i9pn79qhkg';
 // const finnhubClient = new finnhub.DefaultApi();
 
-const HelloPlot = () => {
+const SimPlot = () => {
   const user = useSelector(state => state.session.user)
 
   const rand_walk = x => {
@@ -39,11 +39,21 @@ const HelloPlot = () => {
       test_sim.proceed();
       setDomain(test_sim.domain);
       setRange(test_sim.range);
-    }, 2000)
+    }, 1000)
     return () => clearInterval(intervalPointer);
   }, [setDomain])
 
   if(user) {
+
+    const layout = {
+      autosize: true,
+      plot_bgcolor: 'black',
+      paper_bgcolor: 'black',
+      scene: [{align:'left', bordercolor:'green',
+               font: {color:'white'},
+               text:'HELLO WORLD'}]
+    }
+
     return (
       <Plot
         data={[
@@ -51,12 +61,15 @@ const HelloPlot = () => {
             x: X,
             y: Y,
             type: 'scatter',
+            showlegend: true,
+            legendgrouptitle: {font: {color: 'white'}, text: 'hello world'},
             mode: 'lines+markers',
             marker: {color: 'green'},
           },
-          {type: 'contour', x: X, y: Y},
         ]}
-        layout={{width: 1200, height: 800, title: 'Gauss Coin'}}
+        layout={layout}
+        style={{'width':'100%', height:'100%'}}
+        useResizeHandler={true}
       />
     )
   } else {
@@ -64,4 +77,4 @@ const HelloPlot = () => {
   }
 }
 
-export default HelloPlot
+export default SimPlot

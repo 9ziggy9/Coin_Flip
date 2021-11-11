@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import session from './session'
 import crypto from './crypto'
 import portfolio from './portfolio'
+import watchlist from './watchlist'
 
 const rootReducer = combineReducers({
   session,
   crypto,
-  portfolio
+  portfolio,
+  watchlist
 });
 
 

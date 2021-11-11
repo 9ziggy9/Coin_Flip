@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db
+from app.models import User, db, Watchlist
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -69,6 +69,12 @@ def sign_up():
             cash=0
         )
         db.session.add(user)
+        db.session.commit()
+
+        new_user = User.query.filter_by(email=form.data['email']).first().to_dict()
+        watchlist = Watchlist(name="My First List", user_id=new_user["id"])
+
+        db.session.add(watchlist)
         db.session.commit()
         login_user(user)
         return user.to_dict()
