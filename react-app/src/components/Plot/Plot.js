@@ -43,8 +43,8 @@ const SimPlot = () => {
 
     const layout = {
       autosize: true,
-      plot_bgcolor: '#303030',
-      paper_bgcolor: '#303030',
+      plot_bgcolor: 'black',
+      paper_bgcolor: 'black',
     };
 
     return (
@@ -57,7 +57,7 @@ const SimPlot = () => {
             mode: 'lines+markers',
             marker: {color: 'green'},
           },
-          {type: 'contour', x: X, y: Y},
+          {type: 'bar', x: X, y: Y},
         ]}
         layout={layout}
         style={{'width':'100%', height:'100%'}}
