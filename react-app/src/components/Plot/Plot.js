@@ -35,7 +35,7 @@ const SimPlot = () => {
       test_sim.proceed();
       setDomain(test_sim.domain);
       setRange(test_sim.range);
-    }, 2000)
+    }, 1000)
     return () => clearInterval(intervalPointer);
   }, [setDomain])
 
@@ -57,10 +57,11 @@ const SimPlot = () => {
             x: X,
             y: Y,
             type: 'scatter',
+            showlegend: true,
+            legendgrouptitle: {font: {color: 'white'}, text: 'hello world'},
             mode: 'lines+markers',
             marker: {color: 'green'},
           },
-          {type: 'bar', x: X, y: Y},
         ]}
         layout={layout}
         style={{'width':'100%', height:'100%'}}
