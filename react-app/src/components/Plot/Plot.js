@@ -11,8 +11,20 @@ import { gaussian } from "../../utilities/statistics.js";
 
 const SimPlot = () => {
   const user = useSelector(state => state.session.user)
+  const mock_history = [
+    12.22,
+    13.45,
+    14.87,
+    11.24,
+    13.10,
+    12.07,
+    10.88,
+    9.10,
+    8.2,
+    7.3
+  ];
 
-  const test_sim = new Simulation(60, x => gaussian(x));
+  const test_sim = new Simulation(mock_history, x => gaussian(x));
   test_sim.proceed();
 
   const [X, setDomain] = useState(test_sim.domain);

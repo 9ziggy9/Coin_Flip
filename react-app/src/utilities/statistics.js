@@ -1,10 +1,10 @@
 export class Simulation {
-  constructor(interval,fn=x=>x) {
+  constructor(history, fn=x=>x) {
     this.start = 0;
-    this.interval = interval;
+    this.interval = history.length;
     this.fn = fn;
-    this.domain = [...Array(interval).keys()];
-    this.range = [];
+    this.domain = [...Array(this.interval).keys()];
+    this.range = [...history];
   }
 
   map_domain(domain) {
@@ -12,8 +12,6 @@ export class Simulation {
   }
 
   proceed() {
-    if(this.start === 0) this.range = this.map_domain(this.domain);
-
     const live = this.range[this.range.length-1];
 
     const domain = [];
@@ -41,8 +39,6 @@ export class LiveCrypto {
   }
 
   proceed() {
-    if(this.start === 0) this.range = this.domain;
-
     const domain = [];
 
     for(let x = this.start; x < this.interval; x++)
