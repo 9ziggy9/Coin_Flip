@@ -5,8 +5,7 @@
 }
 
 .home_container_left{
-    display: flex;
-    flex-direction: column;
+    /* sponge 1 */
     height: 100%;
     width: 720px;
     margin-right: 2.15em;
@@ -52,12 +51,9 @@
 }
 
 .porfolio_chart_container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 13.5em;
-    width: 100%;
-    border-bottom: 2px solid rgba(42, 233, 64, 0.872);
+    /* sponge 3 */
+    width:100%;
+    height:100%;
 }
 
 .buying_power_container {
@@ -135,6 +131,18 @@
     height: 2em;
 }
 
+.total_cash_container {
+}
+
+.plotly_placeholder {
+    width: 100%;
+    height: 100%;
+}
+
+.news_container {
+    background-color:white;
+}
+
 .add_funds_button_text{
     font-size: 13px;
     color:rgba(38,208,43,1)
@@ -172,4 +180,3 @@
 .news_label {
     margin-left: 7px;
 }
-
