@@ -25,6 +25,9 @@ const Home = () => {
         setPrice(d.price[coin].usd);
     };
 
+    //NOTE: API calls seemed to have been stacking up, 8 seconds is an additional
+    // security measure. Simulating prices still seems relevant.
+
     useEffect(() => {const pInterval = setInterval(() => data(coin), 8000);
                      return () => clearInterval(pInterval)}, []);
 
