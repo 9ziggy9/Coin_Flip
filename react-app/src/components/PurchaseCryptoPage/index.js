@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import "./PurchaseCryptoPage.css"
 // import { getOneCryptocurrency, getAllCryptocurrency } from "../../store/purchaseCrypto";
 import { getOneCrypto } from "../../store/crypto";
-import { userPortfolios, changePortfolio } from "../../store/portfolio";
+import { userPortfolios, changePortfolio, newPortfolio } from "../../store/portfolio";
 
 
 const PurchaseCryptoPage = () => {
@@ -12,12 +12,12 @@ const PurchaseCryptoPage = () => {
     const currentUser = useSelector((state) => state.session.user);
     const history = useHistory();
     const { pathname } = history.location;
-    const uniqueCryptoId = pathname.split("/")[2]
+    const uniqueCryptoId = parseInt(pathname.split("/")[2])
     let cryptoPortfolio;
     let ports;
 
     const [transaction, setTransaction] = useState("purchase")
-    const [amount, setAmount] = useState(0)
+    let [amount, setAmount] = useState(0)
     const [loaded, setLoaded] = useState(false)
     const [textColor, setTextColor] = useState("white")
     const [price, setPrice] = useState(0)
@@ -28,16 +28,17 @@ const PurchaseCryptoPage = () => {
     useEffect(() => {
         if (singleCrypto)
             setPrice(singleCrypto[0]?.price)
-    })
+    },[])
 
     useEffect(() => {
         if (userId) {
             dispatch(userPortfolios(userId))
         }
-    })
+    },[dispatch])
 
-    ports = useSelector((state) => state.session.portfolios)
+    ports = useSelector((state) => state.portfolio)
     console.log(ports)
+
 
     const colorChange = (history) => {
         document.querySelectorAll(".hisButt").forEach((button) => {
@@ -48,29 +49,45 @@ const PurchaseCryptoPage = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
+        let hasPortfolio = false;
+        let portfolioId
+        let currentAmount = 0;
+
+        for (const portfolio in ports) {
+            if (ports[portfolio].crypto_id === uniqueCryptoId) {
+                portfolioId = ports[portfolio].id;
+                currentAmount = ports[portfolio].quantity
+                hasPortfolio = true;
+            }
+        }
+
+        amount = parseInt(amount)
 
         if (transaction === "sell") {
             amount = amount * -1;
         }
 
+        amount = currentAmount + amount;
 
         const newTransaction = {
             userId,
-            uniqueCryptoId,
-            amount,
+            cryptoId: uniqueCryptoId,
+            quantity: amount,
             purchasePrice: price
-
         }
         console.log(newTransaction)
-        await dispatch(changePortfolio(newTransaction))
+
+        if (hasPortfolio) {
+            await dispatch(changePortfolio(newTransaction))
+        } else {
+            await dispatch(newPortfolio(newTransaction))
+        }
 
     }
 
     const singleCrypto = useSelector(state => {
         return state.crypto?.getOneCrypto;
     })
-
-
 
     useEffect(() => {
         dispatch(getOneCrypto(uniqueCryptoId))
