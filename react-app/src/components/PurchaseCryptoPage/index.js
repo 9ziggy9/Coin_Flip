@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import "./PurchaseCryptoPage.css"
 // import { getOneCryptocurrency, getAllCryptocurrency } from "../../store/purchaseCrypto";
 import { getOneCrypto } from "../../store/crypto";
-import { changePortfolio } from "../../store/portfolio";
+import { userPortfolios, changePortfolio } from "../../store/portfolio";
 
 
 const PurchaseCryptoPage = () => {
@@ -12,22 +12,32 @@ const PurchaseCryptoPage = () => {
     const currentUser = useSelector((state) => state.session.user);
     const history = useHistory();
     const { pathname } = history.location;
-    let historyButtons
+    const uniqueCryptoId = pathname.split("/")[2]
+    let cryptoPortfolio;
+    let ports;
 
     const [transaction, setTransaction] = useState("purchase")
-    const [amount, setAmount] = useState("")
+    const [amount, setAmount] = useState(0)
     const [loaded, setLoaded] = useState(false)
     const [textColor, setTextColor] = useState("white")
+    const [price, setPrice] = useState(0)
+    const [errors, setErrors] = useState([]);
 
-    // useEffect(() => {
-    //     historyButtons = document.querySelectorAll(".hisButt")
+    const userId = currentUser.id;
 
-    //     for (let i = 0; i < historyButtons.length; i++) {
-    //         historyButtons[i].addEventListener("click", function(e) {
-    //             historyButtons[i].color="orangered";
-    //         })
-    //     }
-    // })
+    useEffect(() => {
+        if (singleCrypto)
+            setPrice(singleCrypto[0]?.price)
+    })
+
+    useEffect(() => {
+        if (userId) {
+            dispatch(userPortfolios(userId))
+        }
+    })
+
+    ports = useSelector((state) => state.session.portfolios)
+    console.log(ports)
 
     const colorChange = (history) => {
         document.querySelectorAll(".hisButt").forEach((button) => {
@@ -35,92 +45,118 @@ const PurchaseCryptoPage = () => {
         })
         document.getElementById(history).style.color = "orangered"
     }
-    
-    const handleSubmit = async (e) => {
+
+    const onSubmit = async (e) => {
         e.preventDefault()
+
+        if (transaction === "sell") {
+            amount = amount * -1;
+        }
+
 
         const newTransaction = {
             userId,
-            transaction,
-            amount
-        }
+            uniqueCryptoId,
+            amount,
+            purchasePrice: price
 
+        }
+        console.log(newTransaction)
         await dispatch(changePortfolio(newTransaction))
+
     }
 
     const singleCrypto = useSelector(state => {
         return state.crypto?.getOneCrypto;
     })
 
-    const uniqueCryptoId = pathname.split("/")[2]
-    let userId;
+
 
     useEffect(() => {
         dispatch(getOneCrypto(uniqueCryptoId))
         .then(() => setLoaded(true))
     }, [dispatch, uniqueCryptoId])
 
+    useEffect(() => {
+        const errors = [];
+
+        if (isNaN(amount) || amount === "") {
+            errors.push("Please enter a number")
+        }
+
+        setErrors(errors)
+    }, [amount]);
+
     if (loaded) {
 
-    return (
-        <div className="pageContainer">
-            <div className="cryptoInfoContainer">
-                <div className="cryptoName">{singleCrypto[0]?.name}</div>
-                <div className="cryptoPrice">${singleCrypto[0]?.price.toLocaleString("en-US")}</div>
-            </div>
-            <div className="graph">
-                plot graph
-            </div>
-            <div className="graphHistorySelect">
-                <div className="graphButtonContainer">
-                    <button type="button" className="hisButt" id="1d" onClick={()=>colorChange("1d")} style={{color: textColor}}>1D</button>
-                    <button type="button" className="hisButt" id="1w" onClick={()=>colorChange("1w")} style={{color: textColor}}>1W</button>
-                    <button type="button" className="hisButt" id="1m" onClick={()=>colorChange("1m")} style={{color: textColor}}>1M</button>
-                    <button type="button" className="hisButt" id="1y" onClick={()=>colorChange("1y")} style={{color: textColor}}>1Y</button>
-                    <button type="button" className="hisButt" id="all" onClick={()=>colorChange("all")} style={{color: textColor}}>ALL</button>
+        return (
+            <div className="pageContainer">
+                <div className="cryptoInfoContainer">
+                    <div className="cryptoName">{singleCrypto[0]?.name}</div>
+                    <div className="cryptoPrice">${singleCrypto[0]?.price.toLocaleString("en-US")}</div>
                 </div>
-            </div>
-            <div className="formContainer">
-                <div className="purchaseOrSell" >
-                    <input
-                        className="purchase"
-                        type="radio"
-                        value="purchase"
-                        name="transaction"
-                        checked={transaction === "purchase"}
-                        onChange={(e) => setTransaction("purchase")}
-                    />
-                    Purchase
-                    <input
-                        className="sell"
-                        type="radio"
-                        value="sell"
-                        name="transaction"
-                        checked={transaction === "sell"}
-                        onChange={(e) => setTransaction("sell")}
-                    />
-                    Sell
-                    <input
-                        className="amount"
-                        name="amount"
-                        type="amount"
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
-                    />
+                <div className="graph">
+                    plot graph
                 </div>
-            </div>
-            <div className="about">About</div>
-            <hr className="hr"/>
-            <div className="aboutContainer">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget sem posuere, cursus magna vitae, dapibus ex. Praesent tincidunt porta auctor. Pellentesque vestibulum dui sed iaculis iaculis. Quisque sed magna mollis, commodo libero ac, tristique eros. Maecenas dapibus orci vitae interdum ultrices. Nam luctus lorem ligula, in iaculis metus scelerisque ac. Donec ac bibendum neque. Vivamus ut turpis vel libero vulputate lacinia sed at est. Pellentesque ultrices efficitur ligula non tristique. Pellentesque porta urna justo, venenatis fermentum dui lobortis vel. Curabitur et aliquet eros. Aenean pulvinar semper augue et mollis.
-            </div>
+                <div className="graphHistorySelect">
+                    <div className="graphButtonContainer">
+                        <button type="button" className="hisButt" id="1d" onClick={()=>colorChange("1d")} style={{color: textColor}}>1D</button>
+                        <button type="button" className="hisButt" id="1w" onClick={()=>colorChange("1w")} style={{color: textColor}}>1W</button>
+                        <button type="button" className="hisButt" id="1m" onClick={()=>colorChange("1m")} style={{color: textColor}}>1M</button>
+                        <button type="button" className="hisButt" id="1y" onClick={()=>colorChange("1y")} style={{color: textColor}}>1Y</button>
+                        <button type="button" className="hisButt" id="all" onClick={()=>colorChange("all")} style={{color: textColor}}>ALL</button>
+                    </div>
+                </div>
+                <form className="formContainer" onSubmit={onSubmit}>
+                    <div className="purchaseOrSell" >
+                        <input
+                            className="purchase"
+                            type="radio"
+                            value="purchase"
+                            name="transaction"
+                            checked={transaction === "purchase"}
+                            onChange={(e) => setTransaction("purchase")}
+                        />
+                        Purchase
+                        <input
+                            className="sell"
+                            type="radio"
+                            value="sell"
+                            name="transaction"
+                            checked={transaction === "sell"}
+                            onChange={(e) => setTransaction("sell")}
+                        />
+                        Sell
+                        <input
+                            className="amount"
+                            name="amount"
+                            type="amount"
+                            value={amount}
+                            placeholder="amount"
+                            onChange={(e) => setAmount(e.target.value)}
+                        />
+                    </div>
+                    <div className="subButtContainer">
+                        <button disabled={errors.length > 0} type="submit" className="submitButt"> Submit </button>
+                        <ul className="errors">
+                            {errors.map(error => (
+                                <li key={error}>{error}</li>
+                            ))}
+                        </ul>
+                    </div>
+                </form>
+                <div className="about">About</div>
+                <hr className="hr"/>
+                <div className="aboutContainer">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget sem posuere, cursus magna vitae, dapibus ex. Praesent tincidunt porta auctor. Pellentesque vestibulum dui sed iaculis iaculis. Quisque sed magna mollis, commodo libero ac, tristique eros. Maecenas dapibus orci vitae interdum ultrices. Nam luctus lorem ligula, in iaculis metus scelerisque ac. Donec ac bibendum neque. Vivamus ut turpis vel libero vulputate lacinia sed at est. Pellentesque ultrices efficitur ligula non tristique. Pellentesque porta urna justo, venenatis fermentum dui lobortis vel. Curabitur et aliquet eros. Aenean pulvinar semper augue et mollis.
+                </div>
 
-        </div>
-    )
-}
-else {
-    return null
-}
+            </div>
+        )
+    }
+    else {
+        return null
+    }
 }
 
 export default PurchaseCryptoPage;

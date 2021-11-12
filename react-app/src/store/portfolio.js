@@ -5,6 +5,8 @@ const NEW_PORTFOLIO = '/portfolios/newPortfolio'
 
 const UPDATE_PORTFOLIO = '/portfolios/updatePortfolio'
 
+const UPDATE_SINGLE_CRYTPO = "/portfolios/UPDATE_SINGLE_CRYPTO"
+
 // Action
 const getPortfolios = (portfolios) => {
     return {
@@ -23,6 +25,13 @@ const addPortfolio = (portfolios) => {
 const updatePortfolio = (portfolios) => {
     return {
         type: UPDATE_PORTFOLIO,
+        portfolios
+    }
+}
+
+const updateCrypto = (portfolios) => {
+    return {
+        type: UPDATE_SINGLE_CRYTPO,
         portfolios
     }
 }
@@ -69,11 +78,23 @@ export const changePortfolio = (updatedPortfolioObj) => async (dispatch) => {
     dispatch(updatePortfolio(portfolios));
 }
 
+// export const updateSingleCrypto = (userId) => async (dispatch) => {
+//     const response = await fetch(`/api/portfolios/${userId}`, {
+//         method: "PATCH",
+//         body: JSON.stringify(userId)
+//     });
+//     if (response.ok) {
+//         const data = await response.json();
+//         dispatch(updateCrypto(data))
+//         return data;
+//     }
+// }
+
 // Reducer function
 const portfolioReducer = (state = {}, action) => {
     let newState;
     switch(action.type) {
-        case GET_PORTFOLIOS || NEW_PORTFOLIO || UPDATE_PORTFOLIO:
+        case GET_PORTFOLIOS || NEW_PORTFOLIO || UPDATE_PORTFOLIO || UPDATE_SINGLE_CRYTPO:
             newState = {...state}
             action.portfolios.forEach(portfolio => {
                 newState[portfolio.id] = portfolio

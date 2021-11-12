@@ -1,5 +1,6 @@
 const GET_CRYPTO = "crypto/GET_CRYPTO";
-const SEARCH_CRYPTO = "crypto/SEARCH_CRYPTO"
+const SEARCH_CRYPTO = "crypto/SEARCH_CRYPTO";
+const GET_PRICES = "crypto/GET_PRICES";
 const LOAD_ONE = "crypto/LOAD_ONE"
 
 const getCrypto = (crypto) => ({
@@ -28,7 +29,6 @@ export const getAllCrypto = () => async (dispatch) => {
 
 export const getOneCrypto = (id) => async dispatch => {
   const response = await fetch(`/api/cryptocurrencies/${id}`);
-
   if (response.ok) {
       const cryptocurrencyDetail = await response.json();
       dispatch(load_one(cryptocurrencyDetail))
@@ -57,9 +57,11 @@ export default function reducer(state = initialState, action) {
     case GET_CRYPTO:
       return { ...state, crypto: action.crypto.cryptocurrency };
     case SEARCH_CRYPTO:
-      return {...state, searchRes: action.crypto.search};
+      return { ...state, searchRes: action.crypto.search };
+    case GET_PRICES:
+      return {...state, prices: action.prices.price}
     case LOAD_ONE:
-      return {...state, getOneCrypto: action.loadOneCrypto.k};
+      return {...state, getOneCrypto: action.loadOneCrypto.k}
     default:
       return state;
   }

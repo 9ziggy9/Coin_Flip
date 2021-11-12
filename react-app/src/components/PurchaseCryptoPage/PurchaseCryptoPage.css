@@ -72,14 +72,32 @@
     font-size: 16px;
 }
 
-.graphButtonContainer > *:hover {
+.hisButt:hover {
     color: orangered;
 }
 
 .about {
     margin-left: 10%;
-    font: "Microsoft Sans Serif";
+    font-family: "Microsoft Sans Serif";
     font-weight: bold;
     font-size: 30px;
     margin-top: 25px;
+}
+
+.submitButt {
+    width: 55px;
+    text-align: center;
+    font-family: "Microsoft Sans Serif";
+}
+
+.subButtContainer {
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+    margin-left: 10%;
+    margin-top: 10px;
+}
+
+.errors {
+    margin-top: 0px;
 }
