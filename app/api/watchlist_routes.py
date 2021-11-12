@@ -6,7 +6,7 @@ watchlist_routes = Blueprint('watchlist', __name__)
 
 @watchlist_routes.route('/user/<int:user_id>')
 def get_watchlist(user_id):
-    watchlist = Watchlist.query.filter_by(user_id=user_id).all()
+    watchlist = Watchlist.query.filter_by(user_id=user_id).order_by(Watchlist.id.asc()).all()
 
     return {'watchlists': [item.to_dict() for item in watchlist]}
 
