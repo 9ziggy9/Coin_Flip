@@ -2,15 +2,13 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import Plot from 'react-plotly.js';
 import { useSelector } from 'react-redux';
-import { Redirect } from "react-router";
 // Simulation class
-import {useMemo} from 'react';
 import { Simulation } from "../../utilities/statistics.js";
 // Transformation from uniform -> normal distributions
 import { log_normal } from "../../utilities/statistics.js";
 // Finnhub API
 
-const SimPlot = () => {
+export const SimPlot = () => {
   // const data = async () => {
   //   const res = await fetch("/api/cryptocurrencies/prices");
   //   const d = await res.json();
@@ -24,6 +22,7 @@ const SimPlot = () => {
 
   const test_sim = new Simulation([], log_normal, 200, 2);
 
+  const coin = 'bitcoin';
   const [X, setDomain] = useState(test_sim.domain);
   const [Y, setRange] = useState(test_sim.range);
 
@@ -77,4 +76,6 @@ const SimPlot = () => {
   }
 }
 
-export default SimPlot
+export const MarketPlot = ({price,coin}) => {
+  return (<><h2>hello market plot</h2></>);
+}

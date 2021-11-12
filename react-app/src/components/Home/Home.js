@@ -2,22 +2,24 @@ import { useState, useEffect } from "react"
 import { useSelector } from 'react-redux';
 import { Redirect } from "react-router";
 import { userPortfolios } from "../../store/portfolio";
-import Plot from "../Plot/Plot"
+import { SimPlot, MarketPlot } from "../Plot/Plot"
 import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
 import "./Home.css"
 
 
 const Home = () => {
-    const coin = 'bitcoin'
     const user = useSelector(state => state.session.user);
-    const start = useSelector(state => state.crypto.list);
+    const cryptos = useSelector(state => state.crypto.list);
     const portfolios = useSelector(state => Object.values(state.portfolio))
-    let [start_price] = start.filter(p => p.gecko === coin);
+    const [coin, setCoin] = useState('bitcoin');
+    const cryptoNames = new Set(cryptos.map(c => c.name.toLowerCase()));
+    // This var is solely a matter of convenience, it can be replaced once
+    // user selected coin is a possbility.
+    const hasCoin = cryptoNames.has(coin);
+    let [start_price] = hasCoin? cryptos.filter(p => p.gecko === coin) : 0;
     const [price, setPrice] = useState(start_price.price);
 
-    // This is important, if user is returning to /home and not entering
-    // authentication, crypto_list needs to be loaded back into state.
     const data = async (coin) => {
         const res = await fetch("/api/cryptocurrencies/prices");
         const d = await res.json();
@@ -52,7 +54,10 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="porfolio_chart_container">
-                          <Plot />
+                      {
+                          cryptoNames.has(coin) ?
+                            <MarketPlot price={price} coin={coin}/> : <SimPlot />
+                      }
                     </div>
                     <div className="buying_power_container">
                         <div className="buying_power_label_container">
