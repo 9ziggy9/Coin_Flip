@@ -77,5 +77,5 @@ export const SimPlot = () => {
 }
 
 export const MarketPlot = ({price,coin}) => {
-  return (<><h2>hello market plot</h2></>);
+  return (<><h2>{price}</h2></>);
 }

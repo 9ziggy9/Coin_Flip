@@ -14,10 +14,8 @@ const Home = () => {
     const portfolios = useSelector(state => Object.values(state.portfolio))
     const [coin, setCoin] = useState('bitcoin');
     const cryptoNames = new Set(cryptos.map(c => c.name.toLowerCase()));
-    // This var is solely a matter of convenience, it can be replaced once
-    // user selected coin is a possbility.
-    const hasCoin = cryptoNames.has(coin);
-    let [start_price] = hasCoin? cryptos.filter(p => p.gecko === coin) : 0;
+    let [start_price] = cryptos.filter(p => p.gecko === coin);
+    if(!cryptoNames.has(coin)) start_price = {price:0};
     const [price, setPrice] = useState(start_price.price);
 
     const data = async (coin) => {
@@ -42,7 +40,8 @@ const Home = () => {
                 <div className="home_container_left">
                   <div className="total_cash_container">
                         <div className="cash_container">
-                            <h2 className="cash">{`$${price}`}</h2>
+                            <div className="coin-title">{coin}</div>
+                            <div className="cash">{`$${price}`}</div>
                         </div>
                         <div className="today_tracker">
                             <h5 className="today_values">$0.00 (0.00%)</h5>
