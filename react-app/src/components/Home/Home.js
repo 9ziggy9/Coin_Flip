@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react"
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Redirect } from "react-router";
 import { userPortfolios } from "../../store/portfolio";
-import { getPrice } from "../../store/crypto";
 import Plot from "../Plot/Plot"
 import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
@@ -10,44 +9,39 @@ import "./Home.css"
 
 
 const Home = () => {
-    const dispatch = useDispatch();
-    const user = useSelector(state => state.session.user)
-    const crypto_list = useSelector(state => state.crypto.list)
-    const [indicator, setIndicator] = useState('indicator1');
+    const coin = 'bitcoin'
+    const user = useSelector(state => state.session.user);
+    const start = useSelector(state => state.crypto.list);
     const portfolios = useSelector(state => Object.values(state.portfolio))
+    let [start_price] = start.filter(p => p.gecko === coin);
+    const [price, setPrice] = useState(start_price.price);
 
     // This is important, if user is returning to /home and not entering
     // authentication, crypto_list needs to be loaded back into state.
-    useEffect(() => {
-    }, []);
+    const data = async (coin) => {
+        const res = await fetch("/api/cryptocurrencies/prices");
+        const d = await res.json();
+        console.log('hello');
+        setPrice(d.price[coin].usd);
+    };
 
-    let n = 1;
-    useEffect(() => {
-        const intervalPointer = setInterval(() => {
-            n++;
-            // NOTE: I think the issue is that perhaps one query that results in the
-            // the join table we are returning is counting as more than one?
-            console.log(`Request number ${n * 14}`)
-            // (async () => await dispatch(getPrice()))();
-            //
-            // NOTE: Debug proof of concept
-            if (indicator === 'indicator1') setIndicator('indicator2')
-            else setIndicator('indicator1')
-            //
-            console.log(crypto_list)
-        }, 4000)
-        return () => clearInterval(intervalPointer)
-    },[indicator])
+    //NOTE: API calls seemed to have been stacking up, 8 seconds is an additional
+    // security measure. Simulating prices still seems relevant.
+
+    useEffect(() => {const pInterval = setInterval(() => data(coin), 8000);
+                     return () => clearInterval(pInterval)}, []);
+
+    // const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
+    // const price = entry.price
 
     if (user) {
         return (
             <>
             <div className="home_main">
-              {/* total_cash_container */}
                 <div className="home_container_left">
-                  <div className={indicator}>
+                  <div className="total_cash_container">
                         <div className="cash_container">
-                            <h2 className="cash">{`$${user.cash.toLocaleString()}`}</h2>
+                            <h2 className="cash">{`$${price}`}</h2>
                         </div>
                         <div className="today_tracker">
                             <h5 className="today_values">$0.00 (0.00%)</h5>

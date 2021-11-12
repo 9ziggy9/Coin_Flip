@@ -9,11 +9,18 @@ export class Simulation {
   }
 
   initialize() {
-    return {domain: this.domain, range: this.range}
+    if (!this.realtime.length) {
+      const interval = 50;
+      const past = Date.now() - 1000*interval
+      this.domain = (()=>new Array(interval).fill(0))().map((_,i) => past + i*1000);
+      this.realtime = this.domain
+                          .map(d => ({time:d, price:this.fn(this.mu, this.sigma)}));
+    }
   }
 
   proceed() {
     const uTime = Date.now()
+
     this.realtime = [...this.realtime.slice(1),
                      {time: uTime, price: this.fn(this.mu, this.sigma)}];
 
@@ -36,6 +43,16 @@ export class Market {
     this.api_call = api_call;
     this.domain = this.realtime.map(datapoint => datapoint.time);
     this.range = this.realtime.map(datapoint => datapoint.price);
+  }
+
+  initialize() {
+    if (!this.realtime.length) {
+      const interval = 15;
+      const past = Date.now() - 1000*interval
+      this.domain = (()=>new Array(interval).fill(0))().map((_,i) => past + i*1000);
+      this.realtime = this.domain
+                          .map(d => ({time:d, price:0}));
+    }
   }
 
   proceed() {
