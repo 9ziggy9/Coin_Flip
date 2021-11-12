@@ -15,25 +15,19 @@ const Home = () => {
     const crypto_list = useSelector(state => state.crypto.list)
     const portfolios = useSelector(state => Object.values(state.portfolio))
 
-    useEffect(() => {
-        dispatch(userPortfolios(user?.id))
-    }, [dispatch]);
+    // This is important, if user is returning to /home and not entering
+    // authentication, crypto_list needs to be loaded back into state.
 
-    let i = 0;
     useEffect(() => {
         const intervalPointer = setInterval(() => {
-        i++;
-            if(i < 10) {
-                console.log(user);
-                console.log(`HELLO FROM ${i}, your UseEffect is working`);
-                console.log(crypto_list);
-            }
+            console.log(crypto_list)
         }, 4000)
-        return () => clearInterval(intervalPointer);
-    }, [dispatch])
+        return () => clearInterval(intervalPointer)
+    },[])
 
     if (user) {
         return (
+            <>
             <div className="home_main">
                 <div className="home_container_left">
                     <div className="total_cash_container">
@@ -73,7 +67,7 @@ const Home = () => {
                         </div>
                         <button type="button" className="add_funds_button">
                             <h4 className="add_funds_button_text">Add Funds</h4>
-                            </button>
+                        </button>
                     </div>
                         <div className="add_funds_static_nav">
                             <p><i className="arrow_left">⌃</i></p>
@@ -81,14 +75,14 @@ const Home = () => {
                             <p><i className="arrow_right">⌃</i></p>
                         </div>
                     <div className="news_container">
-                        <h2 className="news_label">News</h2>
-                        <News />
+                            <News />
                     </div>
                 </div>
                 <div className="home_container_right">
                     <Watchlist />
                 </div>
             </div>
+            </>
             )
         } else {
         return <Redirect to="/" />
