@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   deleteUserList,
+  editUserList,
   getUserList,
   newUserList,
   updateUserList,
@@ -159,7 +160,19 @@ const Watchlist = () => {
     }
   };
 
-  const submitEdit = () => {};
+  const editListName = (id) => {
+    const main = document.querySelector(`.list-drop-${id}`);
+    const edit = document.querySelector(`.edit-${id}`);
+
+    dispatch(editUserList(id, editInput)).then(() =>
+      dispatch(getUserList(user.id))
+    );
+
+    dropdown.current[id].classList.add("hidden");
+    main.classList.remove("hidden");
+    edit.classList.add("hidden");
+    setNum((old) => old + 1);
+  };
 
   return (
     <div className="watch-main">
@@ -265,13 +278,25 @@ const Watchlist = () => {
                       >
                         <input
                           className="watchlist-edit-input"
-                          onKeyPress={(e) => e.key === "Enter" && submitEdit()}
+                          onKeyPress={(e) =>
+                            e.key === "Enter" && showEditSettings(w.id)
+                          }
                           value={editInput}
                           onChange={(e) => setEditInput(e.target.value)}
                         />
                         <div className="edit-btns">
-                          <button className="list-edit-yes">Submit</button>
-                          <button className="list-edit-no" onClick={() => showEditSettings(w.id, w.name)}>Cancel</button>
+                          <button
+                            className="list-edit-yes"
+                            onClick={() => editListName(w.id)}
+                          >
+                            Submit
+                          </button>
+                          <button
+                            className="list-edit-no"
+                            onClick={() => showEditSettings(w.id)}
+                          >
+                            Cancel
+                          </button>
                         </div>
                       </div>
                       <div

@@ -43,7 +43,7 @@ def remove_list(watchlist_id):
 
     return {'msg': 'ok'}
 
-@watchlist_routes.route('/<int:watchlist_id>', method=['PUT'])
+@watchlist_routes.route('/<int:watchlist_id>', methods=['PUT'])
 def edit_list(watchlist_id):
     watchlist = Watchlist.query.filter_by(id=watchlist_id).one()
     watchlist.name = request.json['name']
