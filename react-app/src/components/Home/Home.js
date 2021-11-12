@@ -27,8 +27,8 @@ const Home = () => {
     //NOTE: API calls seemed to have been stacking up, 8 seconds is an additional
     // security measure. Simulating prices still seems relevant.
 
-    useEffect(() => {const pInterval = setInterval(() => data(coin), 8000);
-                     return () => clearInterval(pInterval)}, []);
+    // useEffect(() => {const pInterval = setInterval(() => data(coin), 8000);
+    //                  return () => clearInterval(pInterval)}, []);
 
     // const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
     // const price = entry.price
