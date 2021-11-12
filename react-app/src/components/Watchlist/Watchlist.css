@@ -232,3 +232,10 @@
   text-align: right !important;
   font-size: 13px;
 }
+
+.watchlist-text {
+  padding: 30px 30px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}

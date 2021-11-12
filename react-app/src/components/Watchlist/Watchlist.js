@@ -157,7 +157,7 @@ const Watchlist = () => {
                       className="watchlist-dropdown hidden"
                       ref={(el) => (dropdown.current[i] = el)}
                     >
-                      <div className="watchlist-text">Test</div>
+                      <div className="watchlist-text"><img src="https://img.icons8.com/material-outlined/24/ffffff/settings--v1.png"/> Edit</div>
                     </div>
                   </div>
                   <div
