@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   deleteUserList,
+  editUserList,
   getUserList,
   newUserList,
   updateUserList,
@@ -11,6 +12,7 @@ import "./Watchlist.css";
 const Watchlist = () => {
   const [num, setNum] = useState(0);
   const [input, setInput] = useState();
+  const [editInput, setEditInput] = useState("");
   const [imgUrl, setImgUrl] = useState(
     "https://img.icons8.com/material-outlined/24/ffffff/settings--v1.png"
   );
@@ -32,7 +34,7 @@ const Watchlist = () => {
     document.querySelectorAll(".watchlist-options").forEach((i) => {
       i.style.display = "none";
       i.style.textDecoration = "none";
-      i.style.color = "white"
+      i.style.color = "white";
     });
   }, [num]);
 
@@ -73,6 +75,16 @@ const Watchlist = () => {
     }
   };
 
+  const removal = (id) => {
+    const main = document.querySelector(`.list-drop-${id}`);
+    const del = document.querySelector(`.list-del-${id}`);
+    const edit = document.querySelector(`.edit-${id}`);
+
+    main.classList.remove("hidden");
+    del.classList.add("hidden");
+    edit.classList.add("hidden");
+  };
+
   const RemoveOutside = (ref) => {
     useEffect(() => {
       const handleClick = (e) => {
@@ -82,6 +94,7 @@ const Watchlist = () => {
             options.current[i].style.textDecoration = "none";
             options.current[i].style.color = "white";
             options.current[i].style.display = "none";
+            removal(i);
           }
         });
       };
@@ -130,6 +143,34 @@ const Watchlist = () => {
     dropdown.current[id].classList.add("hidden");
     main.classList.remove("hidden");
     del.classList.add("hidden");
+    setNum((old) => old + 1);
+  };
+
+  const showEditSettings = (id, name) => {
+    setEditInput(name);
+    const main = document.querySelector(`.list-drop-${id}`);
+    const edit = document.querySelector(`.edit-${id}`);
+
+    if (!main.classList.contains("hidden")) {
+      main.classList.add("hidden");
+      edit.classList.remove("hidden");
+    } else {
+      main.classList.remove("hidden");
+      edit.classList.add("hidden");
+    }
+  };
+
+  const editListName = (id) => {
+    const main = document.querySelector(`.list-drop-${id}`);
+    const edit = document.querySelector(`.edit-${id}`);
+
+    dispatch(editUserList(id, editInput)).then(() =>
+      dispatch(getUserList(user.id))
+    );
+
+    dropdown.current[id].classList.add("hidden");
+    main.classList.remove("hidden");
+    edit.classList.add("hidden");
     setNum((old) => old + 1);
   };
 
@@ -209,6 +250,7 @@ const Watchlist = () => {
                               "https://img.icons8.com/material-outlined/24/ffffff/settings--v1.png"
                             )
                           }
+                          onClick={() => showEditSettings(w.id, w.name)}
                         >
                           <img className="list-settings-img" src={imgUrl} />{" "}
                           Edit list
@@ -229,6 +271,32 @@ const Watchlist = () => {
                         >
                           <img className="list-settings-img" src={delUrl} />{" "}
                           Delete list
+                        </div>
+                      </div>
+                      <div
+                        className={`edit-watchlist-main edit-${w.id} hidden`}
+                      >
+                        <input
+                          className="watchlist-edit-input"
+                          onKeyPress={(e) =>
+                            e.key === "Enter" && showEditSettings(w.id)
+                          }
+                          value={editInput}
+                          onChange={(e) => setEditInput(e.target.value)}
+                        />
+                        <div className="edit-btns">
+                          <button
+                            className="list-edit-yes"
+                            onClick={() => editListName(w.id)}
+                          >
+                            Submit
+                          </button>
+                          <button
+                            className="list-edit-no"
+                            onClick={() => showEditSettings(w.id)}
+                          >
+                            Cancel
+                          </button>
                         </div>
                       </div>
                       <div

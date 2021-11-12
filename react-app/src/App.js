@@ -19,15 +19,14 @@ import Transactions from "./components/Transactions/Transaction";
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
-  const cryptos = useSelector((state) => state.crypto?.crypto);
 
   useEffect(() => {
     (async () => {
       await dispatch(authenticate());
-      setLoaded(true);
     })();
     (async () => {
       await dispatch(getAllCrypto())
+      setLoaded(true);
     })();
   }, [dispatch]);
 
@@ -46,7 +45,6 @@ function App() {
           <Splash />
         </Route>
         <Route path="/signup" exact={true}>
-          <NavBar />
           <SignUpForm />
         </Route>
         <ProtectedRoute path="/users" exact={true}>
@@ -61,7 +59,7 @@ function App() {
           <AuthNavigation />
           <Home />
         </ProtectedRoute>
-        <Route path="/purchaseCrypto/:id" exact={true}>
+        <Route path="/crypto/:id" exact={true}>
           <NavBar />
           <PurchaseCryptoPage />
         </Route>

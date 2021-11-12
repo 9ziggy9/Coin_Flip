@@ -68,7 +68,7 @@ const PurchaseCryptoPage = () => {
         }
 
         amount = currentAmount + amount;
-        
+
         const newTransaction = {
             userId,
             cryptoId: uniqueCryptoId,

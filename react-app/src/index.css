@@ -13,6 +13,7 @@ body {
 }
 
 .combined-bar {
+  color: black !important;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -81,6 +82,11 @@ body {
 .login:hover {
   color: rgb(119, 126, 196);
   cursor: pointer;
+}
+
+.landing {
+  color: black !important;
+  background-color: white !important;
 }
 
 .landing-top {
