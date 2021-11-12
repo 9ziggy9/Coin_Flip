@@ -70,14 +70,18 @@ def get_coins():
 
     all_cryptos = Cryptocurrency.query.order_by(Cryptocurrency.name.asc()).all()
 
-    price_list = [price[item]['usd'] for item in price]
+    price_list = [{item: price[item]['usd']} for item in price]
 
     crypto_list = [crypto.to_dict() for crypto in all_cryptos]
 
     for crypto in crypto_list:
         one_crypto = Cryptocurrency.query.filter_by(id=crypto['id']).one()
-        one_crypto.price = price_list[crypto_list.index(crypto)]
-        db.session.commit()
+        for item in price_list:
+            non_list = list(item.keys())
+            if non_list[0] == crypto['gecko']:
+                non_list2 = list(item.values())
+                one_crypto.price = non_list2[0]
+                db.session.commit()
 
     return {"price": price}
 
