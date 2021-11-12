@@ -243,6 +243,7 @@
   align-items: center;
   font-weight: 600;
   gap: 10px;
+  user-select: none;
 }
 
 .watchlist-text:hover,
@@ -253,6 +254,7 @@
 .list-settings-img {
   height: 25px;
   width: 25px;
+  user-select: none;
 }
 
 .watchlist-text-2 {
@@ -261,6 +263,7 @@
   align-items: center;
   font-weight: 600;
   gap: 10px;
+  user-select: none;
 }
 
 .watchlist-text-2-confirmation {
@@ -312,4 +315,8 @@
   flex-direction: column;
   justify-content: center;
   gap: 20px;
+}
+
+.hidden {
+  display: none !important;
 }

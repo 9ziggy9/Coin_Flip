@@ -34,3 +34,5 @@ def add_crypto(watchlist_id):
     db.session.commit()
 
     return {'msg': 'ok'}
+
+@watchlist_routes.route('/<int:watchlist_id>', methods=['DELETE'])
