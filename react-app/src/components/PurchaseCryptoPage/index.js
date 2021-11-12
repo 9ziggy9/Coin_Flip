@@ -7,6 +7,7 @@ import { useParams } from "react-router";
 import { getOneCrypto } from "../../store/crypto";
 import { userPortfolios, changePortfolio, newPortfolio } from "../../store/portfolio";
 import AddToList from "../AddToListModal/AddToList";
+import { getUserList } from "../../store/watchlist";
 
 const PurchaseCryptoPage = () => {
     const dispatch = useDispatch();
@@ -27,6 +28,10 @@ const PurchaseCryptoPage = () => {
     const [errors, setErrors] = useState([]);
 
     const userId = currentUser?.id;
+
+    useEffect(() => {
+        dispatch(getUserList(currentUser?.id))
+    }, [])
 
     useEffect(() => {
         if (singleCrypto)
