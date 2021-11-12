@@ -19,23 +19,24 @@ const Home = () => {
     // This is important, if user is returning to /home and not entering
     // authentication, crypto_list needs to be loaded back into state.
     useEffect(() => {
-    }, []);
-
-    useEffect(() => {
         const intervalPointer = setInterval(() => {
             // NOTE: I think the issue is that perhaps one query that results in the
             // the join table we are returning is counting as more than one?
-            // console.log(`Request number ${n * 14}`)
-            // (async () => await dispatch(getPrice()))();
+            console.log(`Requesting price`);
+            (async () => await dispatch(getPrice()))();
             //
             // NOTE: Debug proof of concept
             if (indicator === 'indicator1') setIndicator('indicator2')
             else setIndicator('indicator1')
             //
             // console.log(crypto_list)
-        }, 4000)
+        }, 8000)
         return () => clearInterval(intervalPointer)
     },[indicator])
+
+    const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
+    const price = entry.price
+    console.log(price);
 
     if (user) {
         return (
@@ -45,7 +46,7 @@ const Home = () => {
                 <div className="home_container_left">
                   <div className={indicator}>
                         <div className="cash_container">
-                            <h2 className="cash">{`$${user.cash.toLocaleString()}`}</h2>
+                            <h2 className="cash">{`$${user.cash}`}</h2>
                         </div>
                         <div className="today_tracker">
                             <h5 className="today_values">$0.00 (0.00%)</h5>
