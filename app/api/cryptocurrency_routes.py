@@ -89,11 +89,3 @@ def get_coins():
                 db.session.commit()
 
     return {"price": price}
-
-def update_price():
-
-    coins = Cryptocurrency.query.all()
-
-    items = get_coins()
-
-    print(items)

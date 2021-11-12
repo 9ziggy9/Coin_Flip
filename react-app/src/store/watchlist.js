@@ -39,6 +39,28 @@ export const newUserList = (obj) => async (dispatch) => {
   });
 };
 
+export const deleteUserList = (id) => async (dispatch) => {
+  const res = await fetch(`/api/watchlist/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+}
+
+export const editUserList = (id, newname) => async (dispatch) => {
+  const obj = {
+    name: newname
+  }
+  const res = await fetch(`/api/watchlist/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(obj)
+  })
+}
+
 const initialState = { watchlist: null };
 
 export default function reducer(state = initialState, action) {
