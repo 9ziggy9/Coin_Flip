@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserList, updateUserList } from "../../store/watchlist";
+import {
+  deleteFromList,
+  getUserList,
+  updateUserList,
+} from "../../store/watchlist";
 import { useListModal } from "../../context/ListModal";
 import "./AddToList.css";
 
@@ -15,9 +19,7 @@ const AddToListModal = ({ cryptoId }) => {
   );
 
   const handleChange = (index) => {
-    console.log("WEEE");
     const updated = checked.map((bool, i) => (i === +index ? !bool : bool));
-    console.log(updated);
     setChecked(updated);
   };
 
@@ -28,11 +30,11 @@ const AddToListModal = ({ cryptoId }) => {
       watchlists?.forEach((li, num) => {
         li.cryptos.forEach((c) => {
           if (c.id === +cryptoId) {
-            arr[num] = true
+            arr[num] = true;
           }
         });
       });
-      setChecked(arr)
+      setChecked(arr);
     });
   }, [dispatch]);
 
@@ -40,8 +42,22 @@ const AddToListModal = ({ cryptoId }) => {
     checked.forEach((c, i) => {
       if (c === true) {
         dispatch(updateUserList(watchlists[i].id, cryptoId, user.id));
+      } else {
+        dispatch(deleteFromList(watchlists[i].id, cryptoId));
       }
     });
+
+    dispatch(getUserList(user.id));
+    const arr = new Array(watchlists?.length).fill(false);
+
+    watchlists?.forEach((li, num) => {
+      li.cryptos.forEach((c) => {
+        if (c.id === +cryptoId) {
+          arr[num] = true;
+        }
+      });
+    });
+    setChecked(arr);
     setShowModal(false);
   };
 
@@ -61,7 +77,7 @@ const AddToListModal = ({ cryptoId }) => {
             </div>
           ))}
       </div>
-      <button onClick={() => submit()}>Save Changes</button>
+      <button onClick={submit}>Save Changes</button>
     </div>
   );
 };

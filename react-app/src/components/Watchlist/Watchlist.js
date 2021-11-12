@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import {
   deleteUserList,
   editUserList,
@@ -9,6 +10,7 @@ import {
 import "./Watchlist.css";
 
 const Watchlist = () => {
+  const history = useHistory()
   const [num, setNum] = useState(0);
   const [input, setInput] = useState();
   const [editInput, setEditInput] = useState("");
@@ -330,7 +332,7 @@ const Watchlist = () => {
               </div>
               <div className="watchlist-crypto-all" id={`list-${w.id}`}>
                 {w?.cryptos?.map((crypto) => (
-                  <div className="watchlist-cryptos">
+                  <div className="watchlist-cryptos" onClick={() => history.push(`/crypto/${crypto.id}`)}>
                     <div className="watchlist-crypto-name">{crypto.symbol}</div>
                     <div className="watchlist-crypto-right">
                       <div className="watchlist-crypto-price">
