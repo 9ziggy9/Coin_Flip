@@ -4,30 +4,13 @@ import Plot from 'react-plotly.js';
 import { useSelector } from 'react-redux';
 import { Redirect } from "react-router";
 // Simulation class
+import {useMemo} from 'react';
 import { Simulation } from "../../utilities/statistics.js";
 // Transformation from uniform -> normal distributions
 import { log_normal } from "../../utilities/statistics.js";
 // Finnhub API
 
 const SimPlot = () => {
-  const [market, setMarket] = useState([]);
-
-  const mock_history = [
-    {time: 1636665211, price: 12.22},
-    {time: 1636666212, price: 15.22},
-    {time: 1636667213, price: 20.22},
-    {time: 1636668214, price: 12.22},
-    {time: 1636669215, price: 101.22},
-    {time: 1636670216, price: 200.22},
-    {time: 1636671217, price: 260.22},
-    {time: 1636672218, price: 124.22},
-    {time: 1636673219, price: 261.22},
-    {time: 1636674220, price: 246.22},
-    {time: 1636675221, price: 200.22},
-    {time: 1636676222, price: 391.22},
-    {time: 1636677223, price: 10.22},
-  ];
-
   // const data = async () => {
   //   const res = await fetch("/api/cryptocurrencies/prices");
   //   const d = await res.json();
@@ -38,11 +21,14 @@ const SimPlot = () => {
   // console.log(market)
 
   // mu = mean value; sigma = standard deviation
-  const test_sim = new Simulation(mock_history, log_normal, 200, 2);
-  test_sim.initialize()
+
+  const test_sim = new Simulation([], log_normal, 200, 2);
 
   const [X, setDomain] = useState(test_sim.domain);
   const [Y, setRange] = useState(test_sim.range);
+
+  // NOTE: useEffect ensures that simulation will not run again needlessly.
+  useEffect(() => test_sim.initialize(), []);
 
   useEffect(() => {
     const intervalPointer = setInterval(() => {

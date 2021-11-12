@@ -21,20 +21,18 @@ const Home = () => {
     useEffect(() => {
     }, []);
 
-    let n = 1;
     useEffect(() => {
         const intervalPointer = setInterval(() => {
-            n++;
             // NOTE: I think the issue is that perhaps one query that results in the
             // the join table we are returning is counting as more than one?
-            console.log(`Request number ${n * 14}`)
+            // console.log(`Request number ${n * 14}`)
             // (async () => await dispatch(getPrice()))();
             //
             // NOTE: Debug proof of concept
             if (indicator === 'indicator1') setIndicator('indicator2')
             else setIndicator('indicator1')
             //
-            console.log(crypto_list)
+            // console.log(crypto_list)
         }, 4000)
         return () => clearInterval(intervalPointer)
     },[indicator])
