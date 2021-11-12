@@ -30,7 +30,8 @@
   padding-left: 50px;
 }
 
-.email, .password {
+.email,
+.password {
   display: flex;
   flex-direction: column;
 }
@@ -44,7 +45,8 @@
   font-weight: 500;
 }
 
-.email-label, .password-label {
+.email-label,
+.password-label {
   margin-bottom: 15px;
 }
 
@@ -95,4 +97,10 @@
   margin-top: 10px;
   display: flex;
   align-items: center;
+  gap: 5px;
+}
+
+.signup-link {
+  color: rgb(62, 67, 112);
+  font-weight: 600;
 }

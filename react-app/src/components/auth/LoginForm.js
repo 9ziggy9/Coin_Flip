@@ -86,7 +86,7 @@ const LoginForm = () => {
         </form>
         <div className="login-redirect">
           <p>Not on CoinFlip? </p>{" "}
-          <NavLink to="/signup">Create an account</NavLink>
+          <NavLink className="signup-link" to="/signup">Create an account</NavLink>
         </div>
       </div>
     </div>

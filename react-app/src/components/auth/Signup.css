@@ -1,0 +1,12 @@
+.signup-main {
+    background-color: white;
+    height: 100vh;
+    color: black;
+    padding-left: 10vw;
+    padding-top: 50px;
+}
+
+.signup-logo {
+    max-height: 200px;
+    width: 142px;
+}
