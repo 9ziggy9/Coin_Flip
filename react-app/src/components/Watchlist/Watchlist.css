@@ -186,7 +186,7 @@
 }
 
 .watchlist-options {
-  margin-top: -10px;
+  margin-top: -12px;
   font-size: 24px;
   display: none;
   text-underline-offset: 5px;
@@ -209,6 +209,10 @@
   margin-right: 40px;
   margin-top: 3px;
   box-shadow: 0px 12px 24px black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
 }
 
 .watchlist-cryptos {
@@ -230,5 +234,89 @@
 
 .watchlist-crypto-right {
   text-align: right !important;
-  font-size: 13px;
+  font-size: 14px;
+}
+
+.watchlist-text {
+  padding: 0px 30px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  gap: 10px;
+  user-select: none;
+}
+
+.watchlist-text:hover,
+.watchlist-text-2:hover {
+  color: rgb(255, 80, 0) !important;
+}
+
+.list-settings-img {
+  height: 25px;
+  width: 25px;
+  user-select: none;
+}
+
+.watchlist-text-2 {
+  padding: 0px 30px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  gap: 10px;
+  user-select: none;
+}
+
+.watchlist-text-2-confirmation {
+  padding: 0px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 600;
+  gap: 10px;
+  cursor: default;
+}
+
+.list-del-btns {
+  display: flex;
+  font-size: 14px;
+  gap: 10px;
+}
+
+.list-del-yes {
+  height: 36px;
+  cursor: pointer;
+  background-color: rgb(255, 80, 0);
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  color: rgb(48, 48, 48);
+  font-size: 14px;
+  width: 40px;
+  text-align: center;
+}
+
+.list-del-no {
+  height: 36px;
+  cursor: pointer;
+  outline: none;
+  border: 0.5px solid rgb(255, 80, 0);
+  color: rgb(255, 80, 0);
+  background-color: rgba(59, 66, 71, 0.966);
+  border-radius: 4px;
+  font-weight: 600;
+  text-align: center;
+  width: 40px;
+  font-size: 14px;
+}
+
+.list-drp-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.hidden {
+  display: none !important;
 }

@@ -34,3 +34,11 @@ def add_crypto(watchlist_id):
     db.session.commit()
 
     return {'msg': 'ok'}
+
+@watchlist_routes.route('/<int:watchlist_id>', methods=['DELETE'])
+def remove_list(watchlist_id):
+    Watchlist.query.filter_by(id=watchlist_id).delete()
+
+    db.session.commit()
+
+    return {'msg': 'ok'}
