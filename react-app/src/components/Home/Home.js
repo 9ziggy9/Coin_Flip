@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react"
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Redirect } from "react-router";
 import { userPortfolios } from "../../store/portfolio";
-import { getPrice } from "../../store/crypto";
 import Plot from "../Plot/Plot"
 import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
@@ -10,12 +9,12 @@ import "./Home.css"
 
 
 const Home = () => {
-    const dispatch = useDispatch();
-    const user = useSelector(state => state.session.user)
-    const crypto_list = useSelector(state => state.crypto.list)
-    const [indicator, setIndicator] = useState('indicator1');
-    const [price, setPrice] = useState(5999);
+    const coin = 'bitcoin'
+    const user = useSelector(state => state.session.user);
+    const start = useSelector(state => state.crypto.list);
     const portfolios = useSelector(state => Object.values(state.portfolio))
+    let [start_price] = start.filter(p => p.gecko === coin);
+    const [price, setPrice] = useState(start_price.price);
 
     // This is important, if user is returning to /home and not entering
     // authentication, crypto_list needs to be loaded back into state.
@@ -26,8 +25,8 @@ const Home = () => {
         setPrice(d.price[coin].usd);
     };
 
-    useEffect(() => {const pInterval = setInterval(() => data('bitcoin'), 8000);
-                    return () => clearInterval(pInterval)}, []);
+    useEffect(() => {const pInterval = setInterval(() => data(coin), 8000);
+                     return () => clearInterval(pInterval)}, []);
 
     // const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
     // const price = entry.price
