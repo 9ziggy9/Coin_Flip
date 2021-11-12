@@ -6,7 +6,11 @@ import { useParams } from "react-router";
 // import { getOneCryptocurrency, getAllCryptocurrency } from "../../store/purchaseCrypto";
 import { getOneCrypto } from "../../store/crypto";
 import { userPortfolios, changePortfolio, newPortfolio } from "../../store/portfolio";
+import AlertPopup from "../popup";
 
+//used for alert
+import React from 'react'
+import Alert from 'react-popup-alert'
 
 const PurchaseCryptoPage = () => {
     const dispatch = useDispatch();
@@ -50,9 +54,30 @@ const PurchaseCryptoPage = () => {
         document.getElementById(history).style.color = "orangered"
     }
 
-    const onSubmit = async (e) => {
-        
+    //used for alert
+    const [alert, setAlert] = React.useState({
+        type: 'error',
+        text: 'This is a alert message',
+        show: false
+    })
 
+    function onCloseAlert() {
+        setAlert({
+        type: '',
+        text: '',
+        show: false
+        })
+    }
+
+    function onShowAlert(type) {
+        setAlert({
+        type: type,
+        text: `Demo alert`,
+        show: true
+        })
+    }
+
+    const onSubmit = async (e) => {
         // e.preventDefault()
         // let hasPortfolio = false;
         // let portfolioId
@@ -86,7 +111,6 @@ const PurchaseCryptoPage = () => {
         // } else {
         //     await dispatch(newPortfolio(newTransaction))
         // }
-
     }
 
     const singleCrypto = useSelector(state => {
@@ -105,13 +129,13 @@ const PurchaseCryptoPage = () => {
         if (isNaN(amount) || amount === "") {
             errors.push("Please enter a number")
         }
-
         setErrors(errors)
     }, [amount]);
 
     if (loaded) {
 
         return (
+            <>
             <div className="pageContainer">
                 <div className="cryptoInfoContainer">
                     <div className="cryptoName">{singleCrypto[0]?.name}</div>
@@ -158,8 +182,31 @@ const PurchaseCryptoPage = () => {
                             onChange={(e) => setAmount(e.target.value)}
                         />
                     </div>
+
                     <div className="subButtContainer">
-                        <button disabled={errors.length > 0} type="submit" className="submitButt"> Submit </button>
+                        <div>
+                            <button disabled={errors.length > 0} onClick={() => onShowAlert('warning')}>
+                            Submit
+                            </button>
+                        </div>
+                        <Alert
+                            header={'Confirm Transaction'}
+                            btnText={'Close'}
+                            text={alert.text}
+                            type={alert.type}
+                            show={alert.show}
+                            onClosePress={onCloseAlert}
+                            pressCloseOnOutsideClick={true}
+                            showBorderBottom={true}
+                            alertStyles={{}}
+                            headerStyles={{}}
+                            textStyles={{}}
+                            buttonStyles={{}}
+                        />
+                    </div>
+
+                    <div className="subButtContainer">
+                        {/* <button disabled={errors.length > 0} type="submit" className="submitButt"> Submit </button> */}
                         <ul className="errors">
                             {errors.map(error => (
                                 <li key={error}>{error}</li>
@@ -172,8 +219,8 @@ const PurchaseCryptoPage = () => {
                 <div className="aboutContainer">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget sem posuere, cursus magna vitae, dapibus ex. Praesent tincidunt porta auctor. Pellentesque vestibulum dui sed iaculis iaculis. Quisque sed magna mollis, commodo libero ac, tristique eros. Maecenas dapibus orci vitae interdum ultrices. Nam luctus lorem ligula, in iaculis metus scelerisque ac. Donec ac bibendum neque. Vivamus ut turpis vel libero vulputate lacinia sed at est. Pellentesque ultrices efficitur ligula non tristique. Pellentesque porta urna justo, venenatis fermentum dui lobortis vel. Curabitur et aliquet eros. Aenean pulvinar semper augue et mollis.
                 </div>
-
             </div>
+            </>
         )
     }
     else {
