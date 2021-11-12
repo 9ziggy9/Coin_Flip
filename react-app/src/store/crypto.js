@@ -32,6 +32,7 @@ export const getOneCrypto = (id) => async (dispatch) => {
   if (response.ok) {
     const cryptocurrencyDetail = await response.json();
     dispatch(load_one(cryptocurrencyDetail));
+    console.log("!!!!!!!!!!", cryptocurrencyDetail)
     return cryptocurrencyDetail;
   }
 };
