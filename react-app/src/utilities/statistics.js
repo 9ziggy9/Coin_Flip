@@ -65,6 +65,12 @@ export class Market {
 
     return {domain: this.domain, range: this.range}
   }
+
+  zip() {
+    return JSON.stringify(
+      this.domain.map((timestamp, t) => ({time:timestamp, price:this.range[t]}))
+    );
+  }
 }
 
 // This is the Box-Muller transform implemented in JavaScript. For a mean value
@@ -76,7 +82,8 @@ export function gaussianNoise_boxmuller(mu, sigma) {
   while(x===0) x = Math.random();
   while(y===0) y = Math.random();
   const magnitude = sigma * Math.sqrt(-2.0 * Math.log(x))
-  return (magnitude * (Math.sqrt(-2.0 * Math.log(x)) * Math.cos(2.0 * Math.PI * y))) + mu;
+  return (magnitude * (Math.sqrt(-2.0 * Math.log(x))
+                    * Math.cos(2.0 * Math.PI * y))) + mu;
 }
 
 // By definition, a variable has a lognormal distribution if

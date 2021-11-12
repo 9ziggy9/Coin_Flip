@@ -70,6 +70,7 @@ const SimPlot = () => {
         ]}
         layout={layout}
         style={{'width':'100%', height:'100%'}}
+        config={{scrollZoom: true}}
         useResizeHandler={true}
       />
     )
