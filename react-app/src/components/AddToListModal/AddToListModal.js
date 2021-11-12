@@ -23,13 +23,16 @@ const AddToListModal = ({ cryptoId }) => {
 
   useEffect(() => {
     dispatch(getUserList(user.id)).then(() => {
+      const arr = new Array(watchlists?.length).fill(false);
+
       watchlists?.forEach((li, num) => {
         li.cryptos.forEach((c) => {
           if (c.id === +cryptoId) {
-            handleChange(num);
+            arr[num] = true
           }
         });
       });
+      setChecked(arr)
     });
   }, [dispatch]);
 
