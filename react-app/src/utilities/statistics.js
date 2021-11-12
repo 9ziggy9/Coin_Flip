@@ -9,10 +9,11 @@ export class Simulation {
   }
 
   initialize() {
-    return
+    return {domain: this.domain, range: this.range}
   }
 
   proceed() {
+    console.log(this.realtime);
     const uTime = Date.now()
     this.realtime = [...this.realtime.slice(1),
                      {time: uTime, price: this.fn(this.mu, this.sigma)}];
@@ -25,7 +26,8 @@ export class Simulation {
 
   zip() {
     return JSON.stringify(
-      this.domain.map((timestamp, t) => ({time:timestamp, price:this.range[t]})));
+      this.domain.map((timestamp, t) => ({time:timestamp, price:this.range[t]}))
+    );
   }
 }
 
