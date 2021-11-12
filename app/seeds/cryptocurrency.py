@@ -36,7 +36,7 @@ def seed_cryptocurrency():
     price = cg.get_price(ids=joined, vs_currencies="USD")
 
     for crypto in complete:
-        i = Cryptocurrency(name=crypto["name"], symbol=crypto["symbol"].upper(), price=price[crypto["id"]]["usd"], history="none")
+        i = Cryptocurrency(name=crypto["name"], symbol=crypto["symbol"].upper(), price=price[crypto["id"]]["usd"], history="none", gecko=crypto["id"])
         db.session.add(i)
         db.session.commit()
 
