@@ -24,6 +24,11 @@ const Watchlist = () => {
   const submit = (e) => {
     e.preventDefault();
 
+    if (!input) {
+
+      return
+    }
+
     const obj = {
       name: input,
       user_id: user.id,
@@ -122,6 +127,7 @@ const Watchlist = () => {
           onChange={(e) => setInput(e.target.value)}
           value={input}
           required
+          onKeyPress={(e) => e.key === 'Enter' && submit(e)}
         />
         <div className="list-buttons">
           <button onClick={(e) => cancel(e)} className="list-cancel">
@@ -170,7 +176,7 @@ const Watchlist = () => {
                     <div className="watchlist-crypto-name">{crypto.symbol}</div>
                     <div className="watchlist-crypto-right">
                       <div className="watchlist-crypto-price">
-                        ${crypto.price.toLocaleString()}
+                        ${crypto.price > 1 ? crypto.price.toLocaleString() : crypto.price.toFixed(2)}
                       </div>
                       <div className="watchlist-crypto-change">0.25%</div>
                     </div>
