@@ -13,7 +13,6 @@ export class Simulation {
   }
 
   proceed() {
-    console.log(this.realtime);
     const uTime = Date.now()
     this.realtime = [...this.realtime.slice(1),
                      {time: uTime, price: this.fn(this.mu, this.sigma)}];

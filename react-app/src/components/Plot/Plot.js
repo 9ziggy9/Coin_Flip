@@ -48,16 +48,14 @@ const SimPlot = () => {
   useEffect(() => {
     const intervalPointer = setInterval(() => {
       i++;
-      console.log(i);
       test_sim.proceed();
       setDomain(test_sim.domain);
       setRange(test_sim.range);
     }, 1000)
     return () => clearInterval(intervalPointer);
-  }, [setDomain])
+  }, [])
 
   if(true) {
-
     const layout = {
       autosize: true,
       plot_bgcolor: 'black',

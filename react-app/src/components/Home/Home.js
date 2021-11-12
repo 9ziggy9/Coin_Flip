@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from "react-router";
 import { userPortfolios } from "../../store/portfolio";
+import { getPrice, getAllCrypto } from "../../store/crypto";
 import Plot from "../Plot/Plot"
 import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
@@ -11,11 +12,25 @@ import "./Home.css"
 const Home = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
+    const crypto_list = useSelector(state => state.crypto.list)
     const portfolios = useSelector(state => Object.values(state.portfolio))
 
     useEffect(() => {
         dispatch(userPortfolios(user?.id))
     }, [dispatch]);
+
+    let i = 0;
+    useEffect(() => {
+        const intervalPointer = setInterval(() => {
+        i++;
+            if(i < 10) {
+                console.log(user);
+                console.log(`HELLO FROM ${i}, your UseEffect is working`);
+                console.log(crypto_list);
+            }
+        }, 4000)
+        return () => clearInterval(intervalPointer);
+    }, [dispatch])
 
     if (user) {
         return (

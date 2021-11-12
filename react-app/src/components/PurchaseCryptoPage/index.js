@@ -23,9 +23,9 @@ const PurchaseCryptoPage = () => {
     const uniqueCryptoId = pathname.split("/")[2]
     let userId;
 
-    useEffect(() => {
-        dispatch(getAllCrypto(uniqueCryptoId))
-    }, [dispatch, uniqueCryptoId])
+    // useEffect(() => {
+    //     dispatch(getAllCrypto(uniqueCryptoId))
+    // }, [dispatch, uniqueCryptoId])
 
     return (
         <>
