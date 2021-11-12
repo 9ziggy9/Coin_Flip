@@ -13,6 +13,25 @@ export const getUserList = (userId) => async (dispatch) => {
   }
 };
 
+export const updateUserList = (watchlistId, cryptoId, userId) => async (dispatch) => {
+  const tab = {
+    crypto_id: cryptoId,
+    user_id: userId
+  }
+
+  const res = await fetch(`/api/watchlist/add/${watchlistId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(tab)
+  })
+  if (res.ok) {
+    const data = res.json()
+    dispatch(getUserWatchlist(data))
+  }
+}
+
 const initialState = { watchlist: null };
 
 export default function reducer(state = initialState, action) {

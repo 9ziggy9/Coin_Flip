@@ -163,8 +163,7 @@
 }
 
 .watchlist-open {
-  font-size: 24px;
-  margin-bottom: -5px;
+  font-size: 16px;
 }
 
 .watchlist-open:hover {
@@ -195,4 +194,26 @@
   margin-right: 40px;
   margin-top: 3px;
   box-shadow: 0px 12px 24px black;
+}
+
+.watchlist-cryptos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.watchlist-cryptos:hover {
+  background-color: rgba(59, 66, 71, 0.966);
+}
+
+.watchlist-crypto-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.watchlist-crypto-right {
+  text-align: right !important;
+  font-size: 13px;
 }
