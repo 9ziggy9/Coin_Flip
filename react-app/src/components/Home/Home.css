@@ -4,6 +4,15 @@
     justify-content: center;
 }
 
+.total_cash_container {
+    display:flex;
+    flex-direction:column;
+}
+.coin-title {
+    font-weight: bold;
+    display:flex;
+}
+
 .home_container_left{
     /* sponge 1 */
     height: 100%;
@@ -12,9 +21,8 @@
 }
 
 .cash_container {
-    display: flex;
+    display: flex-column;
     align-items: center;
-    height: 4em;
     width: 13em;
 }
 
@@ -29,7 +37,7 @@
 /*  */
 
 .cash {
-    padding-top: .7em;
+    display:flex;
     width: 4em;
     font-size: 2em;
 }

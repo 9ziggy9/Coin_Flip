@@ -51,14 +51,14 @@ export class Market {
       const past = Date.now() - 1000*interval
       this.domain = (()=>new Array(interval).fill(0))().map((_,i) => past + i*1000);
       this.realtime = this.domain
-                          .map(d => ({time:d, price:0}));
+                          .map(d => ({time:d, price:this.api_call}));
     }
   }
 
   proceed() {
     const uTime = Date.now()
     this.realtime = [...this.realtime.slice(1),
-                     {time: uTime, price: this.api_call()}];
+                     {time: uTime, price: this.api_call}];
 
     this.domain = this.realtime.map(datapoint => datapoint.time);
     this.range = this.realtime.map(datapoint => datapoint.price);
