@@ -46,7 +46,6 @@ function App() {
           <Splash />
         </Route>
         <Route path="/signup" exact={true}>
-          <NavBar />
           <SignUpForm />
         </Route>
         <ProtectedRoute path="/users" exact={true}>

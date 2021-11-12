@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, NavLink } from "react-router-dom";
 import { login } from "../../store/session";
 import "./Login.css";
 
@@ -19,6 +19,12 @@ const LoginForm = () => {
     }
   };
 
+  const demo = () => {
+    setEmail('demo@aa.io')
+    setPassword('password')
+    dispatch(login('demo@aa.io', 'password'))
+  }
+
   const updateEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -33,40 +39,55 @@ const LoginForm = () => {
 
   return (
     <div className="login-main">
-      <img
-        className="login-img"
-        src="https://miro.medium.com/max/2800/1*EHEjXGUol25Pmap8H5IBxg.jpeg"
-      />
+      <div className="login-right">
+        <img
+          className="login-img"
+          src="https://i.pinimg.com/originals/30/aa/2a/30aa2a4cc243f548e16f4eb82a37339a.png"
+        />
+      </div>
       <div className="login-form">
         <div className="welcome-login">Welcome to CoinFlip</div>
-        <form onSubmit={onLogin}>
-          <div>
+        <form onSubmit={onLogin} className="login-submit">
+          <div className="errors">
             {errors.map((error, ind) => (
               <div key={ind}>{error}</div>
             ))}
           </div>
-          <div>
-            <label htmlFor="email">Email</label>
+          <div className="email">
+            <label className="email-label" htmlFor="email">
+              Email
+            </label>
             <input
+              className="login-input"
               name="email"
               type="text"
-              placeholder="Email"
               value={email}
               onChange={updateEmail}
             />
           </div>
-          <div>
-            <label htmlFor="password">Password</label>
+          <div className="password">
+            <label className="password-label" htmlFor="password">
+              Password
+            </label>
             <input
+              className="login-input"
               name="password"
               type="password"
-              placeholder="Password"
               value={password}
               onChange={updatePassword}
             />
-            <button type="submit">Login</button>
+            <div className="login-lower">
+              <button className="login-btn" type="submit">
+                Login
+              </button>
+              <button onClick={demo} className="login-btn">Demo User</button>
+            </div>
           </div>
         </form>
+        <div className="login-redirect">
+          <p>Not on CoinFlip? </p>{" "}
+          <NavLink className="signup-link" to="/signup">Create an account</NavLink>
+        </div>
       </div>
     </div>
   );
