@@ -6,7 +6,7 @@ transaction_routes = Blueprint('transactions', __name__)
 
 # Get a list of current user transactions
 @transaction_routes.route('/<int:user_id>')
-# @login_required
+@login_required
 def user_transactions(user_id):
     if current_user.id != user_id:
         return "bruh, what you do?"
@@ -15,7 +15,7 @@ def user_transactions(user_id):
 
 # Create a new transaction
 @transaction_routes.route('/', methods=['POST'])
-# @login_required
+@login_required
 def create_transaction():
     new_transaction = request.json
     # print(f'=========================={new_transaction}')

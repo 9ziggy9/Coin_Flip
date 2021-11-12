@@ -21,13 +21,13 @@ const addTransaction = (userTransactions) => {
 }
 
 // Thunk
-const getUserTransactions = (userId) => async (dispatch) => {
+export const getUserTransactions = (userId) => async (dispatch) => {
     const res = await fetch(`/api/transactions/${userId}`);
     const userTransactionsData = await res.json();
-    dispatch(currentUserTransactions(userTransactionsData));
+    dispatch(currentUserTransactions(userTransactionsData.transactions));
 }
 
-const createTransaction = (newTransaction) => async (dispatch) => {
+export const createTransaction = (newTransaction) => async (dispatch) => {
     const { cryptoId, userId, type, price, quantity, createdAt } = newTransaction;
     const res = await fetch(`/api/transactions`, {
         method: 'POST',
