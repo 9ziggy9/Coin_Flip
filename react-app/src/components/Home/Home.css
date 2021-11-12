@@ -18,6 +18,16 @@
     width: 13em;
 }
 
+/* DEBUGGING - ziggy */
+.indicator1 {
+    background-color: red;
+}
+
+.indicator2 {
+    background-color: blue;
+}
+/*  */
+
 .cash {
     padding-top: .7em;
     width: 4em;

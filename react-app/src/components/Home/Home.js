@@ -13,6 +13,7 @@ const Home = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
     const crypto_list = useSelector(state => state.crypto.list)
+    const [indicator, setIndicator] = useState('indicator1');
     const portfolios = useSelector(state => Object.values(state.portfolio))
 
     // This is important, if user is returning to /home and not entering
@@ -27,18 +28,24 @@ const Home = () => {
             // the join table we are returning is counting as more than one?
             console.log(`Request number ${n * 14}`)
             // (async () => await dispatch(getPrice()))();
+            //
+            // NOTE: Debug proof of concept
+            if (indicator === 'indicator1') setIndicator('indicator2')
+            else setIndicator('indicator1')
+            //
             console.log(crypto_list)
             n++;
         }, 4000)
         return () => clearInterval(intervalPointer)
-    },[])
+    },[indicator])
 
     if (user) {
         return (
             <>
             <div className="home_main">
+              {/* total_cash_container */}
                 <div className="home_container_left">
-                    <div className="total_cash_container">
+                  <div className={indicator}>
                         <div className="cash_container">
                             <h2 className="cash">{`$${user.cash.toLocaleString()}`}</h2>
                         </div>
