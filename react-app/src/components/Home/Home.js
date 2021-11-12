@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from "react-router";
 import { userPortfolios } from "../../store/portfolio";
+import { getPrice } from "../../store/crypto";
 import Plot from "../Plot/Plot"
 import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
@@ -11,17 +12,40 @@ import "./Home.css"
 const Home = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
+    const crypto_list = useSelector(state => state.crypto.list)
+    const [indicator, setIndicator] = useState('indicator1');
     const portfolios = useSelector(state => Object.values(state.portfolio))
 
+    // This is important, if user is returning to /home and not entering
+    // authentication, crypto_list needs to be loaded back into state.
     useEffect(() => {
-        dispatch(userPortfolios(user?.id))
-    }, [dispatch]);
+    }, []);
+
+    let n = 1;
+    useEffect(() => {
+        const intervalPointer = setInterval(() => {
+            n++;
+            // NOTE: I think the issue is that perhaps one query that results in the
+            // the join table we are returning is counting as more than one?
+            console.log(`Request number ${n * 14}`)
+            // (async () => await dispatch(getPrice()))();
+            //
+            // NOTE: Debug proof of concept
+            if (indicator === 'indicator1') setIndicator('indicator2')
+            else setIndicator('indicator1')
+            //
+            console.log(crypto_list)
+        }, 4000)
+        return () => clearInterval(intervalPointer)
+    },[indicator])
 
     if (user) {
         return (
+            <>
             <div className="home_main">
+              {/* total_cash_container */}
                 <div className="home_container_left">
-                    <div className="total_cash_container">
+                  <div className={indicator}>
                         <div className="cash_container">
                             <h2 className="cash">{`$${user.cash.toLocaleString()}`}</h2>
                         </div>
@@ -58,7 +82,7 @@ const Home = () => {
                         </div>
                         <button type="button" className="add_funds_button">
                             <h4 className="add_funds_button_text">Add Funds</h4>
-                            </button>
+                        </button>
                     </div>
                         <div className="add_funds_static_nav">
                             <p><i className="arrow_left">⌃</i></p>
@@ -66,14 +90,14 @@ const Home = () => {
                             <p><i className="arrow_right">⌃</i></p>
                         </div>
                     <div className="news_container">
-                        <h2 className="news_label">News</h2>
-                        <News />
+                            <News />
                     </div>
                 </div>
                 <div className="home_container_right">
                     <Watchlist />
                 </div>
             </div>
+            </>
             )
         } else {
         return <Redirect to="/" />
