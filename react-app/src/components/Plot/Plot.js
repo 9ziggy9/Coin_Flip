@@ -87,12 +87,10 @@ export const MarketPlot = ({price,coin}) => {
 
   useEffect(() => {
     const intervalPointer = setInterval(() => {
-      let l = test_sim.range.length - 1
-      if(test_sim.range[l] != price)
-        test_sim.proceed();
+      test_sim.proceed();
       setDomain(test_sim.domain);
       setRange(test_sim.range);
-    }, 1000)
+    }, 8000)
     return () => clearInterval(intervalPointer);
   }, [])
 
@@ -106,8 +104,8 @@ export const MarketPlot = ({price,coin}) => {
         type:'date',
       },
       yaxis: {
-        range: [price - 10,
-                price + 10],
+        range: [price - 100,
+                price + 100],
         type: 'linear'
       },
     }
