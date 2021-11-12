@@ -5,7 +5,6 @@ import {
   editUserList,
   getUserList,
   newUserList,
-  updateUserList,
 } from "../../store/watchlist";
 import "./Watchlist.css";
 
