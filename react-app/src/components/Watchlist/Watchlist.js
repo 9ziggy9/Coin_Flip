@@ -26,7 +26,15 @@ const Watchlist = () => {
 
   useEffect(() => {
     dispatch(getUserList(user.id));
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    document.querySelectorAll(".watchlist-options").forEach((i) => {
+      i.style.display = "none";
+      i.style.textDecoration = "none";
+      i.style.color = "white"
+    });
+  }, [num]);
 
   const submit = (e) => {
     e.preventDefault();
@@ -115,8 +123,14 @@ const Watchlist = () => {
   };
 
   const delList = (id) => {
+    const main = document.querySelector(`.list-drop-${id}`);
+    const del = document.querySelector(`.list-del-${id}`);
 
-    hideSettings(id);
+    dispatch(deleteUserList(id)).then(() => dispatch(getUserList(user.id)));
+    dropdown.current[id].classList.add("hidden");
+    main.classList.remove("hidden");
+    del.classList.add("hidden");
+    setNum((old) => old + 1);
   };
 
   return (
@@ -173,16 +187,16 @@ const Watchlist = () => {
                   <div className="watchlist-options-fill">
                     <div
                       className="watchlist-options"
-                      ref={(el) => (options.current[i] = el)}
-                      onClick={() => showDropdown(i)}
+                      ref={(el) => (options.current[w.id] = el)}
+                      onClick={() => showDropdown(w.id)}
                     >
                       ...
                     </div>
                     <div
-                      className="watchlist-dropdown hidden"
-                      ref={(el) => (dropdown.current[i] = el)}
+                      className={`watchlist-dropdown drop-${w.id} hidden`}
+                      ref={(el) => (dropdown.current[w.id] = el)}
                     >
-                      <div className={`list-drp-main list-drop-${i}`}>
+                      <div className={`list-drp-main list-drop-${w.id}`}>
                         <div
                           className="watchlist-text"
                           onMouseEnter={() =>
@@ -211,26 +225,26 @@ const Watchlist = () => {
                               "https://img.icons8.com/carbon-copy/100/ffffff/delete-sign.png"
                             )
                           }
-                          onClick={() => hideSettings(i)}
+                          onClick={() => hideSettings(w.id)}
                         >
                           <img className="list-settings-img" src={delUrl} />{" "}
                           Delete list
                         </div>
                       </div>
                       <div
-                        className={`watchlist-text-2-confirmation list-del-${i} hidden`}
+                        className={`watchlist-text-2-confirmation list-del-${w.id} hidden`}
                       >
                         Are you sure?
                         <div className="list-del-btns">
                           <button
                             className="list-del-yes"
-                            onClick={() => delList(i)}
+                            onClick={() => delList(w.id)}
                           >
                             Yes
                           </button>
                           <button
                             className="list-del-no"
-                            onClick={() => hideSettings(i)}
+                            onClick={() => hideSettings(w.id)}
                           >
                             No
                           </button>
