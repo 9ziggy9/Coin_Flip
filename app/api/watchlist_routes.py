@@ -27,6 +27,10 @@ def add_crypto(watchlist_id):
 
     watchlist = Watchlist.query.filter_by(id=watchlist_id).first()
 
+    for item in watchlist.cryptocurrency:
+        if (item.id == crypto_id):
+            return {'msg': 'already in list'}
+
     crypto = Cryptocurrency.query.filter_by(id=crypto_id).first()
 
     watchlist.cryptocurrency.append(crypto)
