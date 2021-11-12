@@ -1,0 +1,99 @@
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.cryptoInfoContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+    font-size: 40px;
+}
+
+.purchaseOrSell {
+    display: flex;
+    flex-direction: row;
+    margin-left: 10%;
+    margin-top: 20px;
+}
+
+.graph {
+    margin-left: 10%;
+    margin-top: 10px;
+    margin-bottom:10px;
+    border: 2px solid white;
+    height: 350px;
+    width: 50%;
+}
+
+.sell {
+    display: flex;
+    margin-left: 20px;
+}
+
+.amount {
+    diplay: flex;
+    margin-left: 20px;
+}
+
+.hr {
+    display: flex;
+    width: 50%;
+    margin-left: 10%;
+    border: 0.5px solid gray;
+}
+
+.aboutContainer {
+    margin-left: 10%;
+    margin-top: 10px;
+    width: 800px;
+}
+
+.graphHistorySelect {
+    display: flex;
+}
+
+.graphButtonContainer {
+    display: flex;
+    margin-left: 10%;
+    gap: 15px;
+}
+
+.graphButtonContainer > * {
+    background: none;
+    border: none;
+    color: white;
+    font-family: "Microsoft Sans Serif";
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.hisButt:hover {
+    color: orangered;
+}
+
+.about {
+    margin-left: 10%;
+    font-family: "Microsoft Sans Serif";
+    font-weight: bold;
+    font-size: 30px;
+    margin-top: 25px;
+}
+
+.submitButt {
+    width: 55px;
+    text-align: center;
+    font-family: "Microsoft Sans Serif";
+}
+
+.subButtContainer {
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+    margin-left: 10%;
+    margin-top: 10px;
+}
+
+.errors {
+    margin-top: 0px;
+}

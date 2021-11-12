@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import PurchaseCryptoModal from "../PurchaseCryptoModal.js";
 
 const Navigation = () => {
   const nav = useRef(null);
@@ -47,6 +48,23 @@ const Navigation = () => {
       return setNum(3);
     }
   };
+
+  const sessionUser = useSelector(state => state.session.user);
+
+  let sessionLinks;
+  if (sessionUser) {
+    sessionLinks = (
+      <div className="updateCrypto">
+        <PurchaseCryptoModal />
+      </div>
+    );
+  } else {
+    sessionLinks = (
+      <>
+        <NavLink to="/signup">Sign Up</NavLink>
+      </>
+    );
+  }
 
   return (
     <div className="combined-bar">

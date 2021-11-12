@@ -5,6 +5,8 @@ const NEW_PORTFOLIO = '/portfolios/newPortfolio'
 
 const UPDATE_PORTFOLIO = '/portfolios/updatePortfolio'
 
+const UPDATE_SINGLE_CRYTPO = "/portfolios/UPDATE_SINGLE_CRYPTO"
+
 // Action
 const getPortfolios = (portfolios) => {
     return {
@@ -27,6 +29,13 @@ const updatePortfolio = (portfolios) => {
     }
 }
 
+const updateCrypto = (portfolios) => {
+    return {
+        type: UPDATE_SINGLE_CRYTPO,
+        portfolios
+    }
+}
+
 // Thunk functions
 export const userPortfolios = (userId) => async (dispatch) => {
     const res = await fetch(`/api/portfolios/${userId}`);
@@ -34,6 +43,8 @@ export const userPortfolios = (userId) => async (dispatch) => {
     // console.log(portfoliosData.portfolio);
     dispatch(getPortfolios(portfoliosData.portfolio));
 }
+
+
 
 export const newPortfolio = (newPorfolioObj) => async (dispatch) => {
     const { userId, cryptoId, quantity, purchasePrice } = newPorfolioObj;
@@ -49,6 +60,7 @@ export const newPortfolio = (newPorfolioObj) => async (dispatch) => {
     });
     const portfolios = await res.json();
     dispatch(addPortfolio(portfolios));
+    console.log("POST", portfolios)
 }
 
 export const changePortfolio = (updatedPortfolioObj) => async (dispatch) => {
@@ -65,13 +77,26 @@ export const changePortfolio = (updatedPortfolioObj) => async (dispatch) => {
     })
     const portfolios = await res.json();
     dispatch(updatePortfolio(portfolios));
+    console.log("PUT", updatedPortfolioObj)
 }
+
+// export const updateSingleCrypto = (userId) => async (dispatch) => {
+//     const response = await fetch(`/api/portfolios/${userId}`, {
+//         method: "PATCH",
+//         body: JSON.stringify(userId)
+//     });
+//     if (response.ok) {
+//         const data = await response.json();
+//         dispatch(updateCrypto(data))
+//         return data;
+//     }
+// }
 
 // Reducer function
 const portfolioReducer = (state = {}, action) => {
     let newState;
     switch(action.type) {
-        case GET_PORTFOLIOS || NEW_PORTFOLIO || UPDATE_PORTFOLIO:
+        case GET_PORTFOLIOS || NEW_PORTFOLIO || UPDATE_PORTFOLIO || UPDATE_SINGLE_CRYTPO:
             newState = {...state}
             action.portfolios.forEach(portfolio => {
                 newState[portfolio.id] = portfolio

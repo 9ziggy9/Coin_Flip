@@ -59,7 +59,7 @@ function App() {
           <AuthNavigation />
           <Home />
         </ProtectedRoute>
-        <Route path="/purchaseCrypto/:id" exact={true}>
+        <Route path="/crypto/:id" exact={true}>
           <NavBar />
           <PurchaseCryptoPage />
         </Route>
