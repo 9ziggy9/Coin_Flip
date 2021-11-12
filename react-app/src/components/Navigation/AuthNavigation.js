@@ -166,7 +166,7 @@ const AuthNavigation = () => {
         </div>
       </div>
       <div className="right-nav">
-        <NavLink to="/messages" className="nav-messages">Transactions</NavLink>
+        <NavLink to="/transactions" className="account-word">Transactions</NavLink>
         <div className="account">
           <div className="account-word" onClick={() => showDropdown()} ref={account}>
             Account
