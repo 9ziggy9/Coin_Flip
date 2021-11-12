@@ -125,7 +125,7 @@ const AuthNavigation = () => {
           {searchResults?.length > 0 &&
             search?.length > 0 &&
             searchResults.map((result, i) => (
-              <div key={i} className="result">
+              <NavLink to={`/crypto/${result.id}`} key={i} className="result">
                 <div
                   dangerouslySetInnerHTML={{
                     __html: result.symbol.replace(
@@ -142,7 +142,7 @@ const AuthNavigation = () => {
                     ),
                   }}
                 ></div>
-              </div>
+              </NavLink>
             ))}
           {searchResults?.length === 0 && search?.length > 0 && (
             <div className="result">

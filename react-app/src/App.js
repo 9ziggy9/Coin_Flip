@@ -8,7 +8,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
 import { authenticate } from "./store/session";
-import { getAllCrypto } from "./store/crypto"
+import { getAllCrypto } from "./store/crypto";
 import Navigation from "./components/Splash/Navigation";
 import Splash from "./components/Splash/Splash";
 import PurchaseCryptoPage from "./components/PurchaseCryptoPage";
@@ -25,7 +25,7 @@ function App() {
       await dispatch(authenticate());
     })();
     (async () => {
-      await dispatch(getAllCrypto())
+      await dispatch(getAllCrypto());
       setLoaded(true);
     })();
   }, [dispatch]);
@@ -60,7 +60,7 @@ function App() {
           <Home />
         </ProtectedRoute>
         <Route path="/crypto/:id" exact={true}>
-          <NavBar />
+          <AuthNavigation />
           <PurchaseCryptoPage />
         </Route>
         <Route path="/transactions" exact={true}>

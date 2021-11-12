@@ -78,6 +78,7 @@
   gap: 60px;
   padding: 5px 20px;
   margin: 0;
+  cursor: pointer
 }
 
 .result:hover {
