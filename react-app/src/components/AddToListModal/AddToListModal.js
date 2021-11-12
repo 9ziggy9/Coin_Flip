@@ -15,6 +15,7 @@ const AddToListModal = ({ cryptoId }) => {
   );
 
   const handleChange = (index) => {
+    console.log("WEEE");
     const updated = checked.map((bool, i) => (i === index ? !bool : bool));
     setChecked(updated);
   };
@@ -26,10 +27,10 @@ const AddToListModal = ({ cryptoId }) => {
   useEffect(() => {
     setChecked(new Array(watchlists?.length).fill(false));
 
-    watchlists?.forEach((li, index) => {
+    watchlists?.forEach((li, num) => {
       li.cryptos.forEach((c) => {
         if (c.id === +cryptoId) {
-          handleChange(index);
+          handleChange(+num);
         }
       });
     });
