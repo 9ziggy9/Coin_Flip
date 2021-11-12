@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserList } from "../../store/watchlist";
+import { getUserList, updateUserList } from "../../store/watchlist";
 import { useListModal } from "../../context/ListModal";
 import "./AddToList.css";
 
 const AddToListModal = ({ cryptoId }) => {
   const dispatch = useDispatch();
-  const { setShowModal } = useListModal()
+  const { setShowModal } = useListModal();
   const watchlists = useSelector((state) => state.watchlist.watchlist);
   const user = useSelector((state) => state.session.user);
   const crypto = useSelector((state) => state.crypto.getOneCrypto[0]);
@@ -25,7 +25,24 @@ const AddToListModal = ({ cryptoId }) => {
 
   useEffect(() => {
     setChecked(new Array(watchlists?.length).fill(false));
+
+    watchlists?.forEach((li, index) => {
+      li.cryptos.forEach((c) => {
+        if (c.id === +cryptoId) {
+          handleChange(index);
+        }
+      });
+    });
   }, [watchlists]);
+
+  const submit = () => {
+    checked.forEach((c, i) => {
+      if (c === true) {
+        dispatch(updateUserList(watchlists[i].id, cryptoId, user.id));
+      }
+    });
+    setShowModal(false);
+  };
 
   return (
     <div className="add-to-list-modal">
@@ -43,7 +60,7 @@ const AddToListModal = ({ cryptoId }) => {
             </div>
           ))}
       </div>
-      <button onClick={() => setShowModal(false)}>Save Changes</button>
+      <button onClick={() => submit()}>Save Changes</button>
     </div>
   );
 };
