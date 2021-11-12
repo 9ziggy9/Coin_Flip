@@ -26,7 +26,7 @@ const PurchaseCryptoPage = () => {
     const [price, setPrice] = useState(0)
     const [errors, setErrors] = useState([]);
 
-    const userId = currentUser.id;
+    const userId = currentUser?.id;
 
     useEffect(() => {
         if (singleCrypto)

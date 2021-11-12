@@ -22,7 +22,7 @@ const AccountNav = ({ dropdown }) => {
           <div className="portfolio-value">Portfolio Value</div>
         </div>
         <div className="avail-cash">
-          <h3 className="account-value">${user.cash.toLocaleString()}</h3>
+          <h3 className="account-value">${user?.cash.toLocaleString()}</h3>
           <div className="portfolio-value">Available Cash</div>
         </div>
       </div>
