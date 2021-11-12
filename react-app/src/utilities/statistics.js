@@ -30,7 +30,7 @@ export class Simulation {
   }
 }
 
-export class Crypto {
+export class Market {
   constructor(history, api_call) {
     this.realtime = [...history];
     this.api_call = api_call;

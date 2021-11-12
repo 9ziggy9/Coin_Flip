@@ -13,19 +13,19 @@ const SimPlot = () => {
   const [market, setMarket] = useState([]);
 
   const mock_history = [
-    {time: 1636664211, price: 12.22},
-    {time: 1636664212, price: 12.22},
-    {time: 1636664213, price: 12.22},
-    {time: 1636664214, price: 12.22},
-    {time: 1636664215, price: 12.22},
-    {time: 1636664216, price: 12.22},
-    {time: 1636664217, price: 12.22},
-    {time: 1636664218, price: 12.22},
-    {time: 1636664219, price: 12.22},
-    {time: 1636664220, price: 12.22},
-    {time: 1636664221, price: 12.22},
-    {time: 1636664222, price: 12.22},
-    {time: 1636664223, price: 12.22},
+    {time: 1636665211, price: 12.22},
+    {time: 1636666212, price: 15.22},
+    {time: 1636667213, price: 20.22},
+    {time: 1636668214, price: 12.22},
+    {time: 1636669215, price: 101.22},
+    {time: 1636670216, price: 200.22},
+    {time: 1636671217, price: 260.22},
+    {time: 1636672218, price: 124.22},
+    {time: 1636673219, price: 261.22},
+    {time: 1636674220, price: 246.22},
+    {time: 1636675221, price: 200.22},
+    {time: 1636676222, price: 391.22},
+    {time: 1636677223, price: 10.22},
   ];
 
   // const data = async () => {
@@ -39,11 +39,10 @@ const SimPlot = () => {
 
   // mu = mean value; sigma = standard deviation
   const test_sim = new Simulation(mock_history, log_normal, 200, 2);
-  test_sim.proceed();
+  test_sim.initialize()
 
   const [X, setDomain] = useState(test_sim.domain);
   const [Y, setRange] = useState(test_sim.range);
-  let i = 0;
 
   useEffect(() => {
     const intervalPointer = setInterval(() => {
