@@ -6,7 +6,7 @@ import { useParams } from "react-router";
 // import { getOneCryptocurrency, getAllCryptocurrency } from "../../store/purchaseCrypto";
 import { getOneCrypto } from "../../store/crypto";
 import { userPortfolios, changePortfolio, newPortfolio } from "../../store/portfolio";
-
+import AddToList from "../AddToListModal/AddToList";
 
 const PurchaseCryptoPage = () => {
     const dispatch = useDispatch();
@@ -166,6 +166,7 @@ const PurchaseCryptoPage = () => {
                         </ul>
                     </div>
                 </form>
+                <AddToList cryptoId={id} />
                 <div className="about">About</div>
                 <hr className="hr"/>
                 <div className="aboutContainer">
