@@ -42,3 +42,11 @@ def remove_list(watchlist_id):
     db.session.commit()
 
     return {'msg': 'ok'}
+
+@watchlist_routes.route('/<int:watchlist_id>', method=['PUT'])
+def edit_list(watchlist_id):
+    watchlist = Watchlist.query.filter_by(id=watchlist_id).one()
+    watchlist.name = request.json['name']
+    db.session.commit()
+
+    return {'msg': 'ok'}

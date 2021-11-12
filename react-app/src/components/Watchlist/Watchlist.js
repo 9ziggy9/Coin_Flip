@@ -77,8 +77,11 @@ const Watchlist = () => {
   const removal = (id) => {
     const main = document.querySelector(`.list-drop-${id}`);
     const del = document.querySelector(`.list-del-${id}`);
+    const edit = document.querySelector(`.edit-${id}`);
+
     main.classList.remove("hidden");
     del.classList.add("hidden");
+    edit.classList.add("hidden");
   };
 
   const RemoveOutside = (ref) => {
@@ -140,6 +143,20 @@ const Watchlist = () => {
     main.classList.remove("hidden");
     del.classList.add("hidden");
     setNum((old) => old + 1);
+  };
+
+  const showEditSettings = (id, name) => {
+    setEditInput(name);
+    const main = document.querySelector(`.list-drop-${id}`);
+    const edit = document.querySelector(`.edit-${id}`);
+
+    if (!main.classList.contains("hidden")) {
+      main.classList.add("hidden");
+      edit.classList.remove("hidden");
+    } else {
+      main.classList.remove("hidden");
+      edit.classList.add("hidden");
+    }
   };
 
   const submitEdit = () => {};
@@ -220,6 +237,7 @@ const Watchlist = () => {
                               "https://img.icons8.com/material-outlined/24/ffffff/settings--v1.png"
                             )
                           }
+                          onClick={() => showEditSettings(w.id, w.name)}
                         >
                           <img className="list-settings-img" src={imgUrl} />{" "}
                           Edit list
@@ -242,13 +260,19 @@ const Watchlist = () => {
                           Delete list
                         </div>
                       </div>
-                      <div className={`edit-watchlist-main edit-${w.id}`}>
+                      <div
+                        className={`edit-watchlist-main edit-${w.id} hidden`}
+                      >
                         <input
                           className="watchlist-edit-input"
                           onKeyPress={(e) => e.key === "Enter" && submitEdit()}
                           value={editInput}
                           onChange={(e) => setEditInput(e.target.value)}
                         />
+                        <div className="edit-btns">
+                          <button className="list-edit-yes">Submit</button>
+                          <button className="list-edit-no" onClick={() => showEditSettings(w.id, w.name)}>Cancel</button>
+                        </div>
                       </div>
                       <div
                         className={`watchlist-text-2-confirmation list-del-${w.id} hidden`}
