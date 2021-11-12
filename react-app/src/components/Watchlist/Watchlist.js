@@ -11,6 +11,7 @@ import "./Watchlist.css";
 const Watchlist = () => {
   const [num, setNum] = useState(0);
   const [input, setInput] = useState();
+  const [editInput, setEditInput] = useState("");
   const [imgUrl, setImgUrl] = useState(
     "https://img.icons8.com/material-outlined/24/ffffff/settings--v1.png"
   );
@@ -141,6 +142,8 @@ const Watchlist = () => {
     setNum((old) => old + 1);
   };
 
+  const submitEdit = () => {};
+
   return (
     <div className="watch-main">
       <div className="watch-cryptos">Cryptocurrencies</div>
@@ -238,6 +241,14 @@ const Watchlist = () => {
                           <img className="list-settings-img" src={delUrl} />{" "}
                           Delete list
                         </div>
+                      </div>
+                      <div className={`edit-watchlist-main edit-${w.id}`}>
+                        <input
+                          className="watchlist-edit-input"
+                          onKeyPress={(e) => e.key === "Enter" && submitEdit()}
+                          value={editInput}
+                          onChange={(e) => setEditInput(e.target.value)}
+                        />
                       </div>
                       <div
                         className={`watchlist-text-2-confirmation list-del-${w.id} hidden`}
