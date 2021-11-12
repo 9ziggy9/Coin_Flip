@@ -209,6 +209,9 @@
   margin-right: 40px;
   margin-top: 3px;
   box-shadow: 0px 12px 24px black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .watchlist-cryptos {
@@ -230,7 +233,7 @@
 
 .watchlist-crypto-right {
   text-align: right !important;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .watchlist-text {
@@ -238,4 +241,10 @@
   display: flex;
   align-items: center;
   font-weight: 600;
+  gap: 10px;
+}
+
+.list-settings-img {
+  height: 25px;
+  width: 25px;
 }
