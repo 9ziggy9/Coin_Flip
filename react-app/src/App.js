@@ -64,6 +64,7 @@ function App() {
           <PurchaseCryptoPage />
         </Route>
         <Route path="/transactions" exact={true}>
+          <AuthNavigation />
           <Transactions />
         </Route>
       </Switch>
