@@ -11,17 +11,13 @@ const getCrypto = (crypto) => ({
 const searchCrypto = (crypto) => ({
   type: SEARCH_CRYPTO,
   crypto,
-});
-
-const getCryptoPrices = (prices) => ({
-  type: GET_PRICES,
-  prices,
-});
+})
 
 const load_one = (loadOneCrypto) => ({
   type: LOAD_ONE,
   loadOneCrypto,
 });
+
 
 export const getAllCrypto = () => async (dispatch) => {
   const res = await fetch("/api/cryptocurrencies/get");
@@ -33,7 +29,6 @@ export const getAllCrypto = () => async (dispatch) => {
 
 export const getOneCrypto = (id) => async (dispatch) => {
   const response = await fetch(`/api/cryptocurrencies/${id}`);
-
   if (response.ok) {
     const cryptocurrencyDetail = await response.json();
     dispatch(load_one(cryptocurrencyDetail));
@@ -45,23 +40,15 @@ export const findCrypto = (results) => async (dispatch) => {
   const res = await fetch("/api/cryptocurrencies/", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify({ results }),
-  });
-  if (res.ok) {
-    const data = await res.json();
-    dispatch(searchCrypto(data));
-  }
-};
-
-export const getPrice = () => async (dispatch) => {
-  const res = await fetch("/api/cryptocurrencies/prices");
-  if (res.ok) {
-    const data = await res.json();
-    dispatch(getCryptoPrices(data));
-  }
-};
+    body: JSON.stringify({results})
+  })
+    if(res.ok) {
+      const data = await res.json()
+      dispatch(searchCrypto(data))
+    }
+}
 
 const initialState = { list: null };
 

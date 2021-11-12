@@ -7,6 +7,10 @@ import { Simulation, Market } from "../../utilities/statistics.js";
 // Transformation from uniform -> normal distributions
 import { log_normal } from "../../utilities/statistics.js";
 // Finnhub API
+// const finnhub = require('finnhub');
+// const api_key = finnhub.ApiClient.instance.authentications['api_key'];
+// api_key.apiKey = 'sandbox_c65h2eqad3i9pn79qhkg';
+// const finnhubClient = new finnhub.DefaultApi();
 
 export const SimPlot = () => {
   // const data = async () => {
