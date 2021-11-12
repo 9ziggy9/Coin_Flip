@@ -12,7 +12,7 @@ const Home = () => {
     const user = useSelector(state => state.session.user);
     const cryptos = useSelector(state => state.crypto.list);
     const portfolios = useSelector(state => Object.values(state.portfolio))
-    const [coin, setCoin] = useState('bitcoin');
+    const [coin, setCoin] = useState('fakecoin');
     const cryptoNames = new Set(cryptos.map(c => c.name.toLowerCase()));
     let [start_price] = cryptos.filter(p => p.gecko === coin);
     if(!cryptoNames.has(coin)) start_price = {price:0};
