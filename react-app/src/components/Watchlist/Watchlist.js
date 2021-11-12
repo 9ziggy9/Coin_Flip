@@ -278,7 +278,7 @@ const Watchlist = () => {
                         <input
                           className="watchlist-edit-input"
                           onKeyPress={(e) =>
-                            e.key === "Enter" && showEditSettings(w.id)
+                            e.key === "Enter" && editListName(w.id)
                           }
                           value={editInput}
                           onChange={(e) => setEditInput(e.target.value)}
