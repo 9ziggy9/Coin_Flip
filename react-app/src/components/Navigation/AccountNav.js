@@ -15,7 +15,7 @@ const AccountNav = ({ dropdown }) => {
 
   return (
   <>
-      <div className="account-name">{user.username}</div>
+      <div className="account-name">{user?.username}</div>
       <div className="portfolio-details">
         <div className="portfolio-info">
           <h3 className="account-value">$377.73</h3>

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { findCrypto } from "../../store/crypto";
@@ -125,7 +125,7 @@ const AuthNavigation = () => {
           {searchResults?.length > 0 &&
             search?.length > 0 &&
             searchResults.map((result, i) => (
-              <NavLink to={`/crypto/${result.id}`} key={i} className="result">
+              <NavLink to={`/crypto/${result.id}`} className="result" onClick={(e) => hide(e)}>
                 <div
                   dangerouslySetInnerHTML={{
                     __html: result.symbol.replace(

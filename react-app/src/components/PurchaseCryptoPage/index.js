@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./PurchaseCryptoPage.css"
+import { useParams } from "react-router";
 // import { getOneCryptocurrency, getAllCryptocurrency } from "../../store/purchaseCrypto";
 import { getOneCrypto } from "../../store/crypto";
 import { userPortfolios, changePortfolio, newPortfolio } from "../../store/portfolio";
@@ -11,8 +12,10 @@ const PurchaseCryptoPage = () => {
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.session.user);
     const history = useHistory();
-    const { pathname } = history.location;
-    const uniqueCryptoId = parseInt(pathname.split("/")[2])
+    // const { pathname } = history.location;
+    // const uniqueCryptoId = parseInt(pathname.split("/")[2])
+    const [uniqueCryptoId, setUniqueCryptoId] = useState()
+    const { id } = useParams()
     let cryptoPortfolio;
     let ports;
 
@@ -90,9 +93,10 @@ const PurchaseCryptoPage = () => {
     })
 
     useEffect(() => {
-        dispatch(getOneCrypto(uniqueCryptoId))
+        setUniqueCryptoId(+id)
+        dispatch(getOneCrypto(+id))
         .then(() => setLoaded(true))
-    }, [dispatch, uniqueCryptoId])
+    }, [dispatch, id])
 
     useEffect(() => {
         const errors = [];
