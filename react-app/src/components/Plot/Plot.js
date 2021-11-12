@@ -45,14 +45,21 @@ const SimPlot = () => {
       plot_bgcolor: 'black',
       paper_bgcolor: 'black',
       title: 'Lognormal',
-      font: {color: 'white'}
+      font: {color: 'white'},
+      xaxis: {
+        type:'date',
+      },
+      yaxis: {
+        range: [test_sim.mu - 20*test_sim.sigma,
+                test_sim.mu + 20*test_sim.sigma],
+        type: 'linear'
+      },
     }
-
     return (
       <Plot
         data={[
           {
-            x: X.map(x => {let t = new Date(x); return t.toLocaleString();}),
+            x: X,
             y: Y,
             type: 'scatter',
             showlegend: true,

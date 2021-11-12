@@ -21,7 +21,6 @@ const Home = () => {
     const data = async (coin) => {
         const res = await fetch("/api/cryptocurrencies/prices");
         const d = await res.json();
-        console.log('hello');
         setPrice(d.price[coin].usd);
     };
 
