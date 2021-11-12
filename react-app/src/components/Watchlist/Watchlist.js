@@ -32,7 +32,7 @@ const Watchlist = () => {
     document.querySelectorAll(".watchlist-options").forEach((i) => {
       i.style.display = "none";
       i.style.textDecoration = "none";
-      i.style.color = "white"
+      i.style.color = "white";
     });
   }, [num]);
 
@@ -73,6 +73,13 @@ const Watchlist = () => {
     }
   };
 
+  const removal = (id) => {
+    const main = document.querySelector(`.list-drop-${id}`);
+    const del = document.querySelector(`.list-del-${id}`);
+    main.classList.remove("hidden");
+    del.classList.add("hidden");
+  };
+
   const RemoveOutside = (ref) => {
     useEffect(() => {
       const handleClick = (e) => {
@@ -82,6 +89,7 @@ const Watchlist = () => {
             options.current[i].style.textDecoration = "none";
             options.current[i].style.color = "white";
             options.current[i].style.display = "none";
+            removal(i);
           }
         });
       };
