@@ -1,7 +1,7 @@
 const GET_CRYPTO = "crypto/GET_CRYPTO";
 const SEARCH_CRYPTO = "crypto/SEARCH_CRYPTO";
 const GET_PRICES = "crypto/GET_PRICES";
-const LOAD_ONE = "crypto/LOAD_ONE"
+const LOAD_ONE = "crypto/LOAD_ONE";
 
 const getCrypto = (crypto) => ({
   type: GET_CRYPTO,
@@ -18,10 +18,10 @@ const getCryptoPrices = (prices) => ({
   prices,
 });
 
-const load_one = loadOneCrypto => ({
+const load_one = (loadOneCrypto) => ({
   type: LOAD_ONE,
-  loadOneCrypto
-})
+  loadOneCrypto,
+});
 
 export const getAllCrypto = () => async (dispatch) => {
   const res = await fetch("/api/cryptocurrencies");
@@ -31,15 +31,15 @@ export const getAllCrypto = () => async (dispatch) => {
   }
 };
 
-export const getOneCrypto = (id) => async dispatch => {
+export const getOneCrypto = (id) => async (dispatch) => {
   const response = await fetch(`/api/cryptocurrencies/${id}`);
 
   if (response.ok) {
-      const cryptocurrencyDetail = await response.json();
-      dispatch(load_one(cryptocurrencyDetail))
-      return cryptocurrencyDetail;
+    const cryptocurrencyDetail = await response.json();
+    dispatch(load_one(cryptocurrencyDetail));
+    return cryptocurrencyDetail;
   }
-}
+};
 
 export const findCrypto = (results) => async (dispatch) => {
   const res = await fetch("/api/cryptocurrencies/", {
@@ -72,9 +72,9 @@ export default function reducer(state = initialState, action) {
     case SEARCH_CRYPTO:
       return { ...state, searchRes: action.crypto.search };
     case GET_PRICES:
-      return {...state, prices: action.prices.price}
+      return { ...state, prices: action.prices.price };
     case LOAD_ONE:
-      return {...state, getOneCrypto: action.loadOneCrypto.k}
+      return { ...state, getOneCrypto: action.loadOneCrypto.k };
     default:
       return state;
   }

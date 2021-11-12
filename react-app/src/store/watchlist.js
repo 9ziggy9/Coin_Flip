@@ -13,24 +13,31 @@ export const getUserList = (userId) => async (dispatch) => {
   }
 };
 
-export const updateUserList = (watchlistId, cryptoId, userId) => async (dispatch) => {
-  const tab = {
-    crypto_id: cryptoId,
-    user_id: userId
-  }
+export const updateUserList =
+  (watchlistId, cryptoId, userId) => async (dispatch) => {
+    const tab = {
+      crypto_id: cryptoId,
+      user_id: userId,
+    };
 
-  const res = await fetch(`/api/watchlist/add/${watchlistId}`, {
-    method: 'PUT',
+    const res = await fetch(`/api/watchlist/add/${watchlistId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(tab),
+    });
+  };
+
+export const newUserList = (obj) => async (dispatch) => {
+  const res = await fetch(`/api/watchlist/new/${obj.user_id}`, {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(tab)
-  })
-  if (res.ok) {
-    const data = res.json()
-    dispatch(getUserWatchlist(data))
-  }
-}
+    body: JSON.stringify(obj),
+  });
+};
 
 const initialState = { watchlist: null };
 
