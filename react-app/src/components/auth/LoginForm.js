@@ -19,6 +19,12 @@ const LoginForm = () => {
     }
   };
 
+  const demo = () => {
+    setEmail('demo@aa.io')
+    setPassword('password')
+    dispatch(login('demo@aa.io', 'password'))
+  }
+
   const updateEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -74,7 +80,7 @@ const LoginForm = () => {
               <button className="login-btn" type="submit">
                 Login
               </button>
-              <button className="login-btn">Demo User</button>
+              <button onClick={demo} className="login-btn">Demo User</button>
             </div>
           </div>
         </form>
