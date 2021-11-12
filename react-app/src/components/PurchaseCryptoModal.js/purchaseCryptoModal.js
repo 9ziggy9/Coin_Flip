@@ -7,7 +7,7 @@ function PurchaseCryptoModal() {
 
     return (
         <>
-        <button onClick={() => setShowModal(true)}>Log In</button>
+        <button onClick={() => setShowModal(true)}>Submit</button>
         {showModal && (
           <Modal onClose={() => setShowModal(false)}>
             <PurchaseCryptoPage />
@@ -15,7 +15,6 @@ function PurchaseCryptoModal() {
         )}
       </>
     );
-
 }
 
 export default PurchaseCryptoModal;

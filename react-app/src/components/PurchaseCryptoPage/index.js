@@ -51,40 +51,41 @@ const PurchaseCryptoPage = () => {
     }
 
     const onSubmit = async (e) => {
-        e.preventDefault()
-        let hasPortfolio = false;
-        let portfolioId
-        let currentAmount = 0;
+        
 
-        for (const portfolio in ports) {
-            if (ports[portfolio].crypto_id === uniqueCryptoId) {
-                portfolioId = ports[portfolio].id;
-                currentAmount = ports[portfolio].quantity
-                hasPortfolio = true;
-            }
-        }
+        // e.preventDefault()
+        // let hasPortfolio = false;
+        // let portfolioId
+        // let currentAmount = 0;
 
-        amount = parseInt(amount)
+        // for (const portfolio in ports) {
+        //     if (ports[portfolio].crypto_id === uniqueCryptoId) {
+        //         portfolioId = ports[portfolio].id;
+        //         currentAmount = ports[portfolio].quantity
+        //         hasPortfolio = true;
+        //     }
+        // }
 
-        if (transaction === "sell") {
-            amount = amount * -1;
-        }
+        // amount = parseInt(amount)
 
-        amount = currentAmount + amount;
+        // if (transaction === "sell") {
+        //     amount = amount * -1;
+        // }
 
-        const newTransaction = {
-            userId,
-            cryptoId: uniqueCryptoId,
-            quantity: amount,
-            purchasePrice: singleCrypto[0]?.price
-        }
-        console.log(newTransaction)
+        // amount = currentAmount + amount;
 
-        if (hasPortfolio) {
-            await dispatch(changePortfolio(newTransaction))
-        } else {
-            await dispatch(newPortfolio(newTransaction))
-        }
+        // const newTransaction = {
+        //     userId,
+        //     cryptoId: uniqueCryptoId,
+        //     quantity: amount,
+        //     purchasePrice: singleCrypto[0]?.price
+        // }
+
+        // if (hasPortfolio) {
+        //     await dispatch(changePortfolio(newTransaction))
+        // } else {
+        //     await dispatch(newPortfolio(newTransaction))
+        // }
 
     }
 
