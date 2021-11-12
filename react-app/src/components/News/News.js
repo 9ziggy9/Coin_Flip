@@ -17,7 +17,7 @@ const News = () => {
   return (
     <div className="news-main">
       {news &&
-        news.slice(0, 10).map((n) => (
+        news.slice(1, 10).map((n) => (
           <div className="news-card-main">
             <a href={n.url} target="_blank" className="news-card">
               <div className="news-text">

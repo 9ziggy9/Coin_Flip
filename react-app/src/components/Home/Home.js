@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from "react-router";
 import { userPortfolios } from "../../store/portfolio";
-import { getPrice, getAllCrypto } from "../../store/crypto";
+import { getPrice } from "../../store/crypto";
 import Plot from "../Plot/Plot"
 import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
@@ -17,10 +17,18 @@ const Home = () => {
 
     // This is important, if user is returning to /home and not entering
     // authentication, crypto_list needs to be loaded back into state.
+    useEffect(() => {
+    }, []);
 
+    let n = 1;
     useEffect(() => {
         const intervalPointer = setInterval(() => {
+            // NOTE: I think the issue is that perhaps one query that results in the
+            // the join table we are returning is counting as more than one?
+            console.log(`Request number ${n * 14}`)
+            // (async () => await dispatch(getPrice()))();
             console.log(crypto_list)
+            n++;
         }, 4000)
         return () => clearInterval(intervalPointer)
     },[])

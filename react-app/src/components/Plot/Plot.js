@@ -47,7 +47,6 @@ const SimPlot = () => {
 
   useEffect(() => {
     const intervalPointer = setInterval(() => {
-      i++;
       test_sim.proceed();
       setDomain(test_sim.domain);
       setRange(test_sim.range);

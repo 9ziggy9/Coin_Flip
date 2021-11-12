@@ -19,15 +19,14 @@ import Transactions from "./components/Transactions/Transaction";
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
-  const cryptos = useSelector((state) => state.crypto?.crypto);
 
   useEffect(() => {
     (async () => {
       await dispatch(authenticate());
-      setLoaded(true);
     })();
     (async () => {
       await dispatch(getAllCrypto())
+      setLoaded(true);
     })();
   }, [dispatch]);
 
