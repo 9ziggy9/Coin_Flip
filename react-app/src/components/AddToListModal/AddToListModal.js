@@ -16,25 +16,22 @@ const AddToListModal = ({ cryptoId }) => {
 
   const handleChange = (index) => {
     console.log("WEEE");
-    const updated = checked.map((bool, i) => (i === index ? !bool : bool));
+    const updated = checked.map((bool, i) => (i === +index ? !bool : bool));
+    console.log(updated);
     setChecked(updated);
   };
 
   useEffect(() => {
-    dispatch(getUserList(user.id));
-  }, [dispatch]);
-
-  useEffect(() => {
-    setChecked(new Array(watchlists?.length).fill(false));
-
-    watchlists?.forEach((li, num) => {
-      li.cryptos.forEach((c) => {
-        if (c.id === +cryptoId) {
-          handleChange(+num);
-        }
+    dispatch(getUserList(user.id)).then(() => {
+      watchlists?.forEach((li, num) => {
+        li.cryptos.forEach((c) => {
+          if (c.id === +cryptoId) {
+            handleChange(num);
+          }
+        });
       });
     });
-  }, [watchlists]);
+  }, [dispatch]);
 
   const submit = () => {
     checked.forEach((c, i) => {
