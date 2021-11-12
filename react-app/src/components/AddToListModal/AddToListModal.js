@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserList, updateUserList } from "../../store/watchlist";
+import { deleteFromList, getUserList, updateUserList } from "../../store/watchlist";
 import { useListModal } from "../../context/ListModal";
 import "./AddToList.css";
 
@@ -40,6 +40,8 @@ const AddToListModal = ({ cryptoId }) => {
     checked.forEach((c, i) => {
       if (c === true) {
         dispatch(updateUserList(watchlists[i].id, cryptoId, user.id));
+      } else {
+        dispatch(deleteFromList(watchlists[i].id, cryptoId))
       }
     });
     setShowModal(false);
