@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserList } from "../../store/watchlist";
+import { useListModal } from "../../context/ListModal";
 import "./AddToList.css";
 
 const AddToListModal = ({ cryptoId }) => {
   const dispatch = useDispatch();
+  const { setShowModal } = useListModal()
   const watchlists = useSelector((state) => state.watchlist.watchlist);
   const user = useSelector((state) => state.session.user);
   const crypto = useSelector((state) => state.crypto.getOneCrypto[0]);
@@ -18,8 +20,12 @@ const AddToListModal = ({ cryptoId }) => {
   };
 
   useEffect(() => {
-      dispatch(getUserList(user.id));
+    dispatch(getUserList(user.id));
   }, [dispatch]);
+
+  useEffect(() => {
+    setChecked(new Array(watchlists?.length).fill(false));
+  }, [watchlists]);
 
   return (
     <div className="add-to-list-modal">
@@ -37,6 +43,7 @@ const AddToListModal = ({ cryptoId }) => {
             </div>
           ))}
       </div>
+      <button onClick={() => setShowModal(false)}>Save Changes</button>
     </div>
   );
 };

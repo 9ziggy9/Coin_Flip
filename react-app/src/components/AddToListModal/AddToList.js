@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
-import { Modal } from '../../context/Modal';
-import AddToListModal from './AddToListModal';
+import React, { useState } from "react";
+import { Modal } from "../../context/Modal";
+import { useListModal } from "../../context/ListModal";
+import AddToListModal from "./AddToListModal";
 
 const AddToList = ({ cryptoId }) => {
-    const [showModal, setShowModal] = useState(false)
+  const { modal, setShowModal } = useListModal()
 
-    return (
-        <>
-        <button className="add-to-list" onClick={() => setShowModal(true)}>Add to List</button>
-        {showModal && (
-          <Modal onClose={() => setShowModal(false)}>
-            <AddToListModal cryptoId={cryptoId} />
-          </Modal>
-        )}
-      </>
-    );
-}
+  return (
+    <>
+      <button className="add-to-list" onClick={() => setShowModal(true)}>
+        Add to List
+      </button>
+      {modal && (
+        <Modal onClose={() => setShowModal(false)}>
+          <AddToListModal cryptoId={cryptoId} />
+        </Modal>
+      )}
+    </>
+  );
+};
 
-export default AddToList
+export default AddToList;

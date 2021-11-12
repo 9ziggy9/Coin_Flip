@@ -21,6 +21,11 @@
     margin: 30px 30px;
 }
 
+.add-list-card {
+    display: flex;
+    flex-direction: row;
+}
+
 .list-name {
     font-size: 16px;
     font-weight: 600;
