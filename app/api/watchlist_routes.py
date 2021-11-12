@@ -27,11 +27,30 @@ def add_crypto(watchlist_id):
 
     watchlist = Watchlist.query.filter_by(id=watchlist_id).first()
 
+    for item in watchlist.cryptocurrency:
+        if (item.id == crypto_id):
+            return {'msg': 'already in list'}
+
     crypto = Cryptocurrency.query.filter_by(id=crypto_id).first()
 
     watchlist.cryptocurrency.append(crypto)
     db.session.add(watchlist)
     db.session.commit()
+
+    return {'msg': 'ok'}
+
+@watchlist_routes.route('/delete/<int:watchlist_id>', methods=['PUT'])
+def remove_crypto(watchlist_id):
+
+    crypto_id = int(request.json['crypto_id'])
+
+    watchlist = Watchlist.query.filter_by(id=watchlist_id).first()
+
+    for item in watchlist.cryptocurrency:
+        if (item.id == crypto_id):
+            watchlist.remove(item)
+            db.session.add(watchlist)
+            db.session.commit()
 
     return {'msg': 'ok'}
 
