@@ -39,6 +39,19 @@ const AuthNavigation = () => {
     }
   };
 
+  const hideSearch = (e) => {
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      results.current.classList.add("hidden");
+      searchBar.current.style.backgroundColor = "black";
+      searchBar.current.style.borderBottom = "0.5px solid grey";
+      setSearch('')
+      addBorder();
+    } else {
+      searchBar.current.style.backgroundColor = "rgb(42, 47, 51)";
+      searchBar.current.style.borderBottom = "none";
+    }
+  };
+
   const show = (e) => {
     searchBar.current.style.backgroundColor = "rgb(42, 47, 51)";
     if (e.target.value.length > 0) {
@@ -106,6 +119,7 @@ const AuthNavigation = () => {
         <input
           placeholder="Search"
           className="search-bar"
+          value={search}
           onChange={(e) => setSearch(e.target.value)}
           onFocus={(e) => show(e)}
           ref={searchBar}
@@ -125,7 +139,7 @@ const AuthNavigation = () => {
           {searchResults?.length > 0 &&
             search?.length > 0 &&
             searchResults.map((result, i) => (
-              <NavLink to={`/crypto/${result.id}`} className="result" onClick={(e) => hide(e)}>
+              <NavLink to={`/crypto/${result.id}`} key={result.id} className="result" onClick={(e) => hideSearch(e)}>
                 <div
                   dangerouslySetInnerHTML={{
                     __html: result.symbol.replace(
