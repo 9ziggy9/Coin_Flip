@@ -69,8 +69,17 @@ const Transactions = () => {
                     <ul className="transaction_list_container">
                         {transactionsArr && transactionsArr?.map(transaction => (
                             <li className="transaction_li"key={transaction.id}>
+                                <div className="transaction_date_time_container">
+                                    <p className="transaction_date_time" style={{fontSize: '12px', fontWeight:'600', color: 'rgb(145, 159, 166)'}}>
+                                        {`${transaction.createdAt.split(" ")[2].toUpperCase()}
+                                        ${transaction.createdAt.split(" ")[1]}
+                                        ・
+                                        ${transaction.createdAt.split(" ")[4]}
+                                        ${transaction.createdAt.split(" ")[5]}`}
+                                    </p>
+                                </div>
                                 <div className="transaction_details_area">
-                                    <div className="transaction_details_container">
+                                    <div className="transaction_details">
                                         <div className="transaction_details_container">
                                             <h5 className="transaction_details_label">Transaction ID</h5>
                                             <h3 className="transaction_details_value">{transaction.id}</h3>
@@ -91,7 +100,10 @@ const Transactions = () => {
                                     <div className="transaction_details">
                                         <div className="transaction_details_container">
                                             <h5 className="transaction_details_label">Transaction Type</h5>
-                                            <h3 className="transaction_details_value">{transaction.type.toUpperCase()}</h3>
+                                            {transaction.type === "buy" ?
+                                                <h3 className="transaction_details_value" style={{color: 'rgb(0, 200, 5)'}}>{transaction.type.toUpperCase()}</h3> :
+                                                <h3 className="transaction_details_value" style={{color: 'rgb(255, 80, 0)'}}>{transaction.type.toUpperCase()}</h3>
+                                            }
                                         </div>
                                     </div>
                                 </div>
