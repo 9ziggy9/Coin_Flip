@@ -29,6 +29,19 @@ export const updateUserList =
     });
   };
 
+export const deleteFromList = (watchlistId, cryptoId) => async (dispatch) => {
+  const tab = {
+    crypto_id: cryptoId,
+  };
+  const res = await fetch(`/api/watchlist/delete/${watchlistId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(tab),
+  });
+};
+
 export const newUserList = (obj) => async (dispatch) => {
   const res = await fetch(`/api/watchlist/new/${obj.user_id}`, {
     method: "POST",
@@ -45,21 +58,21 @@ export const deleteUserList = (id) => async (dispatch) => {
     headers: {
       "Content-Type": "application/json",
     },
-  })
-}
+  });
+};
 
 export const editUserList = (id, newname) => async (dispatch) => {
   const obj = {
-    name: newname
-  }
+    name: newname,
+  };
   const res = await fetch(`/api/watchlist/${id}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(obj)
-  })
-}
+    body: JSON.stringify(obj),
+  });
+};
 
 const initialState = { watchlist: null };
 

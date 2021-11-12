@@ -43,7 +43,6 @@ def add_crypto(watchlist_id):
 def remove_crypto(watchlist_id):
 
     crypto_id = int(request.json['crypto_id'])
-    user_id = int(request.json['user_id'])
 
     watchlist = Watchlist.query.filter_by(id=watchlist_id).first()
 
