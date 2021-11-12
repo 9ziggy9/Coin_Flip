@@ -14,39 +14,32 @@ const Home = () => {
     const user = useSelector(state => state.session.user)
     const crypto_list = useSelector(state => state.crypto.list)
     const [indicator, setIndicator] = useState('indicator1');
+    const [price, setPrice] = useState(5999);
     const portfolios = useSelector(state => Object.values(state.portfolio))
 
     // This is important, if user is returning to /home and not entering
     // authentication, crypto_list needs to be loaded back into state.
-    useEffect(() => {
-        const intervalPointer = setInterval(() => {
-            // NOTE: I think the issue is that perhaps one query that results in the
-            // the join table we are returning is counting as more than one?
-            console.log(`Requesting price`);
-            (async () => await dispatch(getPrice()))();
-            //
-            // NOTE: Debug proof of concept
-            if (indicator === 'indicator1') setIndicator('indicator2')
-            else setIndicator('indicator1')
-            //
-            // console.log(crypto_list)
-        }, 8000)
-        return () => clearInterval(intervalPointer)
-    },[indicator])
+    const data = async (coin) => {
+        const res = await fetch("/api/cryptocurrencies/prices");
+        const d = await res.json();
+        console.log('hello');
+        setPrice(d.price[coin].usd);
+    };
 
-    const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
-    const price = entry.price
-    console.log(price);
+    useEffect(() => {const pInterval = setInterval(() => data('bitcoin'), 8000);
+                    return () => clearInterval(pInterval)}, []);
+
+    // const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
+    // const price = entry.price
 
     if (user) {
         return (
             <>
             <div className="home_main">
-              {/* total_cash_container */}
                 <div className="home_container_left">
-                  <div className={indicator}>
+                  <div className="total_cash_container">
                         <div className="cash_container">
-                            <h2 className="cash">{`$${user.cash}`}</h2>
+                            <h2 className="cash">{`$${price}`}</h2>
                         </div>
                         <div className="today_tracker">
                             <h5 className="today_values">$0.00 (0.00%)</h5>
