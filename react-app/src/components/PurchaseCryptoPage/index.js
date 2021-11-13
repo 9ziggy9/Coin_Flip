@@ -12,6 +12,7 @@ import {
 } from "../../store/portfolio";
 import AddToList from "../AddToListModal/AddToList";
 import { getUserList } from "../../store/watchlist";
+import CryptoNews from "./CryptoNews";
 
 const PurchaseCryptoPage = () => {
   const dispatch = useDispatch();
@@ -21,8 +22,6 @@ const PurchaseCryptoPage = () => {
   // const uniqueCryptoId = parseInt(pathname.split("/")[2])
   const [uniqueCryptoId, setUniqueCryptoId] = useState();
   const { id } = useParams();
-  const [test, setTest] = useState()
-  const [test2,setTest2] = useState()
   let cryptoPortfolio;
   let ports;
 
@@ -234,6 +233,7 @@ const PurchaseCryptoPage = () => {
           lobortis vel. Curabitur et aliquet eros. Aenean pulvinar semper augue
           et mollis.
         </div>
+        <CryptoNews crypto={singleCrypto[0]} />
       </div>
     );
   } else {

@@ -8,6 +8,9 @@ import Watchlist from "../Watchlist/Watchlist";
 import "./Home.css";
 
 const Home = () => {
+  const [test, setTest] = useState();
+  const [test2, setTest2] = useState();
+
   const user = useSelector((state) => state.session.user);
   const cryptos = useSelector((state) => state.crypto.list);
   const portfolios = useSelector((state) => Object.values(state.portfolio));
