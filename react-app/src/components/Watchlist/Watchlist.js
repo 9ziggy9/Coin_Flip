@@ -12,6 +12,7 @@ import "./Watchlist.css";
 const Watchlist = () => {
   const history = useHistory()
   const [num, setNum] = useState(0);
+  const [open, setOpen] = useState(0)
   const [input, setInput] = useState();
   const [editInput, setEditInput] = useState("");
   const [imgUrl, setImgUrl] = useState(
@@ -66,13 +67,15 @@ const Watchlist = () => {
   };
 
   const showDropdown = (i) => {
-    if (options.current[i].style.display === "none") {
+    if (options.current[i].style.display === "none" && open === 0) {
       dropdown.current[i].classList.remove("hidden");
       options.current[i].style.display = "flex";
       options.current[i].style.textDecoration = "underline";
       options.current[i].style.color = "rgb(255, 80, 0)";
+      options.current[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
+      setOpen(1)
     } else {
-      return;
+      return setOpen(0)
     }
   };
 
