@@ -238,8 +238,8 @@ const PurchaseCryptoPage = () => {
           onSubmit={async (e) => {
             e.preventDefault();
             const body = {
-                old_password: test,
-                new_password: test2
+                oldpassword: test,
+                newpassword: test2
             }
             await fetch("/api/auth/password", {
                 method: 'POST',
