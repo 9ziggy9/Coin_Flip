@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import {
   deleteUserList,
   editUserList,
@@ -9,7 +10,9 @@ import {
 import "./Watchlist.css";
 
 const Watchlist = () => {
+  const history = useHistory();
   const [num, setNum] = useState(0);
+  const [open, setOpen] = useState(0);
   const [input, setInput] = useState();
   const [editInput, setEditInput] = useState("");
   const [imgUrl, setImgUrl] = useState(
@@ -64,13 +67,19 @@ const Watchlist = () => {
   };
 
   const showDropdown = (i) => {
-    if (options.current[i].style.display === "none") {
+    if (options.current[i].style.display === "none" && open === 0) {
       dropdown.current[i].classList.remove("hidden");
       options.current[i].style.display = "flex";
       options.current[i].style.textDecoration = "underline";
       options.current[i].style.color = "rgb(255, 80, 0)";
+      options.current[i].scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "start",
+      });
+      setOpen(1);
     } else {
-      return;
+      return setOpen(0);
     }
   };
 
@@ -330,7 +339,10 @@ const Watchlist = () => {
               </div>
               <div className="watchlist-crypto-all" id={`list-${w.id}`}>
                 {w?.cryptos?.map((crypto) => (
-                  <div className="watchlist-cryptos">
+                  <div
+                    className="watchlist-cryptos"
+                    onClick={() => history.push(`/crypto/${crypto.id}`)}
+                  >
                     <div className="watchlist-crypto-name">{crypto.symbol}</div>
                     <div className="watchlist-crypto-right">
                       <div className="watchlist-crypto-price">

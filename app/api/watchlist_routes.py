@@ -47,8 +47,9 @@ def remove_crypto(watchlist_id):
     watchlist = Watchlist.query.filter_by(id=watchlist_id).first()
 
     for item in watchlist.cryptocurrency:
+        print(item)
         if (item.id == crypto_id):
-            watchlist.remove(item)
+            watchlist.cryptocurrency.remove(item)
             db.session.add(watchlist)
             db.session.commit()
 
