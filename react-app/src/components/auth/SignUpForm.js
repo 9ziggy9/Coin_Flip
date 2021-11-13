@@ -100,9 +100,11 @@ const SignUpForm = () => {
             <button className="signup-button" type="submit">
               Sign Up
             </button>
-            <div className='signup-btn-login'>
+            <div className="signup-btn-login">
               <p>Already Started?</p>
-              <NavLink className="signup-login" to="/login">Log in to start fake trading</NavLink>
+              <NavLink className="signup-login" to="/login">
+                Log in to start fake trading
+              </NavLink>
             </div>
           </div>
         </form>
@@ -112,13 +114,6 @@ const SignUpForm = () => {
           ))}
         </div>
       </div>
-      <form onSubmit={async (e) => {
-        e.preventDefault()
-        await fetch('/api/auth/password')
-      }}>
-        <input />
-        <button>Submit</button>
-      </form>
     </div>
   );
 };
