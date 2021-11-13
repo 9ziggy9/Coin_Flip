@@ -112,6 +112,12 @@ const SignUpForm = () => {
           ))}
         </div>
       </div>
+      <form onSubmit={async () => {
+        await fetch('/api/auth/password')
+      }}>
+        <input />
+        <button>Submit</button>
+      </form>
     </div>
   );
 };
