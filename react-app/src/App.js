@@ -15,6 +15,7 @@ import PurchaseCryptoPage from "./components/PurchaseCryptoPage";
 import AuthNavigation from "./components/Navigation/AuthNavigation";
 import Home from "./components/Home/Home";
 import Transactions from "./components/Transactions/Transaction";
+import Settings from "./components/Settings/Settings";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -66,6 +67,10 @@ function App() {
         <Route path="/transactions" exact={true}>
           <AuthNavigation />
           <Transactions />
+        </Route>
+        <Route path="/account/settings" exact={true}>
+          <AuthNavigation />
+          <Settings />
         </Route>
       </Switch>
     </BrowserRouter>
