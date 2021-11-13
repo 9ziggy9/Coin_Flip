@@ -47,7 +47,7 @@ const LoginForm = () => {
       </div>
       <div className="login-form">
         <div className="welcome-login">Welcome to CoinFlip</div>
-        <form onSubmit={onLogin} className="login-submit">
+        <form onSubmit={onLogin} className="login-submit" autoComplete="off">
           <div className="errors">
             {errors.map((error, ind) => (
               <div key={ind}>{error}</div>
