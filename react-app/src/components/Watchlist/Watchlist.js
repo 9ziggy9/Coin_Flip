@@ -10,9 +10,9 @@ import {
 import "./Watchlist.css";
 
 const Watchlist = () => {
-  const history = useHistory()
+  const history = useHistory();
   const [num, setNum] = useState(0);
-  const [open, setOpen] = useState(0)
+  const [open, setOpen] = useState(0);
   const [input, setInput] = useState();
   const [editInput, setEditInput] = useState("");
   const [imgUrl, setImgUrl] = useState(
@@ -72,10 +72,14 @@ const Watchlist = () => {
       options.current[i].style.display = "flex";
       options.current[i].style.textDecoration = "underline";
       options.current[i].style.color = "rgb(255, 80, 0)";
-      options.current[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
-      setOpen(1)
+      options.current[i].scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "start",
+      });
+      setOpen(1);
     } else {
-      return setOpen(0)
+      return setOpen(0);
     }
   };
 
@@ -335,7 +339,10 @@ const Watchlist = () => {
               </div>
               <div className="watchlist-crypto-all" id={`list-${w.id}`}>
                 {w?.cryptos?.map((crypto) => (
-                  <div className="watchlist-cryptos" onClick={() => history.push(`/crypto/${crypto.id}`)}>
+                  <div
+                    className="watchlist-cryptos"
+                    onClick={() => history.push(`/crypto/${crypto.id}`)}
+                  >
                     <div className="watchlist-crypto-name">{crypto.symbol}</div>
                     <div className="watchlist-crypto-right">
                       <div className="watchlist-crypto-price">

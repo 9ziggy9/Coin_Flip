@@ -108,8 +108,8 @@ export const MarketPlot = ({price,coin}) => {
         type:'date',
       },
       yaxis: {
-        range: [price - 100,
-                price + 100],
+        range: [price - 0.5,
+                price + 0.5],
         type: 'linear'
       },
     }
