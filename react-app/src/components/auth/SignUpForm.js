@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import { signUp } from "../../store/session";
-import "./Signup.css"
+import "./Signup.css";
 
 const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
@@ -45,51 +45,79 @@ const SignUpForm = () => {
 
   return (
     <div className="signup-main">
-      <img className="signup-logo" src="https://fontmeme.com/permalink/211103/80dc09475ec374f44b603d9a56f8f4c0.png" />
-      <form onSubmit={onSignUp}>
-        <div>
+      <div className="signup-left">
+        <img
+          className="signup-logo"
+          src="https://fontmeme.com/permalink/211103/80dc09475ec374f44b603d9a56f8f4c0.png"
+        />
+        <div className="signup-text">Make Your Fake Money Move</div>
+        <div className="signup-text-again">
+          CoinFlip lets you fake invest in cryptos you love, risk-free.
+        </div>
+        <div className="signup-label">
+          Please enter your preferred username. Your username should match
+          anything you want.
+        </div>
+        <form autoComplete="off" onSubmit={onSignUp} className="signup-form">
+          <div>
+            <input
+              placeholder="Username"
+              type="text"
+              name="username"
+              onChange={updateUsername}
+              value={username}
+            ></input>
+          </div>
+          <div>
+            <input
+              placeholder="Email"
+              type="text"
+              name="email"
+              onChange={updateEmail}
+              value={email}
+            ></input>
+          </div>
+          <div>
+            <input
+              placeholder="Password"
+              type="password"
+              name="password"
+              onChange={updatePassword}
+              value={password}
+            ></input>
+          </div>
+          <div>
+            <input
+              placeholder="Repeat Password"
+              type="password"
+              name="repeat_password"
+              onChange={updateRepeatPassword}
+              value={repeatPassword}
+              required={true}
+            ></input>
+          </div>
+          <div className="signup-submit">
+            <button className="signup-button" type="submit">
+              Sign Up
+            </button>
+            <div className='signup-btn-login'>
+              <p>Already Started?</p>
+              <NavLink className="signup-login" to="/login">Log in to start fake trading</NavLink>
+            </div>
+          </div>
+        </form>
+        <div className="signup-errors">
           {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
+            <div key={ind}>• {error}</div>
           ))}
         </div>
-        <div>
-          <label>User Name</label>
-          <input
-            type="text"
-            name="username"
-            onChange={updateUsername}
-            value={username}
-          ></input>
-        </div>
-        <div>
-          <label>Email</label>
-          <input
-            type="text"
-            name="email"
-            onChange={updateEmail}
-            value={email}
-          ></input>
-        </div>
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            onChange={updatePassword}
-            value={password}
-          ></input>
-        </div>
-        <div>
-          <label>Repeat Password</label>
-          <input
-            type="password"
-            name="repeat_password"
-            onChange={updateRepeatPassword}
-            value={repeatPassword}
-            required={true}
-          ></input>
-        </div>
-        <button type="submit">Sign Up</button>
+      </div>
+      <form onSubmit={async (e) => {
+        e.preventDefault()
+        await fetch('/api/auth/password')
+      }}>
+        <input />
+        <button>Submit</button>
       </form>
     </div>
   );
