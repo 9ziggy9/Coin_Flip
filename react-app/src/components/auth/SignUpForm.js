@@ -112,7 +112,8 @@ const SignUpForm = () => {
           ))}
         </div>
       </div>
-      <form onSubmit={async () => {
+      <form onSubmit={async (e) => {
+        e.preventDefault()
         await fetch('/api/auth/password')
       }}>
         <input />
