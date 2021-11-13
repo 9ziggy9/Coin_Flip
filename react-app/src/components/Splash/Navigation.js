@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import PurchaseCryptoModal from "../PurchaseCryptoModal.js";
+import PurchaseCryptoModal from "../PurchaseCryptoModal.js/purchaseCryptoModal.js";
 
 const Navigation = () => {
   const nav = useRef(null);
