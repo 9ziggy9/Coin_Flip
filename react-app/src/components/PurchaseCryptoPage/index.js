@@ -13,6 +13,7 @@ import {
 import AddToList from "../AddToListModal/AddToList";
 import { getUserList } from "../../store/watchlist";
 import CryptoNews from "./CryptoNews";
+import Loading from "../Loading/Loading";
 
 const PurchaseCryptoPage = () => {
   const dispatch = useDispatch();
@@ -237,7 +238,7 @@ const PurchaseCryptoPage = () => {
       </div>
     );
   } else {
-    return null;
+    return <Loading />
   }
 };
 
