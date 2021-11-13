@@ -97,6 +97,9 @@ const Watchlist = () => {
     useEffect(() => {
       const handleClick = (e) => {
         ref.current.forEach((r, i) => {
+          if (!e?.target?.classList?.contains('watchlist-options') && !e?.target?.nextElementSibling?.classList.contains('hidden')) {
+            setOpen(0)
+          }
           if (ref.current[i] && !ref.current[i].contains(e.target)) {
             dropdown.current[i].classList.add("hidden");
             options.current[i].style.textDecoration = "none";
