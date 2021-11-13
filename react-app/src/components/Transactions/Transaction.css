@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    height: 50em;
 }
 
 .transaction_container_left{
@@ -10,9 +9,9 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    width: 30%;
+    width: 350px;
     height: 100%;
-    margin-right: 2em;
+    margin-right: 1rem;
 }
 
 .crypto_title_container {
@@ -60,9 +59,9 @@
 }
 
 .transaction_container_right{
-    width: 60%;
+    width: 600px;
     height: 100%;
-    margin-left: 2em;
+    margin-left: 1rem;
 }
 
 .transaction_title_container{
@@ -75,6 +74,8 @@
     width: 8rem;
     font-size: 22px;
     font-weight: 600;
+    margin-top: 1.77em;
+    margin-bottom: .3em;
 
 }
 
@@ -87,9 +88,17 @@
 
 .transaction_li {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     list-style-type: none;
-    margin: 15px;
+    margin-top: 1.3em;
+}
+
+.transaction_date_time_container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    /* background-color: brown; */
 }
 
 .transaction_details_area {
@@ -99,7 +108,6 @@
     border-top-left-radius: 18px;
     border-top-right-radius: 18px;
     border-bottom-right-radius: 18px;
-
     width: 400px;
 }
 
@@ -110,6 +118,7 @@
     justify-content: space-between;
     width: 100%;
     height: 80%;
+
 
 }
 

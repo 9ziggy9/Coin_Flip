@@ -9,8 +9,9 @@ import { userPortfolios, changePortfolio, newPortfolio } from "../../store/portf
 import AlertPopup from "../popup";
 
 //used for alert
-import React from 'react'
-import Alert from 'react-popup-alert'
+import { confirm } from "react-confirm-box";
+
+import AddToList from "../AddToListModal/AddToList";
 
 const PurchaseCryptoPage = () => {
     const dispatch = useDispatch();
@@ -22,6 +23,8 @@ const PurchaseCryptoPage = () => {
     const { id } = useParams()
     let cryptoPortfolio;
     let ports;
+    let totalValue;
+    let totalValueString;
 
     const [transaction, setTransaction] = useState("purchase")
     let [amount, setAmount] = useState(0)
@@ -30,7 +33,7 @@ const PurchaseCryptoPage = () => {
     const [price, setPrice] = useState(0)
     const [errors, setErrors] = useState([]);
 
-    const userId = currentUser.id;
+    const userId = currentUser?.id;
 
     useEffect(() => {
         if (singleCrypto)
@@ -46,7 +49,6 @@ const PurchaseCryptoPage = () => {
     ports = useSelector((state) => state.portfolio)
     console.log(ports)
 
-
     const colorChange = (history) => {
         document.querySelectorAll(".hisButt").forEach((button) => {
             button.style.color = "white"
@@ -54,68 +56,80 @@ const PurchaseCryptoPage = () => {
         document.getElementById(history).style.color = "orangered"
     }
 
-    //used for alert
-    const [alert, setAlert] = React.useState({
-        type: 'error',
-        text: 'This is a alert message',
-        show: false
-    })
-
-    function onCloseAlert() {
-        setAlert({
-        type: '',
-        text: '',
-        show: false
-        })
-    }
-
-    function onShowAlert(type) {
-        setAlert({
-        type: type,
-        text: `Demo alert`,
-        show: true
-        })
-    }
-
     const onSubmit = async (e) => {
-        // e.preventDefault()
-        // let hasPortfolio = false;
-        // let portfolioId
-        // let currentAmount = 0;
+        e.preventDefault();
 
-        // for (const portfolio in ports) {
-        //     if (ports[portfolio].crypto_id === uniqueCryptoId) {
-        //         portfolioId = ports[portfolio].id;
-        //         currentAmount = ports[portfolio].quantity
-        //         hasPortfolio = true;
-        //     }
-        // }
 
-        // amount = parseInt(amount)
+        const options = {
+            labels: {
+              confirmable: `Confirm`,
+              cancellable: "Cancel"
+            }
+        }
 
-        // if (transaction === "sell") {
-        //     amount = amount * -1;
-        // }
+        let coinSingularOrPlural;
+        amount = parseInt(amount)
 
-        // amount = currentAmount + amount;
+        if (amount === 1) {
+            coinSingularOrPlural = "coin"
+        } else {
+            coinSingularOrPlural = "coins"
+        }
 
-        // const newTransaction = {
-        //     userId,
-        //     cryptoId: uniqueCryptoId,
-        //     quantity: amount,
-        //     purchasePrice: singleCrypto[0]?.price
-        // }
+        const result = await confirm(`Please confirm your ${transaction} of ${amount} ${singleCrypto[0]?.name} ${coinSingularOrPlural}. Estimated value: $${totalValue.toLocaleString("en-US")} `, options);
 
-        // if (hasPortfolio) {
-        //     await dispatch(changePortfolio(newTransaction))
-        // } else {
-        //     await dispatch(newPortfolio(newTransaction))
-        // }
-    }
+        if (result) {
+            let hasPortfolio = false;
+            let portfolioId
+            let currentAmount = 0;
+
+            for (const portfolio in ports) {
+                if (ports[portfolio].crypto_id === uniqueCryptoId) {
+                    portfolioId = ports[portfolio].id;
+                    currentAmount = ports[portfolio].quantity
+                    hasPortfolio = true;
+                }
+            }
+
+            if (transaction === "sell") {
+                amount = amount * -1;
+            }
+
+            amount = currentAmount + amount;
+
+            const newTransaction = {
+                userId,
+                cryptoId: uniqueCryptoId,
+                quantity: amount,
+                purchasePrice: singleCrypto[0]?.price
+            }
+
+            if (hasPortfolio) {
+                await dispatch(changePortfolio(newTransaction))
+            } else {
+                await dispatch(newPortfolio(newTransaction))
+            }
+        } else {
+            console.log("You click No!");
+        }
+    };
 
     const singleCrypto = useSelector(state => {
         return state.crypto?.getOneCrypto;
     })
+
+    if (singleCrypto && amount) {
+        totalValue = (singleCrypto[0].price * amount).toLocaleString("en-US");
+        if (transaction === "sell") {
+            totalValueString = `Estimated Value: $${totalValue}`
+        } else if (transaction === "purchase") {
+            totalValueString = `Estimated Cost: $${totalValue}`
+        } else if (isNaN(totalValue)) {
+            totalValueString = ""
+        } else {
+            totalValueString = ""
+        }
+    }
 
     useEffect(() => {
         setUniqueCryptoId(+id)
@@ -129,6 +143,11 @@ const PurchaseCryptoPage = () => {
         if (isNaN(amount) || amount === "") {
             errors.push("Please enter a number")
         }
+
+        if (amount < 0) {
+            errors.push("Please enter a value greater than zero")
+        }
+
         setErrors(errors)
     }, [amount]);
 
@@ -153,7 +172,7 @@ const PurchaseCryptoPage = () => {
                         <button type="button" className="hisButt" id="all" onClick={()=>colorChange("all")} style={{color: textColor}}>ALL</button>
                     </div>
                 </div>
-                <form className="formContainer" onSubmit={onSubmit}>
+                <form className="formContainer" onSubmit={(e)=>onSubmit(e)}>
                     <div className="purchaseOrSell" >
                         <input
                             className="purchase"
@@ -181,32 +200,14 @@ const PurchaseCryptoPage = () => {
                             placeholder="amount"
                             onChange={(e) => setAmount(e.target.value)}
                         />
+                        <div className="estValue">
+                        {/* Estimated Value: {(amount * singleCrypto[0]?.price).toFixed(2)} */}
+                        {totalValueString}
+                         </div>
                     </div>
 
                     <div className="subButtContainer">
-                        <div>
-                            <button disabled={errors.length > 0} onClick={() => onShowAlert('warning')}>
-                            Submit
-                            </button>
-                        </div>
-                        <Alert
-                            header={'Confirm Transaction'}
-                            btnText={'Close'}
-                            text={alert.text}
-                            type={alert.type}
-                            show={alert.show}
-                            onClosePress={onCloseAlert}
-                            pressCloseOnOutsideClick={true}
-                            showBorderBottom={true}
-                            alertStyles={{}}
-                            headerStyles={{}}
-                            textStyles={{}}
-                            buttonStyles={{}}
-                        />
-                    </div>
-
-                    <div className="subButtContainer">
-                        {/* <button disabled={errors.length > 0} type="submit" className="submitButt"> Submit </button> */}
+                        <button disabled={errors.length > 0} type="submit" className="submitButt" > Submit </button>
                         <ul className="errors">
                             {errors.map(error => (
                                 <li key={error}>{error}</li>
@@ -214,6 +215,9 @@ const PurchaseCryptoPage = () => {
                         </ul>
                     </div>
                 </form>
+                <div className="add_to_list">
+                    <AddToList className="addToListButt" cryptoId={id} />
+                </div>
                 <div className="about">About</div>
                 <hr className="hr"/>
                 <div className="aboutContainer">
