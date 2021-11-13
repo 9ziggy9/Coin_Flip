@@ -21,6 +21,8 @@ const PurchaseCryptoPage = () => {
   // const uniqueCryptoId = parseInt(pathname.split("/")[2])
   const [uniqueCryptoId, setUniqueCryptoId] = useState();
   const { id } = useParams();
+  const [test, setTest] = useState()
+  const [test2,setTest2] = useState()
   let cryptoPortfolio;
   let ports;
 
@@ -235,10 +237,21 @@ const PurchaseCryptoPage = () => {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            await fetch("/api/auth/password");
+            const body = {
+                old_password: test,
+                new_password: test2
+            }
+            await fetch("/api/auth/password", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: body
+            });
           }}
         >
-          <input />
+          <input value={test} onChange={(e) => setTest(e.target.value)} />
+          <input value={test2} onChange={(e) => setTest2(e.target.value)} />
           <button>Submit</button>
         </form>
       </div>
