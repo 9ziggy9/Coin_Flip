@@ -3,13 +3,23 @@
   height: 100vh;
   background-color: rgb(16, 10, 32) !important;
   animation: move-it 500ms linear;
+  padding-top: 2%;
 }
 
 .add-close {
-  padding-top: 2%;
+  height: 52px;
+  width: 52px;
   margin-left: 96%;
   font-size: 24px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-close:hover {
+  border-radius: 26px;
+  background-color: #241E33;
 }
 
 .add-error {
@@ -25,18 +35,24 @@
   font-weight: 500;
 }
 
+.add-warning {
+  color: grey;
+  font-size: 14px !important;
+}
+
 .add-input {
   padding: 0 13px;
   height: 36px;
   width: 354px;
   color: white;
-  background-color: #241E33;
+  background-color: #241e33;
   border: none;
   border-radius: 4px;
 }
 
 .add-input:focus {
-  outline: none;
+  outline: 1px solid #c3f53c !important;
+  background-color: rgb(16, 10, 32) !important;
 }
 
 .add-input:hover {
@@ -48,6 +64,22 @@
   display: flex;
   gap: 50px;
   align-items: center;
+}
+
+.add-submit {
+  width: 142px;
+  height: 48px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 4px;
+  margin-top: 40px;
+  background-color: #c3f53c;
+  border: none;
+  cursor: pointer;
+}
+
+.add-submit:hover {
+  background-color: #ccf759;
 }
 
 @keyframes move-it {
@@ -62,8 +94,8 @@
   }
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
