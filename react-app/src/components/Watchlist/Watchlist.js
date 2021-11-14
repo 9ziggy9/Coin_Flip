@@ -99,9 +99,16 @@ const Watchlist = () => {
     }
   };
 
-  const negative = (num) => {
-    if (num < 0) {
+  const checkNum = (b, c, id) => {
+    let num = ((b - c) / b) * 100;
+
+    if (num > 0) {
+      document.querySelector(`.percentage-${id}`)?.classList.add("green");
+    } else if (num < 0) {
+      document.querySelector(`.percentage-${id}`)?.classList.add("red");
     }
+
+    return num.toFixed(2) + "%";
   };
 
   const removal = (id) => {
@@ -224,7 +231,10 @@ const Watchlist = () => {
                 <div className="watch-crypto-name">
                   {crypto.map((c) => (c.id === p.crypto_id ? c.name : null))}
                 </div>
-                <div className="watch-crypto-shares">{p.quantity.toLocaleString()} {p.quantity === 1 ? "coin" : "coins"}</div>
+                <div className="watch-crypto-shares">
+                  {p.quantity.toLocaleString()}{" "}
+                  {p.quantity === 1 ? "coin" : "coins"}
+                </div>
               </div>
               <div className="watch-crypto-card-right">
                 <div className="watch-crypto-price">
@@ -232,13 +242,10 @@ const Watchlist = () => {
                     ? p.purchase_price.toLocaleString()
                     : p.purchase_price.toFixed(3)}
                 </div>
-                <div className={`watch-crypto-percentage ${p.id}`}>
+                <div className={`watch-crypto-percentage percentage-${p.id}`}>
                   {crypto.map((c) =>
                     c.id === p.crypto_id
-                      ? (
-                          ((p.purchase_price - c.price) / p.purchase_price) *
-                          100
-                        ).toFixed(2) + "%"
+                      ? checkNum(p.purchase_price, c.price, p.id)
                       : null
                   )}
                 </div>
