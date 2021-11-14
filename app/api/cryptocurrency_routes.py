@@ -4,7 +4,7 @@ from app.models import Cryptocurrency, db
 import requests
 from pycoingecko import CoinGeckoAPI
 from datetime import datetime, date, timedelta
-from utiliies import get_yearly_prices
+from .utilities import get_yearly_prices
 
 cg = CoinGeckoAPI()
 
@@ -95,3 +95,7 @@ def get_coins():
                 db.session.commit()
 
     return {"price": price}
+
+@cryptocurrency_routes.route('/<string:coin>')
+def get_history(coin):
+    get_yearly_prices(coin)
