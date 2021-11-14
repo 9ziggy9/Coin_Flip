@@ -38,9 +38,9 @@ export class Simulation {
 }
 
 export class Market {
-  constructor(history, api_call) {
-    this.realtime = [...history];
-    this.api_call = api_call;
+  constructor(name) {
+    this.history = JSON.parse(fetch(`/api/cryptocurrencies/${name}`))
+    this.realtime = [];
     this.domain = this.realtime.map(datapoint => datapoint.time);
     this.range = this.realtime.map(datapoint => datapoint.price);
   }
