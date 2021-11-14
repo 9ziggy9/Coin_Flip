@@ -4,6 +4,7 @@ from app.models import Cryptocurrency, db
 import requests
 from pycoingecko import CoinGeckoAPI
 from datetime import datetime, date, timedelta
+from utiliies import get_yearly_prices
 
 cg = CoinGeckoAPI()
 
@@ -54,20 +55,20 @@ def get_coins():
     coins = cg.get_coins_list()
 
     top = [
-    "USD Coin",
-    "Tether",
-    "Terra",
-    "Solana",
-    "SHIBA INU",
-    "XRP",
-    "Polkadot",
-    "Litecoin",
-    "Ethereum",
-    "Dogecoin",
-    "Cardano",
-    "Bitcoin",
-    "Binance Coin",
-    "Avalanche",
+        "USD Coin",
+        "Tether",
+        "Terra",
+        "Solana",
+        "SHIBA INU",
+        "XRP",
+        "Polkadot",
+        "Litecoin",
+        "Ethereum",
+        "Dogecoin",
+        "Cardano",
+        "Bitcoin",
+        "Binance Coin",
+        "Avalanche",
     ]
 
     items = [item.lower() for item in top]
