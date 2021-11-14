@@ -28,7 +28,7 @@ export const getUserTransactions = (userId) => async (dispatch) => {
 }
 
 export const createTransaction = (newTransaction) => async (dispatch) => {
-    const { cryptoId, userId, type, price, quantity, createdAt } = newTransaction;
+    const { cryptoId, userId, type, price, quantity } = newTransaction;
     const res = await fetch(`/api/transactions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -38,7 +38,6 @@ export const createTransaction = (newTransaction) => async (dispatch) => {
             type,
             price,
             quantity,
-            createdAt
         })
     });
     const userTransactionsData = await res.json();

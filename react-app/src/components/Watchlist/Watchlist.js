@@ -31,9 +31,14 @@ const Watchlist = () => {
   const portfolio = useSelector((state) => state.portfolio.portfolio);
   const crypto = useSelector((state) => state.crypto.list);
 
+  const getData = async () => {
+    await fetch("/api/cryptocurrencies/prices");
+  };
+
   useEffect(() => {
+    getData();
     dispatch(getUserList(user?.id));
-    dispatch(userPortfolios(user?.id))
+    dispatch(userPortfolios(user?.id));
   }, [dispatch]);
 
   useEffect(() => {
@@ -63,7 +68,7 @@ const Watchlist = () => {
 
   const cancel = (e) => {
     e.preventDefault();
-    setInput('')
+    setInput("");
     listInput.current.classList.add("hidden");
   };
 
@@ -87,6 +92,12 @@ const Watchlist = () => {
       return setOpen(0);
     }
   };
+
+  const negative = (num) => {
+    if (num < 0) {
+
+    }
+  }
 
   const removal = (id) => {
     const main = document.querySelector(`.list-drop-${id}`);
@@ -199,7 +210,11 @@ const Watchlist = () => {
       <div className="watch-crypto">
         {portfolio &&
           portfolio?.map((p) => (
-            <div className="watch-crypto-card" key={p} onClick={() => history.push(`/crypto/${p.crypto_id}`)}>
+            <div
+              className="watch-crypto-card"
+              key={p}
+              onClick={() => history.push(`/crypto/${p.crypto_id}`)}
+            >
               <div className="watch-crypto-card-left">
                 <div className="watch-crypto-name">
                   {crypto.map((c) => (c.id === p.crypto_id ? c.name : null))}
@@ -212,7 +227,16 @@ const Watchlist = () => {
                     ? p.purchase_price.toLocaleString()
                     : p.purchase_price.toFixed(3)}
                 </div>
-                <div className="watch-crypto-percentage">-6.95%</div>
+                <div className={`watch-crypto-percentage ${p.id}`}>
+                  {crypto.map((c) =>
+                    c.id === p.crypto_id
+                      ? (
+                         ((p.purchase_price - c.price) / p.purchase_price) *
+                          100
+                        ).toFixed(2) + "%"
+                      : null
+                  )}
+                </div>
               </div>
             </div>
           ))}
