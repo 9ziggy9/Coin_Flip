@@ -15,7 +15,7 @@ const Home = () => {
   const user = useSelector((state) => state.session.user);
   const cryptos = useSelector((state) => state.crypto.list);
   const portfolios = useSelector((state) => Object.values(state.portfolio));
-  const [coin, setCoin] = useState("bitcoin");
+  const [coin, setCoin] = useState("fakecoin");
   const cryptoNames = new Set(cryptos.map((c) => c.name.toLowerCase()));
   let [start_price] = cryptos.filter((p) => p.gecko === coin);
   if (!cryptoNames.has(coin)) start_price = { price: 0 };
@@ -35,49 +35,25 @@ const Home = () => {
 
   // const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
   // const price = entry.price
-
-  // MARKETS AND SIMULATIONS
-  const INTERVAL = 30;
-  let coinMarket;
-  let simMarket;
-  const [X,setDomain] = useState([]);
-  const [Y,setRange] = useState([]);
-  const [Xs,setSDomain] = useState([]);
-  const [Ys,setSRange] = useState([]);
+  const [fn, setFunction] = useState('log_normal');
   const [mu, setMean] = useState(1000);
   const [sigma, setDeviation] = useState(100);
+  const [X, setDomain] = useState([]);
+  const [Y, setRange] = useState([]);
 
-  useEffect( () => {
-      coinMarket = new Market(coin);
-      coinMarket.proceed(INTERVAL);
-      setDomain(coinMarket.domain);
-      setRange(coinMarket.range);
-
-      simMarket = new Simulation([], log_normal, mu, sigma)
-      console.log(simMarket)
-      simMarket.initialize()
-      setDomain(simMarket.domain)
-      setRange(simMarket.Range)
-  },[])
-
-  useEffect(() => {
-    const intervalPointer = setInterval(() => {
-      coinMarket.proceed(INTERVAL);
-      setDomain(coinMarket.domain);
-      setRange(coinMarket.range);
-    }, 10000)
-    return () => clearInterval(intervalPointer);
-  }, [])
-
-  useEffect(() => {
-    const intervalPointer = setInterval(() => {
-      simMarket.proceed()
-      setSDomain(simMarket.domain);
-      setSRange(simMarket.range);
-    }, 1000)
-    return () => clearInterval(intervalPointer);
-  }, [])
-
+  useEffect (() => {
+    if (cryptoNames.has(coin)) {
+      const {domain, range} = Market.initialize(coin,30);
+      setDomain(domain);
+      setRange(range);
+    } else {
+      if (fn === 'log_normal') {
+        const {domain, range} = Simulation.initialize(50, log_normal,mu,sigma)
+        setDomain(domain);
+        setRange(range);
+      }
+    }
+  }, []);
 
   if (user) {
     return (
@@ -100,8 +76,12 @@ const Home = () => {
             </div>
             <div className="porfolio_chart_container">
               {cryptoNames.has(coin) ? (
-                <MarketPlot X={X} Y={Y} />
-              ) : (<SimPlot X={Xs} Y={Ys} mu={mu} sigma={sigma}/>)}
+                <MarketPlot coin={coin} X={X} Y={Y}
+                            setRange={setRange} setDomain={setDomain}/>
+              ) : (
+                <SimPlot fn={fn} mu={mu} sigma={sigma} X={X} Y={Y}
+                  setRange={setRange} setDomain={setDomain}/>
+              )}
             </div>
             <div className="buying_power_container">
               <div className="buying_power_label_container">

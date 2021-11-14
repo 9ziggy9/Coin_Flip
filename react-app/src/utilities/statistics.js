@@ -8,13 +8,12 @@ export class Simulation {
     this.range = this.realtime.map(datapoint => datapoint.price);
   }
 
-  initialize() {
-    if (!this.realtime.length) {
-      const interval = 50;
-      const past = Date.now() - 1000*interval
-      this.domain = (()=>new Array(interval).fill(0))().map((_,i) => past + i*1000);
-      this.realtime = this.domain
-                          .map(d => ({time:d, price:this.fn(this.mu, this.sigma)}));
+  static initialize(length, fn, mu, sigma) {
+    if (length < 365) {
+      const past = Date.now() - 1000*length
+      const domain = (()=>new Array(length).fill(0))().map((_,i) => past + i*1000);
+      const range = domain.map(() => fn(mu, sigma));
+      return {domain: domain, range: range}
     }
   }
 
@@ -51,6 +50,20 @@ export class Market {
   }
 
   async proceed(interval) {
+    if (interval > 365) {
+      console.log('Error: desired time length out of bounds')
+      console.log('Pleae supply a number of days less than 365')
+      return {domain: 0, range: 0}
+    }
+    const res = await this.fetchHistory();
+    const past = res.slice(-interval);
+    console.log('retrieved history')
+    this.domain = past.map(datapoint => datapoint[0]);
+    this.range = past.map(datapoint => Number(datapoint[1].toFixed(2)));
+    return {domain: this.domain, range: this.ranger}
+  }
+
+  static async intialize(name, interval) {
     if (interval > 365) {
       console.log('Error: desired time length out of bounds')
       console.log('Pleae supply a number of days less than 365')
