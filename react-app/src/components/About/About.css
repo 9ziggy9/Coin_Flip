@@ -1,0 +1,86 @@
+.about-main {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  flex-direction: column;
+}
+
+.about-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 60px;
+}
+
+.about-lower {
+  display: flex;
+  width: 50vw;
+  justify-content: space-between;
+}
+
+.about-left {
+  font-size: 24px;
+  width: 500px;
+}
+
+.about-right {
+  border: 0.5px solid grey;
+  height: 40vh;
+  width: 276px;
+  background-color: rgb(30, 33, 36);
+  border-radius: 6px;
+  overflow-y: auto;
+  overflow-x: none;
+  word-break: break-all;
+  position: -webkit-sticky;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.revan {
+  width: calc(100% - 40px);
+  padding: 20px 20px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+
+.revan:hover {
+  background-color: rgb(48, 54, 58);
+}
+
+.linkedin {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.linkedin-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.about-name {
+  margin-bottom: 20px;
+}
+
+.about-me {
+  display: flex;
+  gap: 50px;
+}
+
+.about-bio {
+  margin-bottom: 50px;
+}
+
+.about-fav-crypto {
+  margin-bottom: 50px;
+}
+
+.revan.aboutlink {
+  color: rgb(81, 97, 112);
+}
