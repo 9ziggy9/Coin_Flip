@@ -195,7 +195,7 @@ const AuthNavigation = () => {
             Account
           </div>
           <div className="account-dropdown hidden" ref={dropdown}>
-            <AccountNav dropdown={dropdown} />
+            <AccountNav />
           </div>
         </div>
       </div>

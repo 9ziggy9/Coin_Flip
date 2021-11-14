@@ -100,7 +100,6 @@ span {
 }
 
 .account-dropdown {
-  z-index: 1;
   position: absolute;
   background-color: rgb(30,33,36);
   width: 284px;
@@ -112,7 +111,7 @@ span {
   text-align: left;
   margin-right: 50px;
   margin-top: 10px;
-  z-index: 50;
+  z-index: 1;
 }
 
 .account-word {

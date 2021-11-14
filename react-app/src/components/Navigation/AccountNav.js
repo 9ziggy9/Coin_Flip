@@ -2,23 +2,25 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { logout } from "../../store/session";
+import { useListModal } from "../../context/ListModal";
 
-const AccountNav = ({ dropdown }) => {
+const AccountNav = () => {
+  const { setBool } = useListModal();
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
-  const [amount, setAmount] = useState(0)
+  const [amount, setAmount] = useState(0);
   const history = useHistory();
-  const portfolio = useSelector(state => state.portfolio.portfolio)
+  const portfolio = useSelector((state) => state.portfolio.portfolio);
 
   useEffect(() => {
     let fin = user?.cash;
 
-    portfolio?.map(p => {
-      fin += p.purchase_price * p.quantity
-    })
+    portfolio?.map((p) => {
+      fin += p.purchase_price * p.quantity;
+    });
 
-    setAmount(fin.toFixed(2))
-  }, [portfolio])
+    setAmount(fin.toFixed(2));
+  }, [portfolio, user?.cash]);
 
   const logoutUser = async () => {
     await dispatch(logout());
@@ -26,7 +28,7 @@ const AccountNav = ({ dropdown }) => {
   };
 
   return (
-  <>
+    <>
       <div className="account-name">{user?.username}</div>
       <div className="portfolio-details">
         <div className="portfolio-info">
@@ -39,14 +41,24 @@ const AccountNav = ({ dropdown }) => {
         </div>
       </div>
       <div className="account-links">
-        <div className="account-link" onClick={() => history.push("/profile")}>
+        <div className="account-link" onClick={() => setBool(true)}>
           <img
             className="settings-img"
             src="https://img.icons8.com/glyph-neue/64/ffffff/test-account.png"
           />
-          Profile
+          Add Funds
         </div>
-        <div className="account-link" onClick={() => history.push("/account/settings")}>
+        <div className="account-link" onClick={() => history.push("/about")}>
+          <img
+            className="settings-img"
+            src="https://img.icons8.com/glyph-neue/64/ffffff/test-account.png"
+          />
+          About The Creators
+        </div>
+        <div
+          className="account-link"
+          onClick={() => history.push("/account/settings")}
+        >
           <img
             className="settings-img"
             alt="svgImg"

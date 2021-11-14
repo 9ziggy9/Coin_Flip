@@ -10,6 +10,7 @@
   position: -webkit-sticky;
   position: sticky;
   top: 90px;
+  z-index: 0;
 }
 
 .watch-main::-webkit-scrollbar {
