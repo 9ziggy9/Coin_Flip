@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 import Plot from 'react-plotly.js';
-import { Simulation, Market, log_normal } from "../../utilities/statistics.js";
+import { Simulation, log_normal } from "../../utilities/statistics.js";
 
 export const SimPlot = ({coin,fn,mu,sigma,X,Y,setRange,setDomain}) => {
   let distribution = log_normal;
@@ -63,7 +63,7 @@ export const SimPlot = ({coin,fn,mu,sigma,X,Y,setRange,setDomain}) => {
   }
 }
 
-export const MarketPlot = ({coin, Xr, Yr}) => {
+export const MarketPlot = ({coin, Xr, Yr, setRDomain, setRRange}) => {
   // Setting day interval to 30 for debugging, implement as variable later
   if(true) {
     const layout = {

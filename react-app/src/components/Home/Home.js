@@ -46,7 +46,7 @@ const Home = () => {
   const [Yr, setRRange] = useState([]);
 
 
-  useEffect(() => setCoin('fakecoin'), [])
+  useEffect(() => setCoin('fake'), [])
   useEffect(() => {
     const data = async (coin) => {
       const res = await fetch(`/api/cryptocurrencies/${coin}`);
@@ -56,10 +56,8 @@ const Home = () => {
       console.log('\n\n\n INCOMING DATA')
       console.log(history.prices)
       console.log('\n\n\n')
-      setRDomain([...domain])
-      setRRange([...range])
-      console.log(Xr)
-      console.log(Yr)
+      setRDomain([...domain], () => console.log(domain))
+      setRRange([...range], () => console.log(range))
     }
     data(coin);
   }, [coin])
@@ -86,7 +84,9 @@ const Home = () => {
             </div>
             <div className="porfolio_chart_container">
               {cryptoNames.has(coin) ? (
-                <MarketPlot coin={coin} Xr={Xr} Yr={Yr}/>
+                <MarketPlot coin={coin} Xr={Xr} Yr={Yr}
+                            setRDomain={setRDomain}
+                            setRRange={setRRange}/>
               ) : (
                 <SimPlot coin={coin} fn={fn} mu={mu} sigma={sigma} X={X} Y={Y}
                   setRange={setRange} setDomain={setDomain}/>
