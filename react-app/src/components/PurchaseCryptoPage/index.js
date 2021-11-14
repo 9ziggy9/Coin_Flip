@@ -89,7 +89,7 @@ const PurchaseCryptoPage = () => {
     const result = await confirm(
       `Please confirm your ${transaction} of ${amount} ${
         singleCrypto[0]?.name
-      } ${coinSingularOrPlural}. Estimated value: $${totalValue.toLocaleString(
+      } ${coinSingularOrPlural}. Estimated value: $${totalValue?.toLocaleString(
         "en-US"
       )} `,
       options
@@ -156,7 +156,6 @@ const PurchaseCryptoPage = () => {
 
     if (singleCrypto && amount) {
         totalValue = totalValueOfCoins(amount);
-        console.log(totalValue)
         if (isNaN(totalValue)) {
             totalValueString = "NaN";
         } else if (transaction === "buy") {
@@ -214,7 +213,7 @@ const PurchaseCryptoPage = () => {
         <div className="cryptoInfoContainer">
           <div className="cryptoName">{singleCrypto[0]?.name}</div>
           <div className="cryptoPrice">
-            ${singleCrypto[0]?.price.toLocaleString("en-US")}
+            ${singleCrypto[0]?.price}
           </div>
         </div>
         <div className="graph">plot graph</div>

@@ -6,7 +6,6 @@ import './Settings.css';
 const Settings = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
-    console.log(user);
 
     const handleButton = (e) => {
 
@@ -15,7 +14,6 @@ const Settings = () => {
 
                 break
             case 'Deactivate your account':
-                console.log("deactivate")
                 break
         }
     }
@@ -51,7 +49,7 @@ const Settings = () => {
                         </div>
                         <div className="account_password_container">
                             <p className="account_password_label">Password</p>
-                            <SettingsModal />
+                            <SettingsModal user={user}/>
                         </div>
                     </div>
                     <div className="account_deactivation_container">

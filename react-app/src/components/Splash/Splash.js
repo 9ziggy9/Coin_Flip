@@ -22,7 +22,7 @@ const Splash = () => {
               {!user ? (
                 <NavLink to="/signup" className="landing-signup-btn">Sign Up</NavLink>
               ) : (
-                <p className="landing-signup-btn">Learn More</p>
+                <NavLink to="/home" className="landing-signup-btn">Learn More</NavLink>
               )}
             </div>
             <div className="landing-signup-right">
