@@ -6,7 +6,6 @@ import './Settings.css';
 const Settings = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
-    console.log(user);
 
     const handleButton = (e) => {
 
@@ -15,7 +14,6 @@ const Settings = () => {
 
                 break
             case 'Deactivate your account':
-                console.log("deactivate")
                 break
         }
     }
