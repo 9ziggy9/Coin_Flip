@@ -24,19 +24,11 @@ const Home = () => {
   //   setPrice(d.price[coin].usd);
   // };
 
-  // //NOTE: API calls seemed to have been stacking up, 8 seconds is an additional
-  // // security measure. Simulating prices still seems relevant.
-
-  // useEffect(() => {const pInterval = setInterval(() => data(coin), 8000);
-  //                  return () => clearInterval(pInterval)}, []);
-
-  // // const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
-  // // const price = entry.price
   const [coin, setCoin] = useState("fakecoin");
   const [price, setPrice] = useState(0);
   const [hist, setHist] = useState([])
 
-  useEffect(() => {setCoin('fakecoin')}, []);
+  useEffect(() => {setCoin('bitcoin')}, []);
   useEffect(() => {
     let [start_price] = cryptos.filter((p) => p.gecko === coin);
     if (!cryptoNames.has(coin)) start_price = { price: 0 };
