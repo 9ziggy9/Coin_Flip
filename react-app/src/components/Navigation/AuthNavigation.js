@@ -176,7 +176,7 @@ const AuthNavigation = () => {
               </NavLink>
             ))}
           {searchResults?.length === 0 && search?.length > 0 && (
-            <div className="result">
+            <div className="no-result">
               We were unable to find any results for your search.
             </div>
           )}

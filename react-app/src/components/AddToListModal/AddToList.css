@@ -1,32 +1,52 @@
 .add-to-list-modal {
-    background-color: #2a2f33;
-    height: 489px;
-    width: 368px;
-    border-radius: 6px;
-    padding: 20px 20px;
-    display: flex;
-    flex-direction: column;
+  background-color: #2a2f33;
+  height: 489px;
+  width: 368px;
+  border-radius: 6px;
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 #modal-content {
-    background: none !important;
+  background: none !important;
 }
 
 .add-top {
-    font-size: 20px;
-    font-weight: 700;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .add-list-main {
-    margin: 30px 30px;
+  margin: 30px 30px;
 }
 
 .add-list-card {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .list-name {
-    font-size: 16px;
-    font-weight: 600;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.list-create-img {
+  display: flex;
+  gap: 5px;
+}
+
+.crypto-create-list {
+  cursor: pointer;
+}
+
+.checkbox {
+  margin-right: 1rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgb(255, 80, 0) !important;
+}
+
+.checkbox:checked {
+    background-color: pink;
 }
