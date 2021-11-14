@@ -77,8 +77,6 @@ export const MarketPlot = ({coin}) => {
     const history = await res.json();
     const domain = history.prices.map(dp => dp[0])
     const range = history.prices.map(dp => dp[1].toFixed(2))
-    console.log(`here is domain: ${domain}`);
-    console.log(`here is range: ${range}`);
     setDomain([...domain])
     setRange([...range])
   }
