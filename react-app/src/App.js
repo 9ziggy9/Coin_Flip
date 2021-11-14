@@ -13,6 +13,7 @@ import AuthNavigation from "./components/Navigation/AuthNavigation";
 import Home from "./components/Home/Home";
 import Transactions from "./components/Transactions/Transaction";
 import Settings from "./components/Settings/Settings";
+import About from "./components/About/About";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -45,22 +46,25 @@ function App() {
         <Route path="/signup" exact={true}>
           <SignUpForm />
         </Route>
+        <Route path="/about" exact={true}>
+          <About />
+        </Route>
         <ProtectedRoute path="/home" exact={true}>
           <AuthNavigation />
           <Home />
         </ProtectedRoute>
-        <Route path="/crypto/:id" exact={true}>
+        <ProtectedRoute path="/crypto/:id" exact={true}>
           <AuthNavigation />
           <PurchaseCryptoPage />
-        </Route>
-        <Route path="/transactions" exact={true}>
+        </ProtectedRoute>
+        <ProtectedRoute path="/transactions" exact={true}>
           <AuthNavigation />
           <Transactions />
-        </Route>
-        <Route path="/account/settings" exact={true}>
+        </ProtectedRoute>
+        <ProtectedRoute path="/account/settings" exact={true}>
           <AuthNavigation />
           <Settings />
-        </Route>
+        </ProtectedRoute>
       </Switch>
     </BrowserRouter>
   );

@@ -1,0 +1,39 @@
+.about-main {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  flex-direction: column;
+}
+
+.about-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.about-right {
+  border: 0.5px solid grey;
+  height: 40vh;
+  width: 276px;
+  background-color: rgb(30, 33, 36);
+  border-radius: 6px;
+  overflow-y: auto;
+  overflow-x: none;
+  word-break: break-all;
+  position: -webkit-sticky;
+  margin-left: 20vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.revan {
+    padding: 20px 20px;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.revan:hover {
+    background-color: ;
+}
