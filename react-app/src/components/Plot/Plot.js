@@ -24,7 +24,7 @@ export const SimPlot = () => {
 
   // mu = mean value; sigma = standard deviation
 
-  const test_sim = new Simulation([], log_normal, 200, 2);
+  const test_sim = new Simulation([], log_normal, 1000, 100);
 
   const coin = 'bitcoin';
   const [X, setDomain] = useState(test_sim.domain);

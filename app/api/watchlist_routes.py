@@ -47,7 +47,6 @@ def remove_crypto(watchlist_id):
     watchlist = Watchlist.query.filter_by(id=watchlist_id).first()
 
     for item in watchlist.cryptocurrency:
-        print(item)
         if (item.id == crypto_id):
             watchlist.cryptocurrency.remove(item)
             db.session.add(watchlist)
@@ -57,7 +56,20 @@ def remove_crypto(watchlist_id):
 
 @watchlist_routes.route('/<int:watchlist_id>', methods=['DELETE'])
 def remove_list(watchlist_id):
+    watchlist = Watchlist.query.filter_by(id=watchlist_id).first()
+
+    for item in watchlist.cryptocurrency:
+        watchlist.cryptocurrency.remove(item)
+        db.session.commit()
+
+    for item in watchlist.cryptocurrency:
+        watchlist.cryptocurrency.remove(item)
+        db.session.commit()
+
+    db.session.commit()
+
     Watchlist.query.filter_by(id=watchlist_id).delete()
+
 
     db.session.commit()
 

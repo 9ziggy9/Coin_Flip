@@ -80,8 +80,7 @@ export function gaussianNoise_boxmuller(mu, sigma) {
   let x = 0;
   let y = 0;
   while(x===0) x = Math.random();
-  while(y===0) y = Math.random();
-  const magnitude = sigma * Math.sqrt(-2.0 * Math.log(x))
+  while(y===0) y = Math.random();  const magnitude = sigma * Math.sqrt(-2.0 * Math.log(x))
   return (magnitude * (Math.sqrt(-2.0 * Math.log(x))
                     * Math.cos(2.0 * Math.PI * y))) + mu;
 }

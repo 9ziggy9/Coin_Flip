@@ -9,10 +9,11 @@ import "./AuthNavigation.css";
 const AuthNavigation = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const [num, setNum] = useState(0);
   const results = useRef(null);
   const searchBar = useRef(null);
   const dropdown = useRef(null);
-  const account = useRef(null)
+  const account = useRef(null);
   const [search, setSearch] = useState();
   const searchResults = useSelector((state) => state.crypto.searchRes);
   const regex = new RegExp(search, "gi");
@@ -44,7 +45,7 @@ const AuthNavigation = () => {
       results.current.classList.add("hidden");
       searchBar.current.style.backgroundColor = "black";
       searchBar.current.style.borderBottom = "0.5px solid grey";
-      setSearch('')
+      setSearch("");
       addBorder();
     } else {
       searchBar.current.style.backgroundColor = "rgb(42, 47, 51)";
@@ -70,9 +71,14 @@ const AuthNavigation = () => {
   };
 
   const showDropdown = () => {
-    dropdown.current.classList.remove("hidden");
-    account.current.style.textDecoration = "underline"
-    account.current.style.color = "rgb(255, 80, 0)"
+    if (num === 0) {
+      dropdown.current.classList.remove("hidden");
+      account.current.style.textDecoration = "underline";
+      account.current.style.color = "rgb(255, 80, 0)";
+      setNum(1);
+    } else {
+      setNum(0);
+    }
   };
 
   useEffect(() => {
@@ -91,10 +97,16 @@ const AuthNavigation = () => {
   const RemoveOutside = (ref) => {
     useEffect(() => {
       const handleClick = (e) => {
+        if (
+          !e?.target?.classList?.contains("account-word") &&
+          !e?.target?.nextElementSibling?.classList?.contains("hidden")
+        ) {
+          setNum(0);
+        }
         if (ref.current && !ref.current.contains(e.target)) {
           dropdown.current.classList.add("hidden");
-          account.current.style.textDecoration = "none"
-          account.current.style.color = "white"
+          account.current.style.textDecoration = "none";
+          account.current.style.color = "white";
         }
       };
 
@@ -139,7 +151,12 @@ const AuthNavigation = () => {
           {searchResults?.length > 0 &&
             search?.length > 0 &&
             searchResults.map((result, i) => (
-              <NavLink to={`/crypto/${result.id}`} key={result.id} className="result" onClick={(e) => hideSearch(e)}>
+              <NavLink
+                to={`/crypto/${result.id}`}
+                key={result.id}
+                className="result"
+                onClick={(e) => hideSearch(e)}
+              >
                 <div
                   dangerouslySetInnerHTML={{
                     __html: result.symbol.replace(
@@ -166,9 +183,15 @@ const AuthNavigation = () => {
         </div>
       </div>
       <div className="right-nav">
-        <NavLink to="/transactions" className="account-word">Transactions</NavLink>
+        <NavLink to="/transactions" className="account-word">
+          Transactions
+        </NavLink>
         <div className="account">
-          <div className="account-word" onClick={() => showDropdown()} ref={account}>
+          <div
+            className="account-word"
+            onClick={() => showDropdown()}
+            ref={account}
+          >
             Account
           </div>
           <div className="account-dropdown hidden" ref={dropdown}>

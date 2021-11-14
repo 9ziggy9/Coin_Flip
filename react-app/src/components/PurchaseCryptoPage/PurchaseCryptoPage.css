@@ -120,12 +120,13 @@
 }
 
 .formContainer {
-    background-color: rgb(34, 34, 34);
+    background-color: rgb(42, 47, 51);
+    border: 0.5px solid grey;
     margin-left: 10%;
     margin-top: 10px;
     width: 50%;
     height: 110px;
-    border-radius: 5px;
+    border-radius: 6px;
 }
 
 .purchasePower {
