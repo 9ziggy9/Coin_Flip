@@ -32,7 +32,7 @@ const AccountNav = () => {
       <div className="account-name">{user?.username}</div>
       <div className="portfolio-details">
         <div className="portfolio-info">
-          <h3 className="account-value">{Number(amount).toLocaleString()}</h3>
+          <h3 className="account-value">${Number(amount).toLocaleString()}</h3>
           <div className="portfolio-value">Portfolio Value</div>
         </div>
         <div className="avail-cash">
@@ -41,13 +41,14 @@ const AccountNav = () => {
         </div>
       </div>
       <div className="account-links">
-        <div className="account-link" onClick={() => {
-          document.querySelector('.account-dropdown').classList.add('hidden')
-          setBool(true)}}>
-          <img
-            className="settings-img"
-            src="https://img.icons8.com/glyph-neue/64/ffffff/test-account.png"
-          />
+        <div
+          className="account-link"
+          onClick={() => {
+            document.querySelector(".account-dropdown").classList.add("hidden");
+            setBool(true);
+          }}
+        >
+          <img className="settings-img" src="https://img.icons8.com/external-those-icons-fill-those-icons/24/ffffff/external-dollar-money-currency-those-icons-fill-those-icons-1.png" />
           Add Funds
         </div>
         <div className="account-link" onClick={() => history.push("/about")}>
