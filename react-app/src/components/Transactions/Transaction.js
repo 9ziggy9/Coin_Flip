@@ -4,11 +4,12 @@ import { userPortfolios } from "../../store/portfolio";
 import { getUserTransactions } from "../../store/transaction";
 import { getAllCrypto } from "../../store/crypto"
 import './Transaction.css'
+import { stat } from "fs";
 
 const Transactions = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
-    const portfolios = useSelector(state => Object.values(state.portfolio))
+    const portfolios = useSelector(state => state.portfolio.portfolio)
     const transactions = useSelector(state => Object.values(state.transaction))
     const cryptos = useSelector(state => state.crypto.list);
 
@@ -27,7 +28,7 @@ const Transactions = () => {
         setTransactionsArr(userTransactionArr);
     }, [cryptoId, counter])
 
-    const handleClick = (e) => {
+    const handleClick = (e, i) => {
         e.preventDefault();
         // Reset green border
         document.querySelectorAll(".crypto_name_container").forEach(container => {
@@ -36,8 +37,9 @@ const Transactions = () => {
         // Find Crypto ID
         const crypto_id = parseInt(e.target.getAttribute('id'), 10)
         setCryptoId(crypto_id);
+        console.log(crypto_id)
         // Find selected container and add green border
-        const selectedContainer = document.querySelectorAll(".crypto_name_container")[crypto_id - 1]
+        const selectedContainer = document.querySelectorAll(".crypto_name_container")[i]
         selectedContainer.style.borderLeft = '4px solid rgb(0, 200, 5)';
         setCounter(prev => prev +1);
     }
@@ -51,9 +53,9 @@ const Transactions = () => {
                         <h2 className="crypto_text">Crypto</h2>
                     </div>
                     <ul className="user_crypto_list">
-                        {portfolios ? portfolios.map(portfolio => (
+                        {portfolios ? portfolios.map((portfolio, i) => (
                             <li className="each_crypto_li"key={portfolio.id}>
-                                <div className="crypto_name_container" id={portfolio.crypto_id} value={portfolio.id} onClick={handleClick}>
+                                <div className="crypto_name_container" id={portfolio.crypto_id} value={portfolio.id} onClick={(e) => handleClick(e, i)}>
                                     <div className="crypto_name_label_container"id={portfolio.crypto_id} value={portfolio.id}>
                                         <h3 className="crypto_name" id={portfolio.crypto_id}>{cryptos && cryptos.filter(crypto => crypto.id == portfolio.crypto_id)[0].name}</h3>
                                     </div>
