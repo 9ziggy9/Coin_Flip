@@ -27,16 +27,6 @@ const Home = () => {
     setPrice(d.price[coin].usd);
   };
 
-  useEffect(() => {
-    console.log('\n\n\n')
-    console.log('building market class')
-    const BitCoin = new Market('bitcoin')
-    console.log('fetching history')
-    const history = BitCoin.fetchHistory()
-    console.log(history);
-    console.log('\n\n\n')
-  }, [])
-
   //NOTE: API calls seemed to have been stacking up, 8 seconds is an additional
   // security measure. Simulating prices still seems relevant.
 
