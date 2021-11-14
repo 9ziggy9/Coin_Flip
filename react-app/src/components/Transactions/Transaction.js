@@ -37,7 +37,6 @@ const Transactions = () => {
         // Find Crypto ID
         const crypto_id = parseInt(e.target.getAttribute('id'), 10)
         setCryptoId(crypto_id);
-        console.log(crypto_id)
         // Find selected container and add green border
         const selectedContainer = document.querySelectorAll(".crypto_name_container")[i]
         selectedContainer.style.borderLeft = '4px solid rgb(0, 200, 5)';

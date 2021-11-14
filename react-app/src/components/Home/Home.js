@@ -125,7 +125,7 @@ const Home = () => {
             </div>
           </div>
           <div className="home_container_right">
-            <Watchlist />
+            <Watchlist hist={hist} />
           </div>
         </div>
         <form
