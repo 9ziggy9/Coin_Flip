@@ -1,13 +1,22 @@
 .signup-main {
+  display: flex;
+  flex-direction: row;
   background-color: white;
   height: 100vh;
   color: black;
-  padding-left: 8vw;
-  padding-top: 50px;
+}
+
+.signup-background-left {
+  display: flex;
+  height: 100vh;
+  width: 60%;
 }
 
 .signup-left {
-  width: 55%;
+  width: 50%;
+  margin-right: 4.5rem;
+  margin-left: 8vw;
+  margin-top: 50px;
 }
 
 .signup-logo {
@@ -18,7 +27,7 @@
 }
 
 .signup-main input {
-  width: 650px;
+  width: 420px;
   height: 36px;
   background-color: #f5f8fa;
   outline: none;
@@ -35,22 +44,28 @@
   display: flex;
   flex-direction: column;
   gap: 25px;
+  width: 450px;
 }
 
 .signup-text {
   font-size: 24px;
   font-weight: 500;
   margin-bottom: 10px;
+  width: 450px;
 }
 
 .signup-text-again {
   margin-bottom: 30px;
+  width: 450px;
+  font-size: 15px;
 }
 
 .signup-label {
   font-weight: 700;
   font-size: 13px;
+  line-height: 2;
   margin-bottom: 15px;
+  width: 450px;
 }
 
 .signup-submit {
@@ -93,4 +108,60 @@
   margin-top: 5px;
   color: rgb(62, 67, 112);
   font-weight: 700;
+}
+
+.signup-bottom-disclaimer {
+  margin-top: 6rem;
+}
+
+.signup-disclaimer p{
+  font-size: 13px;
+  font-weight: 450;
+  color: rgb(180, 189, 194);
+}
+
+.signup-disclaimer a{
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(62, 67, 112);
+}
+
+.signup-form p{
+  margin-left: 1.3rem;
+  margin-bottom: .3em;
+}
+
+.signup-form a{
+  margin-left: 1.3rem;
+}
+
+.signup-right {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(245,248,250);
+  width: 100%;
+  padding-top: 9.5rem;
+}
+
+.signup-right-background {
+  height: 100vh;
+  width: 40%;
+}
+
+.signup-right-container {
+  width: 320px;
+  margin-left: 3rem;
+  margin-right: 5rem;
+  margin-right: 5vw;
+}
+
+.signup-right h4 {
+  font-size: 15px;
+  margin-top: 2.8em;
+  margin-bottom: 0;
+}
+
+.signup-right p {
+  font-size: 15px;
+  font-weight: 400;
 }
