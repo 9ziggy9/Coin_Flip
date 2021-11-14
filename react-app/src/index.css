@@ -323,3 +323,8 @@ a {
   max-height: 20vh;
   max-width: 20vh;
 }
+
+.nav-offer {
+  display: flex;
+  gap: 50px;
+}

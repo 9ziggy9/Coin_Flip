@@ -57,26 +57,30 @@ const About = () => {
               ? person
               : "Please select a person on the right to view their information."}
           </div>
-          <div className="about-left-lower">
-            <div className="about-bio">About Me: {bio}</div>
-            <div className="about-fav-crypto">Favorite Crypto: {fave}</div>
-          </div>
-          <div className="about-me">
-            <a href={linkedIn} target="_blank" className="linkedin">
-              <img
-                className="linkedin-img"
-                src="https://icon-library.com/images/linkedin-icon-logo/linkedin-icon-logo-9.jpg"
-              />
-              LinkedIn
-            </a>
-            <a className="linkedin" href={github} target="_blank">
-              <img
-                className="linkedin-img"
-                src="https://cdn.dribbble.com/users/6569/screenshots/16742885/media/361dccdf11984b210043e69cb871fc93.png?compress=1&resize=400x300"
-              />
-              Github
-            </a>
-          </div>
+          {person?.length > 0 ? (
+            <>
+              <div className="about-left-lower">
+                <div className="about-bio">About Me: {bio}</div>
+                <div className="about-fav-crypto">Favorite Crypto: {fave}</div>
+              </div>
+              <div className="about-me">
+                <a href={linkedIn} target="_blank" className="linkedin">
+                  <img
+                    className="linkedin-img"
+                    src="https://icon-library.com/images/linkedin-icon-logo/linkedin-icon-logo-9.jpg"
+                  />
+                  LinkedIn
+                </a>
+                <a className="linkedin" href={github} target="_blank">
+                  <img
+                    className="linkedin-img"
+                    src="https://cdn.dribbble.com/users/6569/screenshots/16742885/media/361dccdf11984b210043e69cb871fc93.png?compress=1&resize=400x300"
+                  />
+                  Github
+                </a>
+              </div>
+            </>
+          ) : null}
         </div>
         <div className="about-right">
           <div className="revan" onClick={() => revan()}>
