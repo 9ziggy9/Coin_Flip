@@ -8,26 +8,38 @@ const AddFunds = () => {
   const dispatch = useDispatch();
   const [amount, setAmount] = useState("");
   const [number, setNumber] = useState(0);
+  const [port, setPort] = useState(0)
   const [errors, setErrors] = useState([]);
   const { setBool } = useListModal();
   const user = useSelector((state) => state.session.user);
+  const portfolio = useSelector((state) => state.portfolio.portfolio)
+
+  useEffect(() => {
+    let fin = user?.cash;
+
+    portfolio?.map((p) => {
+      fin += p.purchase_price * p.quantity;
+    });
+
+    setPort(fin)
+  }, []);
 
   const submit = () => {
     const err = [];
 
-    if (user?.cash > 49999999) {
-      err.push("You are over the cash limit.");
+    if (port > 49999999) {
+      err.push("You are over the total value limit.");
     }
 
     if (number <= 0) {
       err.push("Please enter an amount greater than zero.");
     }
 
-    if (user?.cash + number >= 50000000) {
+    if (port+ number >= 50000000) {
       err.push(
         `Adding $${number.toLocaleString(undefined, {
           maximumFractionDigits: 2,
-        })} to your bank account will put you over the cash limit.`
+        })} to your bank account will put you over the total value limit.`
       );
     }
 
@@ -119,7 +131,7 @@ const AddFunds = () => {
         <div className="add-inpt">
           <div className="add-amount">
             Amount{" "}
-            <span className="add-warning">(Total Cash Limit: $50,000,000)</span>
+            <span className="add-warning">(Total Account Value Limit: $50,000,000)</span>
           </div>
           <input
             autoComplete="off"
