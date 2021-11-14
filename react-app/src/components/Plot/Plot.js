@@ -77,7 +77,7 @@ export const MarketPlot = ({coin}) => {
       test_sim.proceed(INTERVAL);
       setDomain(test_sim.domain);
       setRange(test_sim.range);
-    }, 8000)
+    }, 30000)
     return () => clearInterval(intervalPointer);
   }, [])
 
