@@ -1,10 +1,10 @@
 .nav-main {
   display: flex;
   width: 100%;
-  position: relative;
+  position: fixed;
   left: 0;
   top: 0;
-  margin: 10px 0 40px 0;
+  padding: 10px 0 10px 0;
   align-items: center;
   background-color: black;
 }
@@ -100,7 +100,6 @@ span {
 }
 
 .account-dropdown {
-  z-index: 1;
   position: absolute;
   background-color: rgb(30,33,36);
   width: 284px;
@@ -112,7 +111,7 @@ span {
   text-align: left;
   margin-right: 50px;
   margin-top: 10px;
-  z-index: 50;
+  z-index: 1;
 }
 
 .account-word {

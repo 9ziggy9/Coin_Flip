@@ -1,4 +1,5 @@
 .add-to-list-modal {
+  z-index: 5;
   background-color: #1E2124;
   height: 489px;
   width: 368px;
