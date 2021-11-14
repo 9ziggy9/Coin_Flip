@@ -147,6 +147,7 @@
     padding: 0;
     width: 15%;
     height: 2em;
+    cursor: pointer;
 }
 
 .plotly_placeholder {
@@ -171,7 +172,6 @@
 .arrow_left {
     display: inline-block;
     color: rgba(128, 132, 135, 0.966);
-    transform: rotate(-90deg);
     font-size: 14px;
     margin-right: 1.25em;
 }
@@ -183,7 +183,6 @@
 .arrow_right {
     display: inline-block;
     color: rgba(128, 132, 135, 0.966);
-    transform: rotate(90deg);
     font-size: 14px;
     margin-left: 1.25em;
 }

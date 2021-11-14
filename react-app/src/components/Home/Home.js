@@ -5,6 +5,7 @@ import { userPortfolios } from "../../store/portfolio";
 import { SimPlot, MarketPlot } from "../Plot/Plot";
 import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
+import AddFundsModal from "../AddFundsModal/AddFundsModal";
 import "./Home.css";
 
 const Home = () => {
@@ -81,17 +82,15 @@ const Home = () => {
                   begin trading.
                 </p>
               </div>
-              <button type="button" className="add_funds_button">
-                <h4 className="add_funds_button_text">Add Funds</h4>
-              </button>
+              <AddFundsModal />
             </div>
             <div className="add_funds_static_nav">
               <p>
-                <i className="arrow_left">⌃</i>
+                <i className="arrow_left">{"<"}</i>
               </p>
               <p className="add_funds_page_counter">1 of 1</p>
               <p>
-                <i className="arrow_right">⌃</i>
+                <i className="arrow_right">{">"}</i>
               </p>
             </div>
             <div className="news_container">

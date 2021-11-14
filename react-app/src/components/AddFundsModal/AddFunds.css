@@ -1,0 +1,30 @@
+.modal-change {
+  background-color: rgb(16, 10, 32) !important;
+  animation: move-it 500ms linear;
+}
+
+.add-funds-main {
+  animation: move-it 500ms linear;
+}
+
+.add-input:focus {
+  outline: none;
+}
+
+@keyframes move-it {
+  0% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
