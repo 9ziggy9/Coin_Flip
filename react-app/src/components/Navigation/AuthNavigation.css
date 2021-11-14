@@ -85,6 +85,13 @@
   background-color: rgba(59, 66, 71, 0.966);
 }
 
+.no-result {
+  display: flex;
+  gap: 60px;
+  padding: 5px 20px;
+  margin: 0;
+}
+
 span {
   display: inline-block;
   border: 0;
@@ -113,6 +120,7 @@ span {
   cursor: pointer;
   text-underline-offset: 12px;
   text-decoration-color: rgb(255, 80, 0) !important;
+  user-select: none;
 }
 
 .account-word:hover {
