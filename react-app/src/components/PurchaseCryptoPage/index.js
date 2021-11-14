@@ -261,7 +261,9 @@ const PurchaseCryptoPage = () => {
                     {totalValueString}
                 </div>
             </div>
-
+            <div className="purchasePower">
+                Purchasing Power: ${currentUser?.cash.toLocaleString("en-us")}
+            </div>
             <div className="subButtContainer">
             <button
                 disabled={errors.length > 0}
@@ -271,6 +273,9 @@ const PurchaseCryptoPage = () => {
                 {" "}
                 Submit{" "}
             </button>
+            <div className="add_to_list">
+                <AddToList cryptoId={id} />
+            </div>
             <ul className="errors">
                 {errors.map((error) => (
                 <li key={error}>{error}</li>
@@ -278,9 +283,7 @@ const PurchaseCryptoPage = () => {
             </ul>
             </div>
         </form>
-        <div className="add_to_list">
-            <AddToList cryptoId={id} />
-        </div>
+
         <div className="about">About</div>
         <hr className="hr" />
         <div className="aboutContainer">
