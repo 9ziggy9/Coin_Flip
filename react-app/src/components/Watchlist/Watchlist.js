@@ -238,6 +238,7 @@ const Watchlist = () => {
               </div>
               <div className="watch-crypto-card-right">
                 <div className="watch-crypto-price">
+                  $
                   {p.purchase_price > 1
                     ? p.purchase_price.toLocaleString()
                     : p.purchase_price.toFixed(3)}

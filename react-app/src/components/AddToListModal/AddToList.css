@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  animation: move-it 200ms linear;
+  animation: move-it 300ms linear;
 }
 
 .add-to-list-modal::-webkit-scrollbar {
