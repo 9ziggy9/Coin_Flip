@@ -69,7 +69,7 @@ export const SimPlot = ({coin, setPrice}) => {
   }
 }
 
-export const MarketPlot = ({coin}) => {
+export const MarketPlot = ({coin, setHist}) => {
   const [X, setDomain] = useState([]);
   const [Y, setRange] = useState([]);
   // Setting day interval to 30 for debugging, implement as variable later
@@ -78,8 +78,9 @@ export const MarketPlot = ({coin}) => {
     const history = await res.json();
     const domain = history.prices.map(dp => dp[0])
     const range = history.prices.map(dp => dp[1].toFixed(2))
-    setDomain([...domain])
-    setRange([...range])
+    setDomain([...domain]);
+    setRange([...range]);
+    setHist({time: domain, price: range});
   }
 
   useEffect(() => {

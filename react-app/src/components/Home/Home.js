@@ -34,6 +34,7 @@ const Home = () => {
   // // const price = entry.price
   const [coin, setCoin] = useState("fakecoin");
   const [price, setPrice] = useState(0);
+  const [hist, setHist] = useState([])
 
   useEffect(() => {setCoin('fakecoin')}, []);
   useEffect(() => {
@@ -48,24 +49,43 @@ const Home = () => {
         <div className="home_main">
           <div className="home_container_left">
             <div className="total_cash_container">
-              <div className="cash_container">
-                <div className="coin-title">{coin}</div>
-                <div className="cash">{`$${price}`}</div>
-              </div>
-              <div className="today_tracker">
-                <h5 className="today_values">$0.00 (0.00%)</h5>
-                <h5 className="today_label">Today</h5>
-              </div>
-              <div className="after_hours_tracker">
-                <h5 className="after_hours_values">$0.00 (0.00%)</h5>
-                <h5 className="after_hours_label">After Hours</h5>
-              </div>
+              {cryptoNames.has(coin) ? (
+                <>
+                  <div className="cash_container">
+                    <div className="coin-title">{coin}</div>
+                    <div className="cash">{`$${price}`}</div>
+                  </div>
+                  <div className="today_tracker">
+                    <h5 className="today_values">$0.00 (0.00%)</h5>
+                    <h5 className="today_label">Today</h5>
+                  </div>
+                  <div className="after_hours_tracker">
+                    <h5 className="after_hours_values">$0.00 (0.00%)</h5>
+                    <h5 className="after_hours_label">After Hours</h5>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="cash_container">
+                    <div className="coin-title">{coin}</div>
+                    <div className="cash">{`$${price}`}</div>
+                  </div>
+                  <div className="today_tracker">
+                    <h5 className="today_values">$0.00 (0.00%)</h5>
+                    <h5 className="today_label">Today</h5>
+                  </div>
+                  <div className="after_hours_tracker">
+                    <h5 className="after_hours_values">$0.00 (0.00%)</h5>
+                    <h5 className="after_hours_label">After Hours</h5>
+                  </div>
+                </>
+              )}
             </div>
             <div className="porfolio_chart_container">
               {cryptoNames.has(coin) ? (
-                <MarketPlot coin={coin}/>
+                <MarketPlot coin={coin} setHist={setHist}/>
               ) : (
-                <SimPlot coin={coin} setPrice={setPrice}/>
+                <SimPlot coin={coin} setPrice={setPrice} setHist={setHist}/>
               )}
             </div>
             <div className="buying_power_container">
