@@ -19,6 +19,8 @@ const Watchlist = () => {
   const [num, setNum] = useState(0);
   const [open, setOpen] = useState(0);
   const [input, setInput] = useState();
+  const [name, setName] = useState()
+  const [iden, setIden] = useState()
   const [editInput, setEditInput] = useState("");
   const [imgUrl, setImgUrl] = useState(
     "https://img.icons8.com/material-outlined/24/ffffff/settings--v1.png"
@@ -289,6 +291,11 @@ const Watchlist = () => {
         {watchlists &&
           watchlists?.map((w, i) => (
             <div className="watchlist-card">
+              {shown && (
+                <Modal onClose={() => setShown(false)}>
+                  <EditListModal editInput={name} num={iden} />
+                </Modal>
+              )}
               <div className="watchlist-details">
                 <div className="watchlist-name">
                   {w.name.slice(0, 16)}
@@ -321,16 +328,15 @@ const Watchlist = () => {
                             )
                           }
                           // onClick={() => showEditSettings(w.id, w.name)}
-                          onClick={() => setShown(true)}
+                          onClick={() => {
+                            setName(w.name)
+                            setIden(w.id)
+                            setShown(true);
+                          }}
                         >
                           <img className="list-settings-img" src={imgUrl} />{" "}
                           Edit list
                         </div>
-                        {shown && (
-                          <Modal onClose={() => setShown(false)}>
-                            <EditListModal editInput={w.name} num={w.id} />
-                          </Modal>
-                        )}
                         <div
                           className="watchlist-text-2"
                           onMouseEnter={() =>
