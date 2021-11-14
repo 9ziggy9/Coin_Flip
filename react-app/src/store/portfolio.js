@@ -97,9 +97,9 @@ const portfolioReducer = (state = {}, action) => {
     let newState;
     switch(action.type) {
         case GET_PORTFOLIOS || NEW_PORTFOLIO || UPDATE_PORTFOLIO || UPDATE_SINGLE_CRYTPO:
-            newState = {...state}
-            action.portfolios.forEach(portfolio => {
-                newState[portfolio.id] = portfolio
+            newState = {...state, portfolio: []}
+            action.portfolios.forEach(p => {
+                newState.portfolio.push(p)
             })
             return newState;
         default:

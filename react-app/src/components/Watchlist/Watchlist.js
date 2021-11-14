@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import { userPortfolios } from "../../store/portfolio";
 import {
   deleteUserList,
   editUserList,
@@ -27,9 +28,12 @@ const Watchlist = () => {
   const dispatch = useDispatch();
   const watchlists = useSelector((state) => state.watchlist.watchlist);
   const user = useSelector((state) => state.session.user);
+  const portfolio = useSelector((state) => state.portfolio.portfolio);
+  const crypto = useSelector((state) => state.crypto.list);
 
   useEffect(() => {
-    dispatch(getUserList(user.id));
+    dispatch(getUserList(user?.id));
+    dispatch(userPortfolios(user?.id))
   }, [dispatch]);
 
   useEffect(() => {
@@ -59,6 +63,7 @@ const Watchlist = () => {
 
   const cancel = (e) => {
     e.preventDefault();
+    setInput('')
     listInput.current.classList.add("hidden");
   };
 
@@ -97,8 +102,11 @@ const Watchlist = () => {
     useEffect(() => {
       const handleClick = (e) => {
         ref.current.forEach((r, i) => {
-          if (!e?.target?.classList?.contains('watchlist-options') && !e?.target?.nextElementSibling?.classList.contains('hidden')) {
-            setOpen(0)
+          if (
+            !e?.target?.classList?.contains("watchlist-options") &&
+            !e?.target?.nextElementSibling?.classList.contains("hidden")
+          ) {
+            setOpen(0);
           }
           if (ref.current[i] && !ref.current[i].contains(e.target)) {
             dropdown.current[i].classList.add("hidden");
@@ -189,17 +197,27 @@ const Watchlist = () => {
     <div className="watch-main">
       <div className="watch-cryptos">Cryptocurrencies</div>
       <div className="watch-crypto">
-        <div className="watch-crypto-card">
-          <div className="watch-crypto-card-left">
-            <div className="watch-crypto-name">Test Crypto</div>
-            <div className="watch-crypto-shares">30 shares</div>
-          </div>
-          <div className="watch-crypto-card-right">
-            <div className="watch-crypto-price">$11.52</div>
-            <div className="watch-crypto-percentage">-6.95%</div>
-          </div>
-        </div>
+        {portfolio &&
+          portfolio?.map((p) => (
+            <div className="watch-crypto-card" key={p} onClick={() => history.push(`/crypto/${p.crypto_id}`)}>
+              <div className="watch-crypto-card-left">
+                <div className="watch-crypto-name">
+                  {crypto.map((c) => (c.id === p.crypto_id ? c.name : null))}
+                </div>
+                <div className="watch-crypto-shares">{p.quantity} coins</div>
+              </div>
+              <div className="watch-crypto-card-right">
+                <div className="watch-crypto-price">
+                  {p.purchase_price > 1
+                    ? p.purchase_price.toLocaleString()
+                    : p.purchase_price.toFixed(3)}
+                </div>
+                <div className="watch-crypto-percentage">-6.95%</div>
+              </div>
+            </div>
+          ))}
       </div>
+
       <div className="watch-list">
         <div className="watch-list-left">Lists</div>
         <div className="watch-list-right" onClick={show}>
@@ -352,7 +370,7 @@ const Watchlist = () => {
                         $
                         {crypto.price > 1
                           ? crypto.price.toLocaleString()
-                          : crypto.price.toFixed(2)}
+                          : crypto.price.toFixed(3)}
                       </div>
                       <div className="watchlist-crypto-change">0.25%</div>
                     </div>
