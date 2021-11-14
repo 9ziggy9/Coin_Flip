@@ -17,9 +17,10 @@ def get_yearly_prices(coin):
     year = int(datetime.now().strftime('%Y'))
     month = int(datetime.now().strftime('%m'))
     day = int(datetime.now().strftime('%d'))
-    return cg.get_coin_market_chart_range_by_id(
+    prices = cg.get_coin_market_chart_range_by_id(
         id=coin,
         vs_currency='usd',
         from_timestamp=datetime_to_unix(year-1, month, day),
         to_timestamp=datetime_to_unix(year, month, day)
     )
+    return prices

@@ -98,4 +98,4 @@ def get_coins():
 
 @cryptocurrency_routes.route('/<string:coin>')
 def get_history(coin):
-    get_yearly_prices(coin)
+    return get_yearly_prices(coin)
