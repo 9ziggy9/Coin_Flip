@@ -35,9 +35,24 @@ const Home = () => {
     setPrice(start_price.price);
   }, [coin])
 
-  useEffect(() => {
-    console.log(hist);
-  }, [hist])
+  function assignColor(num, type) {
+    switch (type) {
+      case 'daily':
+        if (num > 0) {
+          document.querySelector('.today_values')?.classList.add("pl-green");
+        } else if (num < 0) {
+          document.querySelector('.today_values')?.classList.add("pl-red");
+        }
+        break;
+      case 'monthly':
+        if (num > 0) {
+          document.querySelector('.after_hours_values')?.classList.add("pl-green");
+        } else if (num < 0) {
+          document.querySelector('.after_hours_values')?.classList.add("pl-red");
+        }
+    }
+    return num;
+  }
 
   if (user) {
     return (
@@ -52,15 +67,17 @@ const Home = () => {
                     <div className="cash">{`$${price}`}</div>
                   </div>
                   <div className="today_tracker">
-                    <h5 className="today_values">${
-                      (hist.d_daily?.toFixed(2))
-                    } ({(hist.d_daily_p?.toFixed(2))}%)</h5>
+                    <h5 className="today_values">
+                      ${(assignColor(hist.d_daily?.toFixed(2), 'daily'))}
+                      ({(hist.d_daily_p?.toFixed(2))}%)
+                    </h5>
                     <h5 className="today_label">Today</h5>
                   </div>
                   <div className="after_hours_tracker">
-                    <h5 className="after_hours_values">${
-                      (hist.d_monthly?.toFixed(2))
-                    }( {(hist.d_monthly_p?.toFixed(2))}%)</h5>
+                    <h5 className="after_hours_values">
+                      ${(assignColor(hist.d_monthly?.toFixed(2), 'monthly'))}
+                      ({(hist.d_monthly_p?.toFixed(2))}%)
+                    </h5>
                     <h5 className="after_hours_label">This Month</h5>
                   </div>
                 </>

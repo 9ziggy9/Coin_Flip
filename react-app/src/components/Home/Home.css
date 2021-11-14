@@ -28,12 +28,12 @@
 }
 
 /* DEBUGGING - ziggy */
-.indicator1 {
-    background-color: red;
+.pl-red {
+    color: red;
 }
 
-.indicator2 {
-    background-color: blue;
+.pl-green {
+    color: green;
 }
 /*  */
 
