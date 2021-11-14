@@ -76,15 +76,16 @@ export const MarketPlot = ({coin}) => {
     const res = await fetch(`/api/cryptocurrencies/${coin}`);
     const history = await res.json();
     const domain = history.prices.map(dp => dp[0])
-    const range = history.prices.map(dp => [...dp[1].toFixed(2)])
-    console.log(domain,range);
-    setDomain([...domain], () => console.log(domain))
-    setRange([...range], () => console.log(range))
+    const range = history.prices.map(dp => dp[1].toFixed(2))
+    console.log(`here is domain: ${domain}`);
+    console.log(`here is range: ${range}`);
+    setDomain([...domain])
+    setRange([...range])
   }
 
   useEffect(() => {
     marketData(coin);
-  }, [])
+  }, [coin])
 
     const layout = {
       title: coin,
@@ -100,15 +101,15 @@ export const MarketPlot = ({coin}) => {
       },
     }
 
-    const data=[{
-        x: X,
-        y: Y,
-        type: 'scatter',
-        showlegend: true,
-        legendgrouptitle: {font: {color: 'white'}, text: 'hello world'},
-        mode: 'lines+markers',
-        marker: {color: 'green'},
-      }];
+   const data=[{
+      x: X,
+      y: Y,
+      type: 'scatter',
+      showlegend: true,
+      legendgrouptitle: {font: {color: 'white'}, text: 'hello world'},
+      mode: 'lines+markers',
+      marker: {color: 'green'},
+    }];
 
     return (
       <Plot

@@ -32,12 +32,10 @@ const Home = () => {
 
   // // const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
   // // const price = entry.price
-  const [coin, setCoin] = useState("fakecoin");
+  const [coin, setCoin] = useState("bitcoin");
   let [start_price] = cryptos.filter((p) => p.gecko === coin);
   if (!cryptoNames.has(coin)) start_price = { price: 0 };
-
   const [price, setPrice] = useState(start_price.price);
-  useEffect(() => setCoin('fakecoin'), [])
 
   if (user) {
     return (
