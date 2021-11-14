@@ -106,9 +106,12 @@ const Navigation = () => {
           </div>
         )}
         {num === 3 && (
-          <NavLink className="links" to="/about">
-            About the site creators
-          </NavLink>
+          <div className="nav-offer">
+            <div>• Created by App Academy Students</div>
+            <NavLink className="links" to="/about">
+              About the site creators
+            </NavLink>
+          </div>
         )}
       </div>
     </div>

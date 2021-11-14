@@ -27,7 +27,6 @@ body {
   align-items: center;
   height: 64px;
   border-bottom: 1px solid #dbd9d9;
-  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
   -webkit-box-align: center;
 }
 
