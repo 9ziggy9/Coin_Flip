@@ -39,10 +39,20 @@ export class Simulation {
 
 export class Market {
   constructor(name) {
-    this.history = JSON.parse(fetch(`/api/cryptocurrencies/${name}`))
+    this.name = name
+    this.history = [];
     this.realtime = [];
     this.domain = this.realtime.map(datapoint => datapoint.time);
     this.range = this.realtime.map(datapoint => datapoint.price);
+  }
+
+  async fetchHistory() {
+    console.log('hello from fetchHistory()')
+    const res = await fetch(`/api/cryptocurrencies/${this.name}`);
+    console.log('awaiting json response')
+    const history = await res.json();
+    console.log('history: ', history)
+    return history
   }
 
   initialize() {

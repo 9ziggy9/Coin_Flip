@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Redirect } from "react-router";
 import { userPortfolios } from "../../store/portfolio";
 import { SimPlot, MarketPlot } from "../Plot/Plot";
+import { Market } from '../../utilities/statistics';
 import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
 import "./Home.css";
@@ -25,6 +26,16 @@ const Home = () => {
     const d = await res.json();
     setPrice(d.price[coin].usd);
   };
+
+  useEffect(() => {
+    console.log('\n\n\n')
+    console.log('building market class')
+    const BitCoin = new Market('bitcoin')
+    console.log('fetching history')
+    const history = BitCoin.fetchHistory()
+    console.log(history);
+    console.log('\n\n\n')
+  }, [])
 
   //NOTE: API calls seemed to have been stacking up, 8 seconds is an additional
   // security measure. Simulating prices still seems relevant.
