@@ -8,11 +8,11 @@ const AddFunds = () => {
   const dispatch = useDispatch();
   const [amount, setAmount] = useState("");
   const [number, setNumber] = useState(0);
-  const [port, setPort] = useState(0)
+  const [port, setPort] = useState(0);
   const [errors, setErrors] = useState([]);
   const { setBool } = useListModal();
   const user = useSelector((state) => state.session.user);
-  const portfolio = useSelector((state) => state.portfolio.portfolio)
+  const portfolio = useSelector((state) => state.portfolio.portfolio);
 
   useEffect(() => {
     let fin = user?.cash;
@@ -21,7 +21,7 @@ const AddFunds = () => {
       fin += p.purchase_price * p.quantity;
     });
 
-    setPort(fin)
+    setPort(fin);
   }, []);
 
   const submit = () => {
@@ -35,7 +35,7 @@ const AddFunds = () => {
       err.push("Please enter an amount greater than zero.");
     }
 
-    if (port+ number >= 50000000) {
+    if (port + number >= 50000000) {
       err.push(
         `Adding $${number.toLocaleString(undefined, {
           maximumFractionDigits: 2,
@@ -131,7 +131,9 @@ const AddFunds = () => {
         <div className="add-inpt">
           <div className="add-amount">
             Amount{" "}
-            <span className="add-warning">(Total Account Value Limit: $50,000,000)</span>
+            <span className="add-warning">
+              (Total Account Value Limit: $50,000,000)
+            </span>
           </div>
           <input
             autoComplete="off"
