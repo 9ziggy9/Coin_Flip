@@ -4,7 +4,12 @@ import "./AddFunds.css";
 
 const AddFunds = () => {
   const [amount, setAmount] = useState("");
+  const [number, setNumber] = useState(0)
   const user = useSelector((state) => state.session.user);
+
+  const submit = () => {
+    
+  }
 
   const changeAmount = (e) => {
     let count = 0;
@@ -21,6 +26,8 @@ const AddFunds = () => {
     }
 
     const replace = e.target.value.replace(/[^\d\.-]/g, "");
+
+    setNumber(Number(replace))
 
     if (
       replace[replace.length - 2] === "." &&
@@ -73,7 +80,7 @@ const AddFunds = () => {
         onChange={(e) => changeAmount(e)}
         className="add-input"
       />
-      <button className="add-submit">Submit</button>
+      <button onClick={submit} className="add-submit">Submit</button>
     </div>
   );
 };
