@@ -16,6 +16,7 @@
   align-self: center;
   margin-left: 60px;
   cursor: pointer;
+  user-select: none;
 }
 
 .search-container {

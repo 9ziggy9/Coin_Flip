@@ -78,7 +78,7 @@ const Home = () => {
               </div>
               <div className="add_funds_description">
                 <p className="funds_description">
-                  Your bank account is ready! Fund your Robinhood account to
+                  Your fake account is ready! Fund your CoinFlip account to
                   begin trading.
                 </p>
               </div>
@@ -94,6 +94,7 @@ const Home = () => {
               </p>
             </div>
             <div className="news_container">
+            <div className="news_title">News</div>
               <News />
             </div>
           </div>
