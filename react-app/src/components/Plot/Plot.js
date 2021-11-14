@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 import Plot from 'react-plotly.js';
 import { Simulation, Market, log_normal } from "../../utilities/statistics.js";
 
-export const SimPlot = ({fn,mu,sigma,X,Y,setRange,setDomain}) => {
+export const SimPlot = ({coin,fn,mu,sigma,X,Y,setRange,setDomain}) => {
   let distribution = log_normal;
   let test_sim;
   let data;
@@ -21,7 +21,7 @@ export const SimPlot = ({fn,mu,sigma,X,Y,setRange,setDomain}) => {
       test_sim.proceed();
       setDomain([...test_sim.domain]);
       setRange([...test_sim.range]);
-    }, 5000)
+    }, 1000)
     return () => clearInterval(intervalPointer);
   }, [])
 
@@ -30,7 +30,7 @@ export const SimPlot = ({fn,mu,sigma,X,Y,setRange,setDomain}) => {
       autosize: true,
       plot_bgcolor: 'black',
       paper_bgcolor: 'black',
-      title: 'Lognormal',
+      title: coin,
       font: {color: 'white'},
       xaxis: {
         type:'date',
@@ -63,23 +63,11 @@ export const SimPlot = ({fn,mu,sigma,X,Y,setRange,setDomain}) => {
   }
 }
 
-export const MarketPlot = ({coin, X, Y, setRange, setDomain}) => {
+export const MarketPlot = ({coin, Xr, Yr}) => {
   // Setting day interval to 30 for debugging, implement as variable later
-  const INTERVAL = 30;
-  let market;
-  useEffect(() => market = new Market(coin), [])
-
-  useEffect(() => {
-    const intervalPointer = setInterval(() => {
-      market.proceed(INTERVAL);
-      setDomain(market.domain);
-      setRange(market.range);
-    }, 15000)
-    return () => clearInterval(intervalPointer);
-  }, [])
-
   if(true) {
     const layout = {
+      title: coin,
       autosize: true,
       plot_bgcolor: 'black',
       paper_bgcolor: 'black',
@@ -95,8 +83,8 @@ export const MarketPlot = ({coin, X, Y, setRange, setDomain}) => {
       <Plot
         data={[
           {
-            x: X,
-            y: Y,
+            x: Xr,
+            y: Yr,
             type: 'scatter',
             showlegend: true,
             legendgrouptitle: {font: {color: 'white'}, text: 'hello world'},

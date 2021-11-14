@@ -36,10 +36,10 @@ export class Simulation {
 }
 
 export class Market {
-  constructor(name) {
+  constructor(name, domain=[], range=[]) {
     this.name = name
-    this.domain = [];
-    this.range = [];
+    this.domain = domain;
+    this.range = range;
     console.log('\n\n\n Market initialized \n\n\n')
   }
 

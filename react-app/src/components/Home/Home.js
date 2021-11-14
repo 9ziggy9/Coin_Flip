@@ -45,18 +45,25 @@ const Home = () => {
   const [Xr, setRDomain] = useState([]);
   const [Yr, setRRange] = useState([]);
 
-  useEffect(() => setCoin("bitcoin"), []);
 
+  useEffect(() => setCoin('fakecoin'), [])
   useEffect(() => {
     const data = async (coin) => {
       const res = await fetch(`/api/cryptocurrencies/${coin}`);
       const history = await res.json();
-      setRDomain(history.prices.map(dp => dp[0]))
-      setRRange(history.prices.map(dp => [dp[1].toFixed(2)]))
-      return history.prices;
+      const domain = history.prices.map(dp => dp[0])
+      const range = history.prices.map(dp => [...dp[1].toFixed(2)])
+      console.log('\n\n\n INCOMING DATA')
+      console.log(history.prices)
+      console.log('\n\n\n')
+      setRDomain([...domain])
+      setRRange([...range])
+      console.log(Xr)
+      console.log(Yr)
     }
     data(coin);
   }, [coin])
+
 
   if (user) {
     return (
@@ -79,10 +86,9 @@ const Home = () => {
             </div>
             <div className="porfolio_chart_container">
               {cryptoNames.has(coin) ? (
-                <MarketPlot coin={coin} X={Xr} Y={Yr}
-                            setRange={setRRange} setDomain={setRDomain}/>
+                <MarketPlot coin={coin} Xr={Xr} Yr={Yr}/>
               ) : (
-                <SimPlot fn={fn} mu={mu} sigma={sigma} X={X} Y={Y}
+                <SimPlot coin={coin} fn={fn} mu={mu} sigma={sigma} X={X} Y={Y}
                   setRange={setRange} setDomain={setDomain}/>
               )}
             </div>
