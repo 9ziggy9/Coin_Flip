@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { logout } from "../../store/session";
@@ -6,7 +6,19 @@ import { logout } from "../../store/session";
 const AccountNav = ({ dropdown }) => {
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
+  const [amount, setAmount] = useState(0)
   const history = useHistory();
+  const portfolio = useSelector(state => state.portfolio.portfolio)
+
+  useEffect(() => {
+    let fin = user?.cash;
+
+    portfolio?.map(p => {
+      fin += p.purchase_price * p.quantity
+    })
+
+    setAmount(fin.toFixed(2))
+  }, [portfolio])
 
   const logoutUser = async () => {
     await dispatch(logout());
@@ -18,7 +30,7 @@ const AccountNav = ({ dropdown }) => {
       <div className="account-name">{user?.username}</div>
       <div className="portfolio-details">
         <div className="portfolio-info">
-          <h3 className="account-value">$377.73</h3>
+          <h3 className="account-value">{Number(amount).toLocaleString()}</h3>
           <div className="portfolio-value">Portfolio Value</div>
         </div>
         <div className="avail-cash">
