@@ -18,9 +18,11 @@ def search_crypto():
 
     search_symbol = Cryptocurrency.query.filter(Cryptocurrency.symbol.ilike(f'{search}%')).all()
 
-    combined = set(search_name + search_symbol)
+    combined = list(set(search_name + search_symbol))
 
-    return {'search': [cryptocurrency.to_dict() for cryptocurrency in combined]}
+    combined_sort = sorted(combined, key=lambda k: k.name)
+
+    return {'search': [cryptocurrency.to_dict() for cryptocurrency in combined_sort]}
 
 @cryptocurrency_routes.route('/get')
 def get_all_crypto():
