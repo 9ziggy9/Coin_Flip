@@ -15,7 +15,7 @@ const Home = () => {
   const user = useSelector((state) => state.session.user);
   const cryptos = useSelector((state) => state.crypto.list);
   const portfolios = useSelector((state) => Object.values(state.portfolio));
-  const [coin, setCoin] = useState("fakecoin");
+  const [coin, setCoin] = useState("bitcoin");
   const cryptoNames = new Set(cryptos.map((c) => c.name.toLowerCase()));
   let [start_price] = cryptos.filter((p) => p.gecko === coin);
   if (!cryptoNames.has(coin)) start_price = { price: 0 };
@@ -38,22 +38,18 @@ const Home = () => {
   const [fn, setFunction] = useState('log_normal');
   const [mu, setMean] = useState(1000);
   const [sigma, setDeviation] = useState(100);
-  const [X, setDomain] = useState([]);
-  const [Y, setRange] = useState([]);
+  const [X, setDomain] = useState(Simulation.initialize(50,log_normal,mu,sigma).domain);
+  const [Y, setRange] = useState(Simulation.initialize(50,log_normal,mu,sigma).range);
 
-  useEffect (() => {
-    if (cryptoNames.has(coin)) {
-      const {domain, range} = Market.initialize(coin,30);
-      setDomain(domain);
-      setRange(range);
-    } else {
-      if (fn === 'log_normal') {
-        const {domain, range} = Simulation.initialize(50, log_normal,mu,sigma)
-        setDomain(domain);
-        setRange(range);
-      }
+  useEffect(() => {
+    const data = async (coin) => {
+      const res = await Market.initialize(coin,30);
+      const d = await res.json();
+      return d;
     }
-  }, []);
+    const marketData = data(coin);
+    console.log(marketData);
+  }, [])
 
   if (user) {
     return (

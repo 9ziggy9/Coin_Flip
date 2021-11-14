@@ -5,17 +5,23 @@ import { Simulation, Market, log_normal } from "../../utilities/statistics.js";
 
 export const SimPlot = ({fn,mu,sigma,X,Y,setRange,setDomain}) => {
   let distribution = log_normal;
+  let test_sim;
+  let data;
   if (fn === 'log_normal') distribution = log_normal
-  const test_sim = new Simulation([], distribution, mu, sigma);
+
+  useEffect(() => {
+    data = Simulation.zip(X,Y,distribution)
+    test_sim = new Simulation(data, distribution, mu, sigma);
+  }, []);
+
 
   // NOTE: useEffect ensures that simulation will not run again needlessly.
   useEffect(() => {
     const intervalPointer = setInterval(() => {
       test_sim.proceed();
-      console.log('hello')
-      setDomain(test_sim.domain);
-      setRange(test_sim.range);
-    }, 1000)
+      setDomain([...test_sim.domain]);
+      setRange([...test_sim.range]);
+    }, 5000)
     return () => clearInterval(intervalPointer);
   }, [])
 
@@ -60,17 +66,15 @@ export const SimPlot = ({fn,mu,sigma,X,Y,setRange,setDomain}) => {
 export const MarketPlot = ({coin, X, Y, setRange, setDomain}) => {
   // Setting day interval to 30 for debugging, implement as variable later
   const INTERVAL = 30;
-  const test_sim = new Market(coin);
-
-  // NOTE: useEffect ensures that simulation will not run again needlessly.
-  useEffect(() => test_sim.proceed(INTERVAL), []);
+  let market;
+  useEffect(() => market = new Market(coin), [])
 
   useEffect(() => {
     const intervalPointer = setInterval(() => {
-      test_sim.proceed(INTERVAL);
-      setDomain(test_sim.domain);
-      setRange(test_sim.range);
-    }, 8000)
+      market.proceed(INTERVAL);
+      setDomain(market.domain);
+      setRange(market.range);
+    }, 15000)
     return () => clearInterval(intervalPointer);
   }, [])
 
