@@ -36,4 +36,4 @@ CoinFlip is a Robinhood clone specifically made for cryptocurrencies.
   * Page about the creators of the project.
 
 
-### A project by [Revan Fajardo](https://www.linkedin.com/in/john-elijah-revan-fajardo-33a189a3), Harrison Gerdes, Victor Hou and David Rogers
+### A project by [Revan Fajardo](https://www.linkedin.com/in/john-elijah-revan-fajardo-33a189a3), [Harrison Gerdes](https://github.com/HGerdes), [Victor Hou](https://github.com/Thereal-victorhou) and [David Rogers](https://github.com/9ziggy9)
