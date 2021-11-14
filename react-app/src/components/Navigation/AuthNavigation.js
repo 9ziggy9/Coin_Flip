@@ -35,7 +35,7 @@ const AuthNavigation = () => {
       searchBar.current.style.borderBottom = "0.5px solid grey";
       addBorder();
     } else {
-      searchBar.current.style.backgroundColor = "rgb(42, 47, 51)";
+      searchBar.current.style.backgroundColor = "rgb(30,33,36)";
       searchBar.current.style.borderBottom = "none";
     }
   };
@@ -48,13 +48,13 @@ const AuthNavigation = () => {
       setSearch("");
       addBorder();
     } else {
-      searchBar.current.style.backgroundColor = "rgb(42, 47, 51)";
+      searchBar.current.style.backgroundColor = "rgb(30,33,36)";
       searchBar.current.style.borderBottom = "none";
     }
   };
 
   const show = (e) => {
-    searchBar.current.style.backgroundColor = "rgb(42, 47, 51)";
+    searchBar.current.style.backgroundColor = "rgb(30,33,36)";
     if (e.target.value.length > 0) {
       results.current.classList.remove("hidden");
       searchBar.current.style.borderBottom = "none";
@@ -136,7 +136,7 @@ const AuthNavigation = () => {
           onFocus={(e) => show(e)}
           ref={searchBar}
           onMouseEnter={() =>
-            (searchBar.current.style.backgroundColor = "rgb(42, 47, 51)")
+            (searchBar.current.style.backgroundColor = "rgb(30,33,36)")
           }
           onMouseLeave={colorChange}
         />
@@ -145,7 +145,7 @@ const AuthNavigation = () => {
           tabIndex={0}
           ref={results}
           onMouseEnter={() =>
-            (searchBar.current.style.backgroundColor = "rgb(42, 47, 51)")
+            (searchBar.current.style.backgroundColor = "rgb(30,33,36)")
           }
         >
           {searchResults?.length > 0 &&

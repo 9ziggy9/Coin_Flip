@@ -8,7 +8,6 @@ import {
 import { newUserList } from "../../store/watchlist";
 import { useListModal } from "../../context/ListModal";
 import "./AddToList.css";
-import { watch } from "fs";
 
 const AddToListModal = ({ cryptoId }) => {
   const dispatch = useDispatch();
@@ -113,9 +112,9 @@ const AddToListModal = ({ cryptoId }) => {
     <div className="add-to-list-modal">
       <div className="add-top">Add {crypto.name} to Your Lists</div>
       <div className="add-list-main">
-        <div className="list-create-img" ref={createNew}>
-          <img src="https://img.icons8.com/material-outlined/24/ffffff/plus-math--v1.png" />
-          <div onClick={show} className="crypto-create-list">
+        <div className="list-create-img" ref={createNew}  onClick={show}>
+          <img className="list-img" src="https://img.icons8.com/material-outlined/24/ffffff/plus-math--v1.png" />
+          <div className="crypto-create-list">
             Create New List
           </div>
         </div>
@@ -161,7 +160,7 @@ const AddToListModal = ({ cryptoId }) => {
             </div>
           ))}
       </div>
-      <button onClick={submit}>Save Changes</button>
+      <button className="add-list-submit" onClick={submit}>Save Changes</button>
     </div>
   );
 };
