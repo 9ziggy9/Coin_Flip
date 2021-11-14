@@ -1,28 +1,8 @@
 import React from 'react';
-import {useState, useEffect} from 'react';
+import {useEffect} from 'react';
 import Plot from 'react-plotly.js';
-import { Simulation, Market } from "../../utilities/statistics.js";
-import { log_normal } from "../../utilities/statistics.js";
 
-export const SimPlot = () => {
-  const test_sim = new Simulation([], log_normal, 1000, 100);
-
-  const coin = 'bitcoin';
-  const [X, setDomain] = useState(test_sim.domain);
-  const [Y, setRange] = useState(test_sim.range);
-
-  // NOTE: useEffect ensures that simulation will not run again needlessly.
-  useEffect(() => test_sim.initialize(), []);
-
-  useEffect(() => {
-    const intervalPointer = setInterval(() => {
-      test_sim.proceed();
-      setDomain(test_sim.domain);
-      setRange(test_sim.range);
-    }, 1000)
-    return () => clearInterval(intervalPointer);
-  }, [])
-
+export const SimPlot = ({X, Y, mu, sigma}) => {
   if(true) {
     const layout = {
       autosize: true,
@@ -34,8 +14,8 @@ export const SimPlot = () => {
         type:'date',
       },
       yaxis: {
-        range: [test_sim.mu - 20*test_sim.sigma,
-                test_sim.mu + 20*test_sim.sigma],
+        range: [mu - 20*sigma,
+                mu + 20*sigma],
         type: 'linear'
       },
     }
@@ -61,26 +41,7 @@ export const SimPlot = () => {
   }
 }
 
-export const MarketPlot = ({coin}) => {
-  // Setting day interval to 30 for debugging, implement as variable later
-  const INTERVAL = 30;
-  const test_sim = new Market(coin);
-
-  const [X, setDomain] = useState(test_sim.domain);
-  const [Y, setRange] = useState(test_sim.range);
-
-  // NOTE: useEffect ensures that simulation will not run again needlessly.
-  useEffect(() => test_sim.proceed(INTERVAL), []);
-
-  useEffect(() => {
-    const intervalPointer = setInterval(() => {
-      test_sim.proceed(INTERVAL);
-      setDomain(test_sim.domain);
-      setRange(test_sim.range);
-    }, 30000)
-    return () => clearInterval(intervalPointer);
-  }, [])
-
+export const MarketPlot = ({X, Y}) => {
   if(true) {
     const layout = {
       autosize: true,

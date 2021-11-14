@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Redirect } from "react-router";
 import { userPortfolios } from "../../store/portfolio";
 import { SimPlot, MarketPlot } from "../Plot/Plot";
-import { Market } from '../../utilities/statistics';
+import { Market, Simulation, log_normal } from '../../utilities/statistics';
 import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
 import "./Home.css";
@@ -36,6 +36,49 @@ const Home = () => {
   // const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
   // const price = entry.price
 
+  // MARKETS AND SIMULATIONS
+  const INTERVAL = 30;
+  let coinMarket;
+  let simMarket;
+  const [X,setDomain] = useState([]);
+  const [Y,setRange] = useState([]);
+  const [Xs,setSDomain] = useState([]);
+  const [Ys,setSRange] = useState([]);
+  const [mu, setMean] = useState(1000);
+  const [sigma, setDeviation] = useState(100);
+
+  useEffect( () => {
+      coinMarket = new Market(coin);
+      coinMarket.proceed(INTERVAL);
+      setDomain(coinMarket.domain);
+      setRange(coinMarket.range);
+
+      simMarket = new Simulation([], log_normal, mu, sigma)
+      console.log(simMarket)
+      simMarket.initialize()
+      setDomain(simMarket.domain)
+      setRange(simMarket.Range)
+  },[])
+
+  useEffect(() => {
+    const intervalPointer = setInterval(() => {
+      coinMarket.proceed(INTERVAL);
+      setDomain(coinMarket.domain);
+      setRange(coinMarket.range);
+    }, 10000)
+    return () => clearInterval(intervalPointer);
+  }, [])
+
+  useEffect(() => {
+    const intervalPointer = setInterval(() => {
+      simMarket.proceed()
+      setSDomain(simMarket.domain);
+      setSRange(simMarket.range);
+    }, 1000)
+    return () => clearInterval(intervalPointer);
+  }, [])
+
+
   if (user) {
     return (
       <>
@@ -57,10 +100,8 @@ const Home = () => {
             </div>
             <div className="porfolio_chart_container">
               {cryptoNames.has(coin) ? (
-                <MarketPlot coin={coin} />
-              ) : (
-                <SimPlot />
-              )}
+                <MarketPlot X={X} Y={Y} />
+              ) : (<SimPlot X={Xs} Y={Ys} mu={mu} sigma={sigma}/>)}
             </div>
             <div className="buying_power_container">
               <div className="buying_power_label_container">
