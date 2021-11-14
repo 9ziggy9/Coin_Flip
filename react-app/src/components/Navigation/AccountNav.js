@@ -21,7 +21,7 @@ const AccountNav = () => {
       fin += p.purchase_price * p.quantity;
     });
 
-    setAmount(fin.toFixed(2));
+    setAmount(fin?.toFixed(2));
   }, [portfolio, user?.cash]);
 
   const logoutUser = async () => {
