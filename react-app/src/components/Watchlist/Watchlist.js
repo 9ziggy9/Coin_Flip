@@ -1,6 +1,7 @@
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import { Modal } from "../../context/Modal";
 import { userPortfolios } from "../../store/portfolio";
 import {
   deleteUserList,
@@ -8,10 +9,13 @@ import {
   getUserList,
   newUserList,
 } from "../../store/watchlist";
+import EditListModal from "./EditListModal";
 import "./Watchlist.css";
+import { useListModal } from "../../context/ListModal";
 
 const Watchlist = () => {
   const history = useHistory();
+  const { shown, setShown } = useListModal();
   const [num, setNum] = useState(0);
   const [open, setOpen] = useState(0);
   const [input, setInput] = useState();
@@ -316,11 +320,17 @@ const Watchlist = () => {
                               "https://img.icons8.com/material-outlined/24/ffffff/settings--v1.png"
                             )
                           }
-                          onClick={() => showEditSettings(w.id, w.name)}
+                          // onClick={() => showEditSettings(w.id, w.name)}
+                          onClick={() => setShown(true)}
                         >
                           <img className="list-settings-img" src={imgUrl} />{" "}
                           Edit list
                         </div>
+                        {shown && (
+                          <Modal onClose={() => setShown(false)}>
+                            <EditListModal editInput={w.name} num={w.id} />
+                          </Modal>
+                        )}
                         <div
                           className="watchlist-text-2"
                           onMouseEnter={() =>
