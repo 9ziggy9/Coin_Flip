@@ -422,8 +422,8 @@
   background-color: #1e2124;
   border-radius: 4px;
   height: 172px;
-  margin-bottom: 300px;
   width: 444px;
+  animation: move-it 250ms linear;
 }
 
 .edit-list-name {
@@ -459,4 +459,16 @@
 .e-close-div:hover {
   border-radius: 6px;
   background-color: #35373a;
+}
+
+@keyframes move-it {
+  0% {
+    transform: translateY(10rem);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
