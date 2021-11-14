@@ -61,7 +61,7 @@ export default function reducer(state = initialState, action) {
     case GET_PRICES:
       return { ...state, prices: action.prices.price };
     case LOAD_ONE:
-      return { ...state, getOneCrypto: action.loadOneCrypto.k };
+      return { ...state, getOneCrypto: action.loadOneCrypto.k, news: action.loadOneCrypto.news };
     default:
       return state;
   }

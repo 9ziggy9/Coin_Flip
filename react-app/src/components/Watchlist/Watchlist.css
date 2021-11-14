@@ -24,26 +24,31 @@
 
 .watch-crypto {
   font-size: 14px;
-  padding: 10px 20px;
-  cursor: pointer;
   display: flex;
+  flex-direction: column;
   border-bottom: 0.5px solid grey;
 }
 
-.watch-crypto:hover {
+.watch-crypto-card:hover {
   background-color: rgba(59, 66, 71, 0.966);
 }
 
 .watch-crypto-card {
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
+  padding: 10px 20px;
 }
 
 .watch-crypto-card-left {
   display: flex;
   flex-direction: column;
+}
+
+.watch-crypto-card-right {
+  text-align: right;
+  align-self: flex-end;
 }
 
 .watch-crypto-name {

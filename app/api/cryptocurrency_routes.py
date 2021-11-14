@@ -3,6 +3,7 @@ from flask_login import login_required
 from app.models import Cryptocurrency, db
 import requests
 from pycoingecko import CoinGeckoAPI
+from datetime import datetime, date, timedelta
 
 cg = CoinGeckoAPI()
 
@@ -28,9 +29,13 @@ def get_all_crypto():
 
 @cryptocurrency_routes.route('/<int:id>')
 def getOneCryptocurrency(id):
+    date = datetime.today().strftime('%Y-%m-%d')
     crypto = Cryptocurrency.query.get(id)
     d = crypto.to_dict()
-    api_url = f'https://finnhub.io/api/v1/company-news?symbol={d["symbol"]}&from=2021-09-01&to=2021-09-09&token=c65is3aad3i9pn79rgfg'
+    # print(f'\n\n\n{date}\n\n\n')
+    prev_date = (datetime.now() - timedelta(weeks=52)).strftime('%Y-%m-%d')
+    # print(f'\n\n\n{prev_date}\n\n\n')
+    api_url = f'https://finnhub.io/api/v1/company-news?symbol={d["symbol"]}&from={prev_date}&to={date}&token=c65is3aad3i9pn79rgfg'
     res = requests.get(api_url)
     data = res.json()
 

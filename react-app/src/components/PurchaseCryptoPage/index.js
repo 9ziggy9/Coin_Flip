@@ -5,100 +5,155 @@ import "./PurchaseCryptoPage.css";
 import { useParams } from "react-router";
 // import { getOneCryptocurrency, getAllCryptocurrency } from "../../store/purchaseCrypto";
 import { getOneCrypto } from "../../store/crypto";
-import {
-  userPortfolios,
-  changePortfolio,
-  newPortfolio,
-} from "../../store/portfolio";
+import { userPortfolios, changePortfolio, newPortfolio } from "../../store/portfolio";
+import AlertPopup from "../popup";
+
+//used for alert
+import { confirm } from "react-confirm-box";
+
 import AddToList from "../AddToListModal/AddToList";
 import { getUserList } from "../../store/watchlist";
+import CryptoNews from "./CryptoNews";
+import Loading from "../Loading/Loading";
 
 const PurchaseCryptoPage = () => {
-  const dispatch = useDispatch();
-  const currentUser = useSelector((state) => state.session.user);
-  const history = useHistory();
-  // const { pathname } = history.location;
-  // const uniqueCryptoId = parseInt(pathname.split("/")[2])
-  const [uniqueCryptoId, setUniqueCryptoId] = useState();
-  const { id } = useParams();
-  const [test, setTest] = useState()
-  const [test2,setTest2] = useState()
-  let cryptoPortfolio;
-  let ports;
+    const dispatch = useDispatch();
+    const currentUser = useSelector((state) => state.session.user);
+    const history = useHistory();
+    // const { pathname } = history.location;
+    // const uniqueCryptoId = parseInt(pathname.split("/")[2])
+    const [uniqueCryptoId, setUniqueCryptoId] = useState()
+    const { id } = useParams()
+    let cryptoPortfolio;
+    let ports;
+    let totalValue;
+    let totalValueString;
 
-  const [transaction, setTransaction] = useState("purchase");
-  let [amount, setAmount] = useState(0);
-  const [loaded, setLoaded] = useState(false);
-  const [textColor, setTextColor] = useState("white");
-  const [price, setPrice] = useState(0);
-  const [errors, setErrors] = useState([]);
+    const [transaction, setTransaction] = useState("purchase")
+    let [amount, setAmount] = useState(0)
+    const [loaded, setLoaded] = useState(false)
+    const [textColor, setTextColor] = useState("white")
+    const [price, setPrice] = useState(0)
+    const [errors, setErrors] = useState([]);
+    let singleCrypto;
 
-  const userId = currentUser?.id;
+    const userId = currentUser?.id;
 
-  useEffect(() => {
-    dispatch(getUserList(currentUser?.id));
-  }, []);
+    useEffect(() => {
+        if (singleCrypto)
+            setPrice(singleCrypto[0]?.price)
+    },[])
 
-  useEffect(() => {
-    if (singleCrypto) setPrice(singleCrypto[0]?.price);
-  }, []);
+    useEffect(() => {
+        if (userId) {
+            dispatch(userPortfolios(userId))
+        }
+    },[dispatch])
 
-  useEffect(() => {
-    if (userId) {
-      dispatch(userPortfolios(userId));
-    }
-  }, [dispatch]);
+    ports = useSelector((state) => state.portfolio)
+    console.log(ports)
 
-  ports = useSelector((state) => state.portfolio);
-  console.log(ports);
-
-  const colorChange = (history) => {
-    document.querySelectorAll(".hisButt").forEach((button) => {
-      button.style.color = "white";
-    });
-    document.getElementById(history).style.color = "orangered";
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    let hasPortfolio = false;
-    let portfolioId;
-    let currentAmount = 0;
-
-    for (const portfolio in ports) {
-      if (ports[portfolio].crypto_id === uniqueCryptoId) {
-        portfolioId = ports[portfolio].id;
-        currentAmount = ports[portfolio].quantity;
-        hasPortfolio = true;
-      }
+    const colorChange = (history) => {
+        document.querySelectorAll(".hisButt").forEach((button) => {
+            button.style.color = "white"
+        })
+        document.getElementById(history).style.color = "orangered"
     }
 
-    amount = parseInt(amount);
+    const onSubmit = async (e) => {
+        e.preventDefault();
 
-    if (transaction === "sell") {
-      amount = amount * -1;
-    }
 
-    amount = currentAmount + amount;
+        const options = {
+            labels: {
+              confirmable: `Confirm`,
+              cancellable: "Cancel"
+            }
+        }
 
-    const newTransaction = {
-      userId,
-      cryptoId: uniqueCryptoId,
-      quantity: amount,
-      purchasePrice: singleCrypto[0]?.price,
+        let coinSingularOrPlural;
+        amount = parseInt(amount)
+
+        if (amount === 1) {
+            coinSingularOrPlural = "coin"
+        } else {
+            coinSingularOrPlural = "coins"
+        }
+
+        const result = await confirm(`Please confirm your ${transaction} of ${amount} ${singleCrypto[0]?.name} ${coinSingularOrPlural}. Estimated value: $${totalValue.toLocaleString("en-US")} `, options);
+
+        if (result) {
+            let hasPortfolio = false;
+            let portfolioId
+            let currentAmount = 0;
+
+            for (const portfolio in ports) {
+                if (ports[portfolio].crypto_id === uniqueCryptoId) {
+                    portfolioId = ports[portfolio].id;
+                    currentAmount = ports[portfolio].quantity
+                    hasPortfolio = true;
+                }
+            }
+
+            if (transaction === "sell") {
+                amount = amount * -1;
+            }
+
+            amount = currentAmount + amount;
+
+            const newTransaction = {
+                userId,
+                cryptoId: uniqueCryptoId,
+                quantity: amount,
+                purchasePrice: singleCrypto[0]?.price
+            }
+
+            if (hasPortfolio) {
+                await dispatch(changePortfolio(newTransaction))
+            } else {
+                await dispatch(newPortfolio(newTransaction))
+            }
+        } else {
+            console.log("You click No!");
+        }
     };
-    console.log(newTransaction);
 
-    if (hasPortfolio) {
-      await dispatch(changePortfolio(newTransaction));
-    } else {
-      await dispatch(newPortfolio(newTransaction));
+    singleCrypto = useSelector((state) => {
+        return state.crypto?.getOneCrypto;
+    });
+
+    if (singleCrypto && amount) {
+        totalValue = (singleCrypto[0].price * amount).toLocaleString("en-US");
+        if (transaction === "sell") {
+            totalValueString = `Estimated Value: $${totalValue}`
+        } else if (transaction === "purchase") {
+            totalValueString = `Estimated Cost: $${totalValue}`
+        } else if (isNaN(totalValue)) {
+            totalValueString = ""
+        } else {
+            totalValueString = ""
+        }
     }
-  };
 
-  const singleCrypto = useSelector((state) => {
-    return state.crypto?.getOneCrypto;
-  });
+    useEffect(() => {
+        setUniqueCryptoId(+id)
+        dispatch(getOneCrypto(+id))
+        .then(() => setLoaded(true))
+    }, [dispatch, id])
+
+    useEffect(() => {
+        const errors = [];
+
+        if (isNaN(amount) || amount === "") {
+            errors.push("Please enter a number")
+        }
+
+        if (amount < 0) {
+            errors.push("Please enter a value greater than zero")
+        }
+
+        setErrors(errors)
+    }, [amount]);
 
   useEffect(() => {
     setUniqueCryptoId(+id);
@@ -117,147 +172,134 @@ const PurchaseCryptoPage = () => {
 
   if (loaded) {
     return (
-      <div className="pageContainer">
-        <div className="cryptoInfoContainer">
-          <div className="cryptoName">{singleCrypto[0]?.name}</div>
-          <div className="cryptoPrice">
-            ${singleCrypto[0]?.price.toLocaleString("en-US")}
-          </div>
-        </div>
+        <div className="pageContainer">
+            <div className="cryptoInfoContainer">
+                <div className="cryptoName">{singleCrypto[0]?.name}</div>
+                <div className="cryptoPrice">
+                ${singleCrypto[0]?.price.toLocaleString("en-US")}
+                </div>
+            </div>
         <div className="graph">plot graph</div>
         <div className="graphHistorySelect">
-          <div className="graphButtonContainer">
+            <div className="graphButtonContainer">
             <button
-              type="button"
-              className="hisButt"
-              id="1d"
-              onClick={() => colorChange("1d")}
-              style={{ color: textColor }}
+                type="button"
+                className="hisButt"
+                id="1d"
+                onClick={() => colorChange("1d")}
+                style={{ color: textColor }}
             >
-              1D
+                1D
             </button>
             <button
-              type="button"
-              className="hisButt"
-              id="1w"
-              onClick={() => colorChange("1w")}
-              style={{ color: textColor }}
+                type="button"
+                className="hisButt"
+                id="1w"
+                onClick={() => colorChange("1w")}
+                style={{ color: textColor }}
             >
-              1W
+                1W
             </button>
             <button
-              type="button"
-              className="hisButt"
-              id="1m"
-              onClick={() => colorChange("1m")}
-              style={{ color: textColor }}
+                type="button"
+                className="hisButt"
+                id="1m"
+                onClick={() => colorChange("1m")}
+                style={{ color: textColor }}
             >
-              1M
+                1M
             </button>
             <button
-              type="button"
-              className="hisButt"
-              id="1y"
-              onClick={() => colorChange("1y")}
-              style={{ color: textColor }}
+                type="button"
+                className="hisButt"
+                id="1y"
+                onClick={() => colorChange("1y")}
+                style={{ color: textColor }}
             >
-              1Y
+                1Y
             </button>
             <button
-              type="button"
-              className="hisButt"
-              id="all"
-              onClick={() => colorChange("all")}
-              style={{ color: textColor }}
+                type="button"
+                className="hisButt"
+                id="all"
+                onClick={() => colorChange("all")}
+                style={{ color: textColor }}
             >
-              ALL
+                ALL
             </button>
-          </div>
+            </div>
         </div>
         <form className="formContainer" onSubmit={onSubmit}>
-          <div className="purchaseOrSell">
+            <div className="purchaseOrSell">
             <input
-              className="purchase"
-              type="radio"
-              value="purchase"
-              name="transaction"
-              checked={transaction === "purchase"}
-              onChange={(e) => setTransaction("purchase")}
+                className="purchase"
+                type="radio"
+                value="purchase"
+                name="transaction"
+                checked={transaction === "purchase"}
+                onChange={(e) => setTransaction("purchase")}
             />
             Purchase
             <input
-              className="sell"
-              type="radio"
-              value="sell"
-              name="transaction"
-              checked={transaction === "sell"}
-              onChange={(e) => setTransaction("sell")}
+                className="sell"
+                type="radio"
+                value="sell"
+                name="transaction"
+                checked={transaction === "sell"}
+                onChange={(e) => setTransaction("sell")}
             />
             Sell
             <input
-              className="amount"
-              name="amount"
-              type="amount"
-              value={amount}
-              placeholder="amount"
-              onChange={(e) => setAmount(e.target.value)}
+                className="amount"
+                name="amount"
+                type="amount"
+                value={amount}
+                placeholder="amount"
+                onChange={(e) => setAmount(e.target.value)}
             />
-          </div>
-          <div className="subButtContainer">
+                <div className="estValue">
+                    {totalValueString}
+                </div>
+            </div>
+
+            <div className="subButtContainer">
             <button
-              disabled={errors.length > 0}
-              type="submit"
-              className="submitButt"
+                disabled={errors.length > 0}
+                type="submit"
+                className="submitButt"
             >
-              {" "}
-              Submit{" "}
+                {" "}
+                Submit{" "}
             </button>
             <ul className="errors">
-              {errors.map((error) => (
+                {errors.map((error) => (
                 <li key={error}>{error}</li>
-              ))}
+                ))}
             </ul>
-          </div>
+            </div>
         </form>
-        <AddToList cryptoId={id} />
+        <div className="add_to_list">
+            <AddToList cryptoId={id} />
+        </div>
         <div className="about">About</div>
         <hr className="hr" />
         <div className="aboutContainer">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget
-          sem posuere, cursus magna vitae, dapibus ex. Praesent tincidunt porta
-          auctor. Pellentesque vestibulum dui sed iaculis iaculis. Quisque sed
-          magna mollis, commodo libero ac, tristique eros. Maecenas dapibus orci
-          vitae interdum ultrices. Nam luctus lorem ligula, in iaculis metus
-          scelerisque ac. Donec ac bibendum neque. Vivamus ut turpis vel libero
-          vulputate lacinia sed at est. Pellentesque ultrices efficitur ligula
-          non tristique. Pellentesque porta urna justo, venenatis fermentum dui
-          lobortis vel. Curabitur et aliquet eros. Aenean pulvinar semper augue
-          et mollis.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget
+            sem posuere, cursus magna vitae, dapibus ex. Praesent tincidunt porta
+            auctor. Pellentesque vestibulum dui sed iaculis iaculis. Quisque sed
+            magna mollis, commodo libero ac, tristique eros. Maecenas dapibus orci
+            vitae interdum ultrices. Nam luctus lorem ligula, in iaculis metus
+            scelerisque ac. Donec ac bibendum neque. Vivamus ut turpis vel libero
+            vulputate lacinia sed at est. Pellentesque ultrices efficitur ligula
+            non tristique. Pellentesque porta urna justo, venenatis fermentum dui
+            lobortis vel. Curabitur et aliquet eros. Aenean pulvinar semper augue
+            et mollis.
         </div>
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            const body = {
-                oldpassword: test,
-                newpassword: test2
-            }
-            await fetch("/api/auth/password", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: body
-            });
-          }}
-        >
-          <input value={test} onChange={(e) => setTest(e.target.value)} />
-          <input value={test2} onChange={(e) => setTest2(e.target.value)} />
-          <button>Submit</button>
-        </form>
-      </div>
+        <CryptoNews crypto={singleCrypto[0]} />
+        </div>
     );
   } else {
-    return null;
+    return <Loading />
   }
 };
 
