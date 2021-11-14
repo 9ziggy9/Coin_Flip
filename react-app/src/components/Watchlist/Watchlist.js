@@ -5,7 +5,6 @@ import { Modal } from "../../context/Modal";
 import { userPortfolios } from "../../store/portfolio";
 import {
   deleteUserList,
-  editUserList,
   getUserList,
   newUserList,
 } from "../../store/watchlist";
@@ -216,7 +215,7 @@ const Watchlist = () => {
                   $
                   {p.purchase_price > 1
                     ? p.purchase_price.toLocaleString()
-                    : p.purchase_price.toFixed(3)}
+                    : p.purchase_price}
                 </div>
                 <div className={`watch-crypto-percentage percentage-${p.id}`}>
                   {crypto.map((c) =>
@@ -365,7 +364,7 @@ const Watchlist = () => {
                         $
                         {crypto.price > 1
                           ? crypto.price.toLocaleString()
-                          : crypto.price.toFixed(3)}
+                          : crypto.price}
                       </div>
                       <div className="watchlist-crypto-change">0.25%</div>
                     </div>
