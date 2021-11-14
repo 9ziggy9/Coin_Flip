@@ -34,7 +34,7 @@ const AccountNav = ({ dropdown }) => {
           />
           Profile
         </div>
-        <div className="account-link" onClick={() => history.push("/settings")}>
+        <div className="account-link" onClick={() => history.push("/account/settings")}>
           <img
             className="settings-img"
             alt="svgImg"
