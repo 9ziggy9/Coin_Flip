@@ -11,13 +11,11 @@ import {
   newPortfolio,
 } from "../../store/portfolio";
 import { createTransaction } from "../../store/transaction";
-import AlertPopup from "../popup";
 
 //used for alert
 import { confirm } from "react-confirm-box";
 
 import AddToList from "../AddToListModal/AddToList";
-import { getUserList } from "../../store/watchlist";
 import CryptoNews from "./CryptoNews";
 import Loading from "../Loading/Loading";
 
@@ -40,7 +38,12 @@ const PurchaseCryptoPage = () => {
   const [textColor, setTextColor] = useState("white");
   const [price, setPrice] = useState(0);
   const [errors, setErrors] = useState([]);
+
+  const completePortfolio = useSelector(state => state.portfolio.portfolio)
+
   let singleCrypto;
+
+  let Portfolio;
 
   const userId = currentUser?.id;
 
@@ -55,7 +58,6 @@ const PurchaseCryptoPage = () => {
   }, [dispatch]);
 
   ports = useSelector((state) => state.portfolio);
-  console.log(ports);
 
   const colorChange = (history) => {
     document.querySelectorAll(".hisButt").forEach((button) => {
@@ -93,48 +95,48 @@ const PurchaseCryptoPage = () => {
     );
 
     if (result) {
-      let hasPortfolio = false;
-      let portfolioId;
-      let currentAmount = 0;
+        let hasPortfolio = false;
+        let portfolioId;
+        let currentAmount = 0;
 
-      for (const portfolio in ports) {
-        if (ports[portfolio].crypto_id === uniqueCryptoId) {
-          portfolioId = ports[portfolio].id;
-          currentAmount = ports[portfolio].quantity;
-          hasPortfolio = true;
+        for (const portfolio in ports) {
+            if (ports[portfolio].crypto_id === uniqueCryptoId) {
+                portfolioId = ports[portfolio].id;
+                currentAmount = ports[portfolio].quantity;
+                hasPortfolio = true;
+            }
         }
-      }
 
-      if (transaction === "sell") {
-        amount = amount * -1;
-      }
+        if (transaction === "sell") {
+            amount = amount * -1;
+        }
 
-      amount = currentAmount + amount;
+        amount = currentAmount + amount;
 
-      const newTransaction = {
-        userId,
-        cryptoId: uniqueCryptoId,
-        quantity: amount,
-        purchasePrice: singleCrypto[0]?.price,
-      };
+            const newTransaction = {
+            userId,
+            cryptoId: uniqueCryptoId,
+            quantity: amount,
+            purchasePrice: singleCrypto[0]?.price,
+        };
 
-      const creatingTransaction = {
-        cryptoId: +uniqueCryptoId,
-        userId: +userId,
-        type: transaction.toString(),
-        price: +singleCrypto[0]?.price,
-        quantity: +amount,
-      };
+        const creatingTransaction = {
+            cryptoId: +uniqueCryptoId,
+            userId: +userId,
+            type: transaction.toString(),
+            price: +singleCrypto[0]?.price,
+            quantity: +amount,
+        };
 
-      if (hasPortfolio) {
-        await dispatch(changePortfolio(newTransaction));
-        await dispatch(createTransaction(creatingTransaction));
-      } else {
-        await dispatch(newPortfolio(newTransaction));
-        await dispatch(createTransaction(creatingTransaction));
-      }
+
+        if (hasPortfolio) {
+            await dispatch(changePortfolio(newTransaction));
+            await dispatch(createTransaction(creatingTransaction));
+        } else {
+            await dispatch(newPortfolio(newTransaction));
+            await dispatch(createTransaction(creatingTransaction));
+        }
     } else {
-      console.log("You click No!");
     }
   };
 
@@ -142,52 +144,72 @@ const PurchaseCryptoPage = () => {
     return state.crypto?.getOneCrypto;
   });
 
-  if (singleCrypto && amount) {
-    totalValue = (singleCrypto[0].price * amount).toLocaleString("en-US");
-    if (transaction === "sell") {
-      totalValueString = `Estimated Value: $${totalValue}`;
-    } else if (transaction === "buy") {
-      totalValueString = `Estimated Cost: $${totalValue}`;
-    } else if (isNaN(totalValue)) {
-      totalValueString = "";
-    } else {
-      totalValueString = "";
+  const totalValueOfCoins = (amount) => {
+    if (singleCrypto) {
+        return (singleCrypto[0]?.price * amount)
     }
   }
 
-  useEffect(() => {
-    setUniqueCryptoId(+id);
-    dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
+    if (singleCrypto && amount) {
+        totalValue = totalValueOfCoins(amount);
+        console.log(totalValue)
+        if (isNaN(totalValue)) {
+            totalValueString = "NaN";
+        } else if (transaction === "buy") {
+            totalValueString = `Estimated Cost: $${totalValue.toLocaleString("en-us")}`;
+        } else if (transaction === "sell") {
+            totalValueString = `Estimated Value: $${totalValue.toLocaleString("en-us")}`;
+        }
+    }
+
+    useEffect(() => {
+        setUniqueCryptoId(+id);
+        dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
+    }, [dispatch, id]);
+
+    const [cryptoPort, setCryptoPort] = useState(0);
+
+    useEffect(() => {
+        let a = completePortfolio?.filter(c => c.crypto_id === uniqueCryptoId)
+        setCryptoPort(a)
+    },[completePortfolio]);
+
+    useEffect(() => {
+        const errors = [];
+        totalValue = totalValueOfCoins(amount);
+        let currentAmount;
+
+    // for (const portfolio in ports) { //refactor this later.  Not DRY.  Very moist.
+    //     if (ports[portfolio].crypto_id === uniqueCryptoId) {
+    //         console.log("?????", ports[portfolio])
+    //         currentAmount = ports[portfolio].quantity;
+    //     }
+    // }
+
+        if (isNaN(amount) || amount === "") {
+            errors.push("Please enter a number");
+        }
+
+        if (amount < 0) {
+            errors.push("Please enter a value greater than zero");
+        }
+
+        if (transaction === "buy" && (totalValue > currentUser?.cash)) {
+            errors.push("Not enough buying power")
+        }
+
+        if (transaction === "sell" && (cryptoPort[0].quantity < amount)) {
+            errors.push("Not enough coins")
+        }
+
+        setErrors(errors);
+    }, [amount, totalValue]);
+
+
+    useEffect(() => {
+        setUniqueCryptoId(+id);
+        dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
   }, [dispatch, id]);
-
-  useEffect(() => {
-    const errors = [];
-
-    if (isNaN(amount) || amount === "") {
-      errors.push("Please enter a number");
-    }
-
-    if (amount < 0) {
-      errors.push("Please enter a value greater than zero");
-    }
-
-    setErrors(errors);
-  }, [amount]);
-
-  useEffect(() => {
-    setUniqueCryptoId(+id);
-    dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    const errors = [];
-
-    if (isNaN(amount) || amount === "") {
-      errors.push("Please enter a number");
-    }
-
-    setErrors(errors);
-  }, [amount]);
 
   if (loaded) {
     return (
@@ -276,10 +298,14 @@ const PurchaseCryptoPage = () => {
               placeholder="amount"
               onChange={(e) => setAmount(e.target.value)}
             />
-            <div className="estValue">{totalValueString}</div>
-          </div>
-
-          <div className="subButtContainer">
+                <div className="estValue">
+                    {totalValueString}
+                </div>
+            </div>
+            <div className="purchasePower">
+                Buying Power: ${currentUser?.cash.toLocaleString("en-us")}
+            </div>
+            <div className="subButtContainer">
             <button
               disabled={errors.length > 0}
               type="submit"
@@ -288,6 +314,9 @@ const PurchaseCryptoPage = () => {
               {" "}
               Submit{" "}
             </button>
+            <div className="add_to_list">
+                <AddToList cryptoId={id} />
+            </div>
             <ul className="errors">
               {errors.map((error) => (
                 <li key={error}>{error}</li>
@@ -295,9 +324,6 @@ const PurchaseCryptoPage = () => {
             </ul>
           </div>
         </form>
-        <div className="add_to_list">
-          <AddToList cryptoId={id} />
-        </div>
         <div className="about">About</div>
         <hr className="hr" />
         <div className="aboutContainer">

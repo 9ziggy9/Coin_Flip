@@ -1,12 +1,28 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { logout } from "../../store/session";
+import { useListModal } from "../../context/ListModal";
+import AddFunds from "../AddFundsModal/AddFunds"
+import { Modal } from "../../context/Modal";
 
-const AccountNav = ({ dropdown }) => {
+const AccountNav = () => {
+  const { bool, setBool } = useListModal();
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
+  const [amount, setAmount] = useState(0);
   const history = useHistory();
+  const portfolio = useSelector((state) => state.portfolio.portfolio);
+
+  useEffect(() => {
+    let fin = user?.cash;
+
+    portfolio?.map((p) => {
+      fin += p.purchase_price * p.quantity;
+    });
+
+    setAmount(fin?.toFixed(2));
+  }, [portfolio, user?.cash]);
 
   const logoutUser = async () => {
     await dispatch(logout());
@@ -14,11 +30,11 @@ const AccountNav = ({ dropdown }) => {
   };
 
   return (
-  <>
+    <>
       <div className="account-name">{user?.username}</div>
       <div className="portfolio-details">
         <div className="portfolio-info">
-          <h3 className="account-value">$377.73</h3>
+          <h3 className="account-value">${Number(amount).toLocaleString()}</h3>
           <div className="portfolio-value">Portfolio Value</div>
         </div>
         <div className="avail-cash">
@@ -27,14 +43,30 @@ const AccountNav = ({ dropdown }) => {
         </div>
       </div>
       <div className="account-links">
-        <div className="account-link" onClick={() => history.push("/profile")}>
+        <div
+          className="account-link"
+          onClick={() => {
+            document.querySelector(".account-dropdown").classList.add("hidden");
+            setBool(true);
+          }}
+        >
+          <img
+            className="settings-img"
+            src="https://img.icons8.com/external-those-icons-fill-those-icons/24/ffffff/external-dollar-money-currency-those-icons-fill-those-icons-1.png"
+          />
+          Add Funds
+        </div>
+        <div className="account-link" onClick={() => history.push("/about")}>
           <img
             className="settings-img"
             src="https://img.icons8.com/glyph-neue/64/ffffff/test-account.png"
           />
-          Profile
+          About The Creators
         </div>
-        <div className="account-link" onClick={() => history.push("/account/settings")}>
+        <div
+          className="account-link"
+          onClick={() => history.push("/account/settings")}
+        >
           <img
             className="settings-img"
             alt="svgImg"
@@ -50,6 +82,11 @@ const AccountNav = ({ dropdown }) => {
           Log Out
         </div>
       </div>
+      {bool && (
+        <Modal onClose={() => setBool(false)}>
+          <AddFunds />
+        </Modal>
+      )}
     </>
   );
 };

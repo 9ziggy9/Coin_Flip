@@ -6,6 +6,7 @@ import { SimPlot, MarketPlot } from "../Plot/Plot";
 import { Market, Simulation, log_normal } from '../../utilities/statistics';
 import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
+import AddFundsModal from "../AddFundsModal/AddFundsModal";
 import "./Home.css";
 
 const Home = () => {
@@ -101,24 +102,23 @@ const Home = () => {
               </div>
               <div className="add_funds_description">
                 <p className="funds_description">
-                  Your bank account is ready! Fund your Robinhood account to
+                  Your fake account is ready! Fund your CoinFlip account to
                   begin trading.
                 </p>
               </div>
-              <button type="button" className="add_funds_button">
-                <h4 className="add_funds_button_text">Add Funds</h4>
-              </button>
+              <AddFundsModal />
             </div>
             <div className="add_funds_static_nav">
               <p>
-                <i className="arrow_left">⌃</i>
+                <i className="arrow_left">{"<"}</i>
               </p>
               <p className="add_funds_page_counter">1 of 1</p>
               <p>
-                <i className="arrow_right">⌃</i>
+                <i className="arrow_right">{">"}</i>
               </p>
             </div>
             <div className="news_container">
+            <div className="news_title">News</div>
               <News />
             </div>
           </div>

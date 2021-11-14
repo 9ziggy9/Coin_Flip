@@ -1,12 +1,13 @@
 .nav-main {
   display: flex;
   width: 100%;
-  position: relative;
+  position: fixed;
   left: 0;
   top: 0;
-  margin: 10px 0 40px 0;
+  padding: 10px 0 10px 0;
   align-items: center;
   background-color: black;
+  z-index: 100;
 }
 
 .nav-coin-auth {
@@ -15,6 +16,7 @@
   align-self: center;
   margin-left: 60px;
   cursor: pointer;
+  user-select: none;
 }
 
 .search-container {
@@ -45,17 +47,17 @@
 
 .search-bar:focus,
 .search-bar:hover {
-  background-color: rgb(30,33,36);
+  background-color: rgb(30, 33, 36);
 }
 
 .search-bar:focus {
   border-bottom: none;
-  background-color: rgb(30,33,36) !important;
+  background-color: rgb(30, 33, 36) !important;
 }
 
 .search-results {
   position: absolute;
-  background-color: rgb(30,33,36);
+  background-color: rgb(30, 33, 36);
   width: inherit;
   overflow: hidden;
   border-top: 0 !important;
@@ -75,14 +77,17 @@
 
 .result {
   display: flex;
-  gap: 60px;
   padding: 5px 20px;
   margin: 0;
-  cursor: pointer
+  cursor: pointer;
+}
+
+.result-symbol {
+  width: 120px;
 }
 
 .result:hover {
-  background-color: rgb(48,54,58);
+  background-color: rgb(48, 54, 58);
 }
 
 .no-result {
@@ -100,9 +105,8 @@ span {
 }
 
 .account-dropdown {
-  z-index: 1;
   position: absolute;
-  background-color: rgb(30,33,36);
+  background-color: rgb(30, 33, 36);
   width: 284px;
   overflow: hidden;
   border: 0.5px solid grey;
@@ -112,7 +116,7 @@ span {
   text-align: left;
   margin-right: 50px;
   margin-top: 10px;
-  z-index: 50;
+  z-index: 5;
 }
 
 .account-word {
@@ -184,7 +188,7 @@ span {
 
 .account-link:hover,
 .account-logout:hover {
-  background-color: rgb(48,54,58);
+  background-color: rgb(48, 54, 58);
 }
 
 .account-logout {

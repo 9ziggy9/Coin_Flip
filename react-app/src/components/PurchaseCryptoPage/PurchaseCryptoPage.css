@@ -1,6 +1,7 @@
 .pageContainer {
     display: flex;
     flex-direction: column;
+    margin-top: 100px;
 }
 
 .cryptoInfoContainer {
@@ -13,8 +14,8 @@
 .purchaseOrSell {
     display: flex;
     flex-direction: row;
-    margin-left: 10%;
     margin-top: 20px;
+    margin-left: 5px;
 }
 
 .graph {
@@ -32,7 +33,7 @@
 }
 
 .amount {
-    diplay: flex;
+    display: flex;
     margin-left: 20px;
 }
 
@@ -90,7 +91,7 @@
     display: flex;
     flex-direction: row;
     height: 20px;
-    margin-left: 10%;
+    margin-left: 10px;
     margin-top: 10px;
 }
 
@@ -102,13 +103,14 @@
     display: flex;
     flex-direction: row;
     height: 20px;
-    margin-left: 10%;
-    margin-top: 10px;
+    margin-top: 0px;
+    margin-left: 10px;
 }
 
-.addToListButt {
-    text-align: center;
+.add-to-list {
     font-family: "Microsoft Sans Serif";
+    text-align: center;
+
 }
 
 .estValue {
@@ -119,5 +121,16 @@
 }
 
 .formContainer {
-    
+    background-color: rgb(42, 47, 51);
+    border: 0.5px solid grey;
+    margin-left: 10%;
+    margin-top: 10px;
+    width: 50%;
+    height: 110px;
+    border-radius: 6px;
+}
+
+.purchasePower {
+    margin-top: 5px;
+    margin-left: 10px;
 }

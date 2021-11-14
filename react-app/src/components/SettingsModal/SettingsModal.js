@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal } from "../../context/Modal";
 import ResetPassword from "./ResetPassword";
 
-const SettingsModal = () => {
+const SettingsModal = ({ user }) => {
   const [modal, setShowModal] = useState(false);
 
   return (
@@ -14,7 +14,7 @@ const SettingsModal = () => {
       </button>
       {modal && (
         <Modal onClose={() => setShowModal(false)}>
-          <ResetPassword />
+          <ResetPassword user={user}/>
         </Modal>
       )}
     </>
