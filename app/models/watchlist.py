@@ -21,4 +21,3 @@ class Watchlist(db.Model):
 
     user = db.relationship("User", back_populates="watchlist")
     cryptocurrency = db.relationship("Cryptocurrency", secondary=association_table, back_populates="watchlist")
-
