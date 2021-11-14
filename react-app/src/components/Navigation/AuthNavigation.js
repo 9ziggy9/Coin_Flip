@@ -158,6 +158,7 @@ const AuthNavigation = () => {
                 onClick={(e) => hideSearch(e)}
               >
                 <div
+                className="result-symbol"
                   dangerouslySetInnerHTML={{
                     __html: result.symbol.replace(
                       regex,
@@ -166,6 +167,7 @@ const AuthNavigation = () => {
                   }}
                 ></div>
                 <div
+                className="result-name"
                   dangerouslySetInnerHTML={{
                     __html: result.name.replace(
                       regex,
