@@ -41,7 +41,9 @@ const AccountNav = () => {
         </div>
       </div>
       <div className="account-links">
-        <div className="account-link" onClick={() => setBool(true)}>
+        <div className="account-link" onClick={() => {
+          document.querySelector('.account-dropdown').classList.add('hidden')
+          setBool(true)}}>
           <img
             className="settings-img"
             src="https://img.icons8.com/glyph-neue/64/ffffff/test-account.png"
