@@ -103,8 +103,9 @@ const AddFunds = () => {
       </div>
       <div className="add-form">
         {errors?.length > 0 &&
-          errors?.map((err) => <div className="add-error">{err}</div>)}
-        <div className="add-title">Add Funds</div>
+          errors?.map((err) => <div className="add-error">• {err}</div>)}
+        <h2 className="add-title">Add Funds</h2>
+        <div className="add-inpt">
         <div className="add-amount">Amount</div>
         <input
           autoComplete="off"
@@ -115,6 +116,7 @@ const AddFunds = () => {
           onChange={(e) => changeAmount(e)}
           className="add-input"
         />
+        </div>
         <button onClick={submit} className="add-submit">
           Submit
         </button>

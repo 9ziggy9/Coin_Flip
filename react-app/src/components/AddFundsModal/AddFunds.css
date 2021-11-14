@@ -12,12 +12,42 @@
   cursor: pointer;
 }
 
+.add-error {
+  color: red;
+}
+
 .add-form {
-  margin: 0 auto !important;
+  margin-left: 36vw;
+  margin-top: 10vh;
+}
+
+.add-title {
+  font-weight: 500;
+}
+
+.add-input {
+  padding: 0 13px;
+  height: 36px;
+  width: 354px;
+  color: white;
+  background-color: #241E33;
+  border: none;
+  border-radius: 4px;
 }
 
 .add-input:focus {
   outline: none;
+}
+
+.add-input:hover {
+  background-color: rgb(16, 10, 32);
+  outline: 1px solid #383345;
+}
+
+.add-inpt {
+  display: flex;
+  gap: 50px;
+  align-items: center;
 }
 
 @keyframes move-it {
