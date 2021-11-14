@@ -224,7 +224,7 @@ const Watchlist = () => {
                 <div className="watch-crypto-name">
                   {crypto.map((c) => (c.id === p.crypto_id ? c.name : null))}
                 </div>
-                <div className="watch-crypto-shares">{p.quantity} coins</div>
+                <div className="watch-crypto-shares">{p.quantity.toLocaleString()} {p.quantity === 1 ? "coin" : "coins"}</div>
               </div>
               <div className="watch-crypto-card-right">
                 <div className="watch-crypto-price">
