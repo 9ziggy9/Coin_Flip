@@ -49,6 +49,12 @@ const Watchlist = () => {
     });
   }, [num]);
 
+  useEffect(() => {
+    if (portfolio?.length > 0) {
+      document.querySelector(".watch-cryptos").classList.remove("hidden");
+    }
+  }, [portfolio]);
+
   const submit = (e) => {
     e.preventDefault();
 
@@ -95,9 +101,8 @@ const Watchlist = () => {
 
   const negative = (num) => {
     if (num < 0) {
-
     }
-  }
+  };
 
   const removal = (id) => {
     const main = document.querySelector(`.list-drop-${id}`);
@@ -206,7 +211,7 @@ const Watchlist = () => {
 
   return (
     <div className="watch-main">
-      <div className="watch-cryptos">Cryptocurrencies</div>
+      <div className="watch-cryptos hidden">Cryptocurrencies</div>
       <div className="watch-crypto">
         {portfolio &&
           portfolio?.map((p) => (
@@ -231,7 +236,7 @@ const Watchlist = () => {
                   {crypto.map((c) =>
                     c.id === p.crypto_id
                       ? (
-                         ((p.purchase_price - c.price) / p.purchase_price) *
+                          ((p.purchase_price - c.price) / p.purchase_price) *
                           100
                         ).toFixed(2) + "%"
                       : null
