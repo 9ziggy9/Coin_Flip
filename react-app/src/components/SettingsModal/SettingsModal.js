@@ -1,23 +1,24 @@
 import React, { useState } from "react";
 import { Modal } from "../../context/Modal";
-import { useListModal } from "../../context/ListModal";
-import AddToListModal from "./AddToListModal";
+import ResetPassword from "./ResetPassword";
 
-const AddToList = ({ cryptoId }) => {
-  const { modal, setShowModal } = useListModal()
+const SettingsModal = () => {
+  const [modal, setShowModal] = useState(false);
 
   return (
     <>
-      <button className="add-to-list" onClick={() => setShowModal(true)}>
-        Add to List
+      <button className="reset_password_button" onClick={() => setShowModal(true)}>
+        <h4 type="button" className="reset_password_text">
+          Reset Password
+        </h4>
       </button>
       {modal && (
         <Modal onClose={() => setShowModal(false)}>
-          <AddToListModal cryptoId={cryptoId} />
+          <ResetPassword />
         </Modal>
       )}
     </>
   );
 };
 
-export default AddToList;
+export default SettingsModal;

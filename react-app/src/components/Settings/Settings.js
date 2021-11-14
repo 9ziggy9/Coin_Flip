@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
+import SettingsModal from "../SettingsModal/SettingsModal";
 import './Settings.css';
 
 const Settings = () => {
@@ -50,9 +51,7 @@ const Settings = () => {
                         </div>
                         <div className="account_password_container">
                             <p className="account_password_label">Password</p>
-                            <button className="reset_password_button">
-                                <h4 type="button" className="reset_password_text" onClick={handleButton}>Reset Password</h4>
-                            </button>
+                            <SettingsModal />
                         </div>
                     </div>
                     <div className="account_deactivation_container">
