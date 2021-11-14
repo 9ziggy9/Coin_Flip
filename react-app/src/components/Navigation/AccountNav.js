@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { logout } from "../../store/session";
 import { useListModal } from "../../context/ListModal";
-import AddFunds from "../AddFundsModal/AddFunds"
+import AddFunds from "../AddFundsModal/AddFunds";
 import { Modal } from "../../context/Modal";
 
 const AccountNav = () => {
