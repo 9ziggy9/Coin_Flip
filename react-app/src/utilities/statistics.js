@@ -45,21 +45,19 @@ export class Market {
   }
 
   async fetchHistory() {
-    console.log('hello from fetchHistory()')
     const res = await fetch(`/api/cryptocurrencies/${this.name}`);
-    console.log('awaiting json response')
     const history = await res.json();
-    console.log('history: ', history.prices.slice(-30).map(dp => Number(dp[1].toFixed(2))));
     return history.prices;
   }
 
-  proceed(interval) {
+  async proceed(interval) {
     if (interval > 365) {
       console.log('Error: desired time length out of bounds')
       console.log('Pleae supply a number of days less than 365')
       return {domain: 0, range: 0}
     }
-    const past = this.fetchHistory().slice(-interval)
+    const res = await this.fetchHistory();
+    const past = res.slice(-interval);
     this.domain = past.map(datapoint => datapoint[0]);
     this.range = past.map(datapoint => Number(datapoint[1].toFixed(2)));
     return {domain: this.domain, range: this.ranger}
