@@ -42,11 +42,49 @@
 
 .checkbox {
   margin-right: 1rem;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  box-shadow: 0 0 0 1px rgb(255, 80, 0) !important;
+  border-radius: 4px;
 }
 
-.checkbox:checked {
-    background-color: pink;
+.checkbox[type="checkbox"]:after {
+  position: relative;
+  display: block;
+  top: -20px;
+  width: 18px;
+  height: 18px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(255, 80, 0) !important;
+  content: "";
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.checkbox[type="checkbox"]:before {
+  content: "";
+  background: #2a2f33;
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+.checkbox[type="checkbox"]:checked:after {
+  background-size: cover;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iMjQiIGhlaWdodD0iMjQiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGcgZmlsbD0iIzJhMmYzMyI+PHBhdGggZD0iTTE0Ny40OSwyOS42N2MtMC4xMDc1LDAuMDI2ODggLTAuMjE1LDAuMDY3MTkgLTAuMzIyNSwwLjEwNzVjLTAuOTAwMzEsMC4yMjg0NCAtMS42Nzk2OSwwLjgwNjI1IC0yLjE1LDEuNjEyNWwtNzAuMzA1LDEwOS4wMDVsLTQ4LjM3NSwtNDMuNjQ1Yy0wLjg0NjU2LC0xLjA3NSAtMi4yNTc1LC0xLjU0NTMxIC0zLjU4NzgxLC0xLjE5NTk0Yy0xLjMzMDMxLDAuMzQ5MzcgLTIuMzExMjUsMS40NjQ2OSAtMi41MTI4MSwyLjgyMTg3Yy0wLjIwMTU2LDEuMzU3MTkgMC40MTY1NiwyLjcwMDk0IDEuNTg1NjIsMy40MjY1Nmw1MS4yNzc1LDQ2LjQ0YzAuNzUyNSwwLjY1ODQ0IDEuNzYwMzEsMC45NTQwNiAyLjc1NDY5LDAuODA2MjVjMC45OTQzOCwtMC4xNDc4MSAxLjg2NzgxLC0wLjcxMjE5IDIuNDA1MzEsLTEuNTU4NzVsNzIuNTYyNSwtMTEyLjQ0NWMwLjc5MjgxLC0xLjEyODc1IDAuODMzMTMsLTIuNjIwMzEgMC4xMDc1LC0zLjc4OTM3Yy0wLjcyNTYyLC0xLjE2OTA2IC0yLjA4MjgxLC0xLjc4NzE5IC0zLjQ0LC0xLjU4NTYzeiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+");
+  background-color: rgb(255, 80, 0) !important;
+}
+
+.checkbox.large {
+  height: 22px;
+  width: 22px;
+}
+
+.checkbox.large[type="checkbox"]:before {
+  width: 20px;
+  height: 20px;
+}
+.checkbox.large[type="checkbox"]:after {
+  top: -20px;
+  width: 16px;
+  height: 16px;
 }
