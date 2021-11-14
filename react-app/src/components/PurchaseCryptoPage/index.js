@@ -200,7 +200,7 @@ const PurchaseCryptoPage = () => {
       }
 
         setErrors(errors);
-    }, [amount, totalValue]);
+    }, [amount, transaction, totalValue]);
 
 
     useEffect(() => {
@@ -334,8 +334,9 @@ const PurchaseCryptoPage = () => {
           non tristique. Pellentesque porta urna justo, venenatis fermentum dui
           lobortis vel. Curabitur et aliquet eros. Aenean pulvinar semper augue
           et mollis.
+          <CryptoNews crypto={singleCrypto[0]} />
+
         </div>
-        <CryptoNews crypto={singleCrypto[0]} />
       </div>
     );
   } else {
