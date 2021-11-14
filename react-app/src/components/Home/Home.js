@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Redirect } from "react-router";
 import { userPortfolios } from "../../store/portfolio";
 import { SimPlot, MarketPlot } from "../Plot/Plot";
+import { Market, Simulation, log_normal } from '../../utilities/statistics';
 import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
 import AddFundsModal from "../AddFundsModal/AddFundsModal";
@@ -15,26 +16,28 @@ const Home = () => {
   const user = useSelector((state) => state.session.user);
   const cryptos = useSelector((state) => state.crypto.list);
   const portfolios = useSelector((state) => Object.values(state.portfolio));
-  const [coin, setCoin] = useState("fakecoin");
   const cryptoNames = new Set(cryptos.map((c) => c.name.toLowerCase()));
-  let [start_price] = cryptos.filter((p) => p.gecko === coin);
-  if (!cryptoNames.has(coin)) start_price = { price: 0 };
-  const [price, setPrice] = useState(start_price.price);
 
-  const data = async (coin) => {
-    const res = await fetch("/api/cryptocurrencies/prices");
-    const d = await res.json();
-    setPrice(d.price[coin].usd);
-  };
+  // const data = async (coin) => {
+  //   const res = await fetch("/api/cryptocurrencies/prices");
+  //   const d = await res.json();
+  //   setPrice(d.price[coin].usd);
+  // };
 
-  //NOTE: API calls seemed to have been stacking up, 8 seconds is an additional
-  // security measure. Simulating prices still seems relevant.
+  // //NOTE: API calls seemed to have been stacking up, 8 seconds is an additional
+  // // security measure. Simulating prices still seems relevant.
 
   // useEffect(() => {const pInterval = setInterval(() => data(coin), 8000);
   //                  return () => clearInterval(pInterval)}, []);
 
-  // const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
-  // const price = entry.price
+  // // const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
+  // // const price = entry.price
+  const [coin, setCoin] = useState("fakecoin");
+  let [start_price] = cryptos.filter((p) => p.gecko === coin);
+  if (!cryptoNames.has(coin)) start_price = { price: 0 };
+  const [price, setPrice] = useState(start_price.price);
+
+  useEffect(() => {setCoin('bitcoin')}, []);
 
   if (user) {
     return (
@@ -57,9 +60,9 @@ const Home = () => {
             </div>
             <div className="porfolio_chart_container">
               {cryptoNames.has(coin) ? (
-                <MarketPlot price={price} coin={coin} />
+                <MarketPlot coin={coin}/>
               ) : (
-                <SimPlot />
+                <SimPlot coin={coin}/>
               )}
             </div>
             <div className="buying_power_container">
