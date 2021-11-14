@@ -3,7 +3,15 @@
   animation: move-it 500ms linear;
 }
 
+.close {
+  position: absolute;
+  top: 0;
+  left: 100%;;
+}
+
 .add-funds-main {
+  width: 100vw;
+  height: 100vh;
   animation: move-it 500ms linear;
 }
 
