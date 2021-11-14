@@ -29,6 +29,7 @@ export const addFunds = (num) => async (dispatch) => {
   }
 };
 
+
 export const authenticate = () => async (dispatch) => {
   const response = await fetch("/api/auth/", {
     headers: {

@@ -11,13 +11,14 @@ import {
   newPortfolio,
 } from "../../store/portfolio";
 import { createTransaction } from "../../store/transaction";
-
+import { addFunds } from "../../store/session";
 //used for alert
 import { confirm } from "react-confirm-box";
 
 import AddToList from "../AddToListModal/AddToList";
 import CryptoNews from "./CryptoNews";
 import Loading from "../Loading/Loading";
+
 
 const PurchaseCryptoPage = () => {
   const dispatch = useDispatch();
@@ -98,6 +99,7 @@ const PurchaseCryptoPage = () => {
         let hasPortfolio = false;
         let portfolioId;
         let currentAmount = 0;
+        let newCashValue = 0;
 
         for (const portfolio in ports) {
             if (ports[portfolio].crypto_id === uniqueCryptoId) {
@@ -109,6 +111,9 @@ const PurchaseCryptoPage = () => {
 
         if (transaction === "sell") {
             amount = amount * -1;
+            newCashValue += totalValue;
+        } else if (transaction === "buy") {
+            newCashValue -= totalValue;
         }
 
         amount = currentAmount + amount;
@@ -128,14 +133,13 @@ const PurchaseCryptoPage = () => {
             quantity: +amount,
         };
 
-
         if (hasPortfolio) {
-            await dispatch(changePortfolio(newTransaction));
-            await dispatch(createTransaction(creatingTransaction));
-        } else {
-            await dispatch(newPortfolio(newTransaction));
-            await dispatch(createTransaction(creatingTransaction));
-        }
+          await dispatch(changePortfolio(newTransaction));
+      } else {
+          await dispatch(newPortfolio(newTransaction));
+      }
+        await dispatch(addFunds(newCashValue))
+        await dispatch(createTransaction(creatingTransaction));
     } else {
     }
   };
@@ -175,32 +179,25 @@ const PurchaseCryptoPage = () => {
     },[completePortfolio]);
 
     useEffect(() => {
-        const errors = [];
-        totalValue = totalValueOfCoins(amount);
-        let currentAmount;
+      const errors = [];
+      totalValue = totalValueOfCoins(amount);
+      let currentAmount;
 
-    // for (const portfolio in ports) { //refactor this later.  Not DRY.  Very moist.
-    //     if (ports[portfolio].crypto_id === uniqueCryptoId) {
-    //         console.log("?????", ports[portfolio])
-    //         currentAmount = ports[portfolio].quantity;
-    //     }
-    // }
+      if (isNaN(amount) || amount === "") {
+          errors.push("Please enter a number");
+      }
 
-        if (isNaN(amount) || amount === "") {
-            errors.push("Please enter a number");
-        }
+      if (amount < 0) {
+          errors.push("Please enter a value greater than zero");
+      }
 
-        if (amount < 0) {
-            errors.push("Please enter a value greater than zero");
-        }
+      if (transaction === "buy" && (totalValue > currentUser?.cash)) {
+          errors.push("Not enough buying power")
+      }
 
-        if (transaction === "buy" && (totalValue > currentUser?.cash)) {
-            errors.push("Not enough buying power")
-        }
-
-        if (transaction === "sell" && (cryptoPort[0].quantity < amount)) {
-            errors.push("Not enough coins")
-        }
+      if (transaction === "sell" && (cryptoPort[0].quantity < amount)) {
+          errors.push("Not enough coins")
+      }
 
         setErrors(errors);
     }, [amount, totalValue]);
