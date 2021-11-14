@@ -3,11 +3,16 @@ import {useState, useEffect} from 'react';
 import Plot from 'react-plotly.js';
 import { Simulation, log_normal } from "../../utilities/statistics.js";
 
-export const SimPlot = ({coin,fn,mu,sigma,X,Y,setRange,setDomain}) => {
+export const SimPlot = ({coin}) => {
   let distribution = log_normal;
   let test_sim;
   let data;
-  if (fn === 'log_normal') distribution = log_normal
+
+  const [mu, setMean] = useState(1000);
+  const [sigma, setDeviation] = useState(100);
+  const [X, setDomain] = useState(Simulation.initialize(50,log_normal,mu,sigma).domain);
+  const [Y, setRange] = useState(Simulation.initialize(50,log_normal,mu,sigma).range);
+
 
   useEffect(() => {
     data = Simulation.zip(X,Y,distribution)
@@ -63,9 +68,24 @@ export const SimPlot = ({coin,fn,mu,sigma,X,Y,setRange,setDomain}) => {
   }
 }
 
-export const MarketPlot = ({coin, Xr, Yr, setRDomain, setRRange}) => {
+export const MarketPlot = ({coin}) => {
+  const [X, setDomain] = useState([]);
+  const [Y, setRange] = useState([]);
   // Setting day interval to 30 for debugging, implement as variable later
-  if(true) {
+  const marketData = async (coin) => {
+    const res = await fetch(`/api/cryptocurrencies/${coin}`);
+    const history = await res.json();
+    const domain = history.prices.map(dp => dp[0])
+    const range = history.prices.map(dp => [...dp[1].toFixed(2)])
+    console.log(domain,range);
+    setDomain([...domain], () => console.log(domain))
+    setRange([...range], () => console.log(range))
+  }
+
+  useEffect(() => {
+    marketData(coin);
+  }, [])
+
     const layout = {
       title: coin,
       autosize: true,
@@ -79,23 +99,23 @@ export const MarketPlot = ({coin, Xr, Yr, setRDomain, setRRange}) => {
         type: 'linear'
       },
     }
+
+    const data=[{
+        x: X,
+        y: Y,
+        type: 'scatter',
+        showlegend: true,
+        legendgrouptitle: {font: {color: 'white'}, text: 'hello world'},
+        mode: 'lines+markers',
+        marker: {color: 'green'},
+      }];
+
     return (
       <Plot
-        data={[
-          {
-            x: Xr,
-            y: Yr,
-            type: 'scatter',
-            showlegend: true,
-            legendgrouptitle: {font: {color: 'white'}, text: 'hello world'},
-            mode: 'lines+markers',
-            marker: {color: 'green'},
-          },
-        ]}
+        data={data}
         layout={layout}
         style={{'width':'100%', height:'100%'}}
         config={{scrollZoom: true}}
         useResizeHandler={true}
       />);
-  }
 }

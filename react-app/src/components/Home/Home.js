@@ -24,44 +24,20 @@ const Home = () => {
   //   setPrice(d.price[coin].usd);
   // };
 
-  //NOTE: API calls seemed to have been stacking up, 8 seconds is an additional
-  // security measure. Simulating prices still seems relevant.
+  // //NOTE: API calls seemed to have been stacking up, 8 seconds is an additional
+  // // security measure. Simulating prices still seems relevant.
 
   // useEffect(() => {const pInterval = setInterval(() => data(coin), 8000);
   //                  return () => clearInterval(pInterval)}, []);
 
-  // const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
-  // const price = entry.price
+  // // const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
+  // // const price = entry.price
   const [coin, setCoin] = useState("fakecoin");
   let [start_price] = cryptos.filter((p) => p.gecko === coin);
   if (!cryptoNames.has(coin)) start_price = { price: 0 };
 
   const [price, setPrice] = useState(start_price.price);
-  const [fn, setFunction] = useState('log_normal');
-  const [mu, setMean] = useState(1000);
-  const [sigma, setDeviation] = useState(100);
-  const [X, setDomain] = useState(Simulation.initialize(50,log_normal,mu,sigma).domain);
-  const [Y, setRange] = useState(Simulation.initialize(50,log_normal,mu,sigma).range);
-  const [Xr, setRDomain] = useState([]);
-  const [Yr, setRRange] = useState([]);
-
-
-  useEffect(() => setCoin('fake'), [])
-  useEffect(() => {
-    const data = async (coin) => {
-      const res = await fetch(`/api/cryptocurrencies/${coin}`);
-      const history = await res.json();
-      const domain = history.prices.map(dp => dp[0])
-      const range = history.prices.map(dp => [...dp[1].toFixed(2)])
-      console.log('\n\n\n INCOMING DATA')
-      console.log(history.prices)
-      console.log('\n\n\n')
-      setRDomain([...domain], () => console.log(domain))
-      setRRange([...range], () => console.log(range))
-    }
-    data(coin);
-  }, [coin])
-
+  useEffect(() => setCoin('fakecoin'), [])
 
   if (user) {
     return (
@@ -84,12 +60,9 @@ const Home = () => {
             </div>
             <div className="porfolio_chart_container">
               {cryptoNames.has(coin) ? (
-                <MarketPlot coin={coin} Xr={Xr} Yr={Yr}
-                            setRDomain={setRDomain}
-                            setRRange={setRRange}/>
+                <MarketPlot coin={coin}/>
               ) : (
-                <SimPlot coin={coin} fn={fn} mu={mu} sigma={sigma} X={X} Y={Y}
-                  setRange={setRange} setDomain={setDomain}/>
+                <SimPlot coin={coin}/>
               )}
             </div>
             <div className="buying_power_container">
