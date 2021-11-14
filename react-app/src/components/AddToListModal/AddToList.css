@@ -1,5 +1,5 @@
 .add-to-list-modal {
-  background-color: #2a2f33;
+  background-color: #1E2124;
   height: 489px;
   width: 368px;
   border-radius: 6px;
@@ -113,7 +113,7 @@
 
 .checkbox[type="checkbox"]:before {
   content: "";
-  background: #2a2f33;
+  background: #1E2124;
   position: relative;
   display: block;
   width: 15px;
