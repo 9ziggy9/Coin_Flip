@@ -20,12 +20,12 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  border-top: 0.5px solid rgba(59, 66, 71, 0.966);
+  border-top: 0.5px solid rgb(48,54,58);
   transition: 200ms all;
 }
 
 .news-card:hover {
-  background-color: rgba(59, 66, 71, 0.966);
+  background-color: rgb(48,54,58);
 }
 
 .news-img {

@@ -29,8 +29,8 @@
     justify-content: center;
     align-items: center;
     padding-left: 0;
-    border-top: 1px solid rgba(59, 66, 71, 0.966);
-    border-bottom: 1px solid rgba(59, 66, 71, 0.966);
+    border-top: 1px solid rgb(48,54,58);
+    border-bottom: 1px solid rgb(48,54,58);
 }
 
 .each_crypto_li {
@@ -42,7 +42,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid rgba(59, 66, 71, 0.966);
+    border-bottom: 1px solid rgb(48,54,58);
     width: 290px;
     height: 80px;
 }
@@ -83,7 +83,7 @@
 .transaction_list_container {
     display: flex;
     flex-direction: column;
-    border-top: 1px solid rgba(59, 66, 71, 0.966);
+    border-top: 1px solid rgb(48,54,58);
 
 }
 

@@ -79,7 +79,7 @@
     flex-direction: row;
     justify-content: space-between;
     padding-top: .5em;
-    border-bottom: 1px solid rgba(59, 66, 71, 0.966);
+    border-bottom: 1px solid rgb(48,54,58);
     height: 4.7em;
     width: 100%;
 }
@@ -104,7 +104,7 @@
     margin-bottom: 0em;
     padding: 1.5em;
     height: 8em;
-    border: 1px solid rgba(59, 66, 71, 0.966);
+    border: 1px solid rgb(48,54,58);
     border-radius: 5px
 }
 

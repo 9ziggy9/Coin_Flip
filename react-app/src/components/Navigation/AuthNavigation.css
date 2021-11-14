@@ -45,17 +45,17 @@
 
 .search-bar:focus,
 .search-bar:hover {
-  background-color: rgb(42, 47, 51);
+  background-color: rgb(30,33,36);
 }
 
 .search-bar:focus {
   border-bottom: none;
-  background-color: rgb(42, 47, 51) !important;
+  background-color: rgb(30,33,36) !important;
 }
 
 .search-results {
   position: absolute;
-  background-color: rgb(42, 47, 51);
+  background-color: rgb(30,33,36);
   width: inherit;
   overflow: hidden;
   border-top: 0 !important;
@@ -82,7 +82,14 @@
 }
 
 .result:hover {
-  background-color: rgba(59, 66, 71, 0.966);
+  background-color: rgb(48,54,58);
+}
+
+.no-result {
+  display: flex;
+  gap: 60px;
+  padding: 5px 20px;
+  margin: 0;
 }
 
 span {
@@ -95,7 +102,7 @@ span {
 .account-dropdown {
   z-index: 1;
   position: absolute;
-  background-color: rgb(42, 47, 51);
+  background-color: rgb(30,33,36);
   width: 284px;
   overflow: hidden;
   border: 0.5px solid grey;
@@ -111,8 +118,10 @@ span {
 .account-word {
   font-weight: 600;
   cursor: pointer;
-  text-underline-offset: 12px;
+  text-underline-offset: 10.5px;
   text-decoration-color: rgb(255, 80, 0) !important;
+  text-decoration-thickness: 2px !important;
+  user-select: none;
 }
 
 .account-word:hover {
@@ -175,7 +184,7 @@ span {
 
 .account-link:hover,
 .account-logout:hover {
-  background-color: rgba(59, 66, 71, 0.966);
+  background-color: rgb(48,54,58);
 }
 
 .account-logout {

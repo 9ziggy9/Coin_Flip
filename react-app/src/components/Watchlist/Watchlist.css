@@ -2,7 +2,7 @@
   border: 0.5px solid grey;
   height: 80vh;
   width: 276px;
-  background-color: rgb(42, 47, 51);
+  background-color: rgb(30,33,36);
   border-radius: 6px;
   overflow-y: auto;
   overflow-x: none;
@@ -30,7 +30,7 @@
 }
 
 .watch-crypto-card:hover {
-  background-color: rgba(59, 66, 71, 0.966);
+  background-color: rgb(48,54,58);
 }
 
 .watch-crypto-card {
@@ -92,7 +92,7 @@
   color: white;
   font-family: inherit;
   border: 0.5px solid grey;
-  background-color: rgba(59, 66, 71, 0.966);
+  background-color: rgb(48,54,58);
   outline: grey;
   width: 160px;
   height: 34px;
@@ -130,9 +130,13 @@
   outline: none;
   border: 0.5px solid rgb(255, 80, 0);
   color: rgb(255, 80, 0);
-  background-color: rgba(59, 66, 71, 0.966);
+  background-color: rgb(30,33,36);
   border-radius: 4px;
   font-weight: 600;
+}
+
+.list-cancel:hover {
+  background-color: rgb(75,42,29);
 }
 
 .list-submit {
@@ -146,6 +150,10 @@
   border-radius: 4px;
   font-weight: 600;
   color: rgb(48, 48, 48);
+}
+
+.list-submit:hover {
+  background-color: rgb(255,106,38);
 }
 
 .watchlist-card {
@@ -164,11 +172,11 @@
 }
 
 .watchlist-details:hover {
-  background-color: rgba(59, 66, 71, 0.966);
+  background-color: rgb(48,54,58);
 }
 
 .watchlist-details:hover .watchlist-options {
-  background-color: rgba(59, 66, 71, 0.966);
+  background-color: rgb(48,54,58);
   display: flex !important;
 }
 
@@ -204,7 +212,7 @@
 
 .watchlist-dropdown {
   position: absolute;
-  background-color: rgb(42, 47, 51);
+  background-color: rgb(30,33,36);
   width: 168px;
   height: 180px;
   border-radius: 4px;
@@ -230,7 +238,7 @@
 }
 
 .watchlist-cryptos:hover {
-  background-color: rgba(59, 66, 71, 0.966);
+  background-color: rgb(48,54,58);
 }
 
 .watchlist-crypto-name {
@@ -308,7 +316,7 @@
   outline: none;
   border: 0.5px solid rgb(255, 80, 0);
   color: rgb(255, 80, 0);
-  background-color: rgba(59, 66, 71, 0.966);
+  background-color: rgb(48,54,58);
   border-radius: 4px;
   font-weight: 600;
   text-align: center;
@@ -344,7 +352,7 @@
   color: white;
   font-family: inherit;
   border: 0.5px solid grey;
-  background-color: rgba(59, 66, 71, 0.966) !important;
+  background-color: rgb(48,54,58) !important;
   outline: grey;
   width: 120px;
   height: 34px;
@@ -397,10 +405,18 @@
   outline: none;
   border: 0.5px solid rgb(255, 80, 0);
   color: rgb(255, 80, 0);
-  background-color: rgba(59, 66, 71, 0.966);
+  background-color: rgb(48,54,58);
   border-radius: 4px;
   font-weight: 600;
   text-align: center;
   width: 60px;
   font-size: 14px;
+}
+
+.red {
+  color: red
+}
+
+.green {
+  color: green
 }
