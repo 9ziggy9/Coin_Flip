@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 import Plot from 'react-plotly.js';
 import { Simulation, log_normal } from "../../utilities/statistics.js";
 
-export const SimPlot = ({coin}) => {
+export const SimPlot = ({coin, setPrice}) => {
   let distribution = log_normal;
   let test_sim;
   let data;
@@ -13,10 +13,10 @@ export const SimPlot = ({coin}) => {
   const [X, setDomain] = useState(Simulation.initialize(50,log_normal,mu,sigma).domain);
   const [Y, setRange] = useState(Simulation.initialize(50,log_normal,mu,sigma).range);
 
-
   useEffect(() => {
     data = Simulation.zip(X,Y,distribution)
     test_sim = new Simulation(data, distribution, mu, sigma);
+    setPrice(test_sim.range[49].toFixed(2))
   }, []);
 
 
@@ -26,6 +26,7 @@ export const SimPlot = ({coin}) => {
       test_sim.proceed();
       setDomain([...test_sim.domain]);
       setRange([...test_sim.range]);
+      setPrice(test_sim.range[49].toFixed(2))
     }, 1000)
     return () => clearInterval(intervalPointer);
   }, [])

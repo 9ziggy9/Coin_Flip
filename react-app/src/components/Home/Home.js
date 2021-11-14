@@ -35,7 +35,7 @@ const Home = () => {
   const [coin, setCoin] = useState("fakecoin");
   const [price, setPrice] = useState(0);
 
-  useEffect(() => {setCoin('bitcoin')}, []);
+  useEffect(() => {setCoin('fakecoin')}, []);
   useEffect(() => {
     let [start_price] = cryptos.filter((p) => p.gecko === coin);
     if (!cryptoNames.has(coin)) start_price = { price: 0 };
@@ -65,7 +65,7 @@ const Home = () => {
               {cryptoNames.has(coin) ? (
                 <MarketPlot coin={coin}/>
               ) : (
-                <SimPlot coin={coin}/>
+                <SimPlot coin={coin} setPrice={setPrice}/>
               )}
             </div>
             <div className="buying_power_container">
