@@ -35,6 +35,10 @@ const Home = () => {
     setPrice(start_price.price);
   }, [coin])
 
+  useEffect(() => {
+    console.log(hist);
+  }, [hist])
+
   if (user) {
     return (
       <>
@@ -48,12 +52,16 @@ const Home = () => {
                     <div className="cash">{`$${price}`}</div>
                   </div>
                   <div className="today_tracker">
-                    <h5 className="today_values">$0.00 (0.00%)</h5>
+                    <h5 className="today_values">${
+                      (hist.d_daily?.toFixed(2))
+                    } ({(hist.d_daily_p?.toFixed(2))}%)</h5>
                     <h5 className="today_label">Today</h5>
                   </div>
                   <div className="after_hours_tracker">
-                    <h5 className="after_hours_values">$0.00 (0.00%)</h5>
-                    <h5 className="after_hours_label">After Hours</h5>
+                    <h5 className="after_hours_values">${
+                      (hist.d_monthly?.toFixed(2))
+                    }( {(hist.d_monthly_p?.toFixed(2))}%)</h5>
+                    <h5 className="after_hours_label">This Month</h5>
                   </div>
                 </>
               ) : (

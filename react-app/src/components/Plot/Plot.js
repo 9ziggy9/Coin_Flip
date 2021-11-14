@@ -79,7 +79,13 @@ export const MarketPlot = ({coin, setHist}) => {
     const range = history.prices.map(dp => dp[1].toFixed(2)).slice(-30)
     setDomain([...domain]);
     setRange([...range]);
-    setHist({time: domain, price: range});
+    const d_daily = range[range.length-1] - range[range.length-2];
+    const d_daily_p = 100*(d_daily / range[range.length-2])
+    const d_monthly = range[range.length-1] - range[0];
+    const d_monthly_p = 100*(d_monthly / range[0])
+    setHist({time: domain, price: range,
+             d_daily: d_daily, d_daily_p: d_daily_p,
+             d_monthly: d_monthly, d_monthly_p: d_monthly_p});
   }
 
   useEffect(() => {
