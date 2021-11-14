@@ -8,7 +8,6 @@ import {
 import { newUserList } from "../../store/watchlist";
 import { useListModal } from "../../context/ListModal";
 import "./AddToList.css";
-import { watch } from "fs";
 
 const AddToListModal = ({ cryptoId }) => {
   const dispatch = useDispatch();
