@@ -3,17 +3,21 @@ import { useSelector } from "react-redux";
 import "./AddFunds.css";
 
 const AddFunds = () => {
-  const [amount, setAmount] = useState();
+  const [amount, setAmount] = useState("");
   const user = useSelector((state) => state.session.user);
 
   const changeAmount = (e) => {
     let count = 0;
-    if (amount.includes(".")) {
+    if (amount?.includes(".")) {
       e.target.value.split("").filter((i) => (i === "." ? count++ : null));
     }
 
     if (count > 1) {
       return;
+    }
+
+    if (amount[amount.length - 3] === "." && e.target.value[e.target.value.length - 4] === ".") {
+      return
     }
 
     const replace = e.target.value.replace(/[^\d\.-]/g, "");
@@ -30,8 +34,10 @@ const AddFunds = () => {
     }
 
     if (
-      replace[replace.length - 3] === "." &&
-      replace[replace.length - 1] === "0"
+      (replace[replace.length - 3] === "." &&
+        replace[replace.length - 1] === "0") ||
+      (replace[replace.length - 4] === "." &&
+        replace[replace.length - 2] === "0")
     ) {
       const newNum =
         Number(replace).toLocaleString(undefined, {
@@ -59,6 +65,8 @@ const AddFunds = () => {
       <div className="add-title">Add Funds</div>
       <div className="add-amount">Amount</div>
       <input
+        autoComplete="off"
+        autoFocus="on"
         type="text"
         value={amount}
         placeholder="$0.00"
