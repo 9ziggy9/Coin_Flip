@@ -51,7 +51,7 @@ const Settings = () => {
                         </div>
                         <div className="account_password_container">
                             <p className="account_password_label">Password</p>
-                            <SettingsModal />
+                            <SettingsModal user={user}/>
                         </div>
                     </div>
                     <div className="account_deactivation_container">
