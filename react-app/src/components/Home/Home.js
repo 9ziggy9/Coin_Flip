@@ -15,17 +15,13 @@ const Home = () => {
   const user = useSelector((state) => state.session.user);
   const cryptos = useSelector((state) => state.crypto.list);
   const portfolios = useSelector((state) => Object.values(state.portfolio));
-  const [coin, setCoin] = useState("bitcoin");
   const cryptoNames = new Set(cryptos.map((c) => c.name.toLowerCase()));
-  let [start_price] = cryptos.filter((p) => p.gecko === coin);
-  if (!cryptoNames.has(coin)) start_price = { price: 0 };
-  const [price, setPrice] = useState(start_price.price);
 
-  const data = async (coin) => {
-    const res = await fetch("/api/cryptocurrencies/prices");
-    const d = await res.json();
-    setPrice(d.price[coin].usd);
-  };
+  // const data = async (coin) => {
+  //   const res = await fetch("/api/cryptocurrencies/prices");
+  //   const d = await res.json();
+  //   setPrice(d.price[coin].usd);
+  // };
 
   //NOTE: API calls seemed to have been stacking up, 8 seconds is an additional
   // security measure. Simulating prices still seems relevant.
@@ -35,21 +31,31 @@ const Home = () => {
 
   // const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
   // const price = entry.price
+  const [coin, setCoin] = useState("fakecoin");
+  let [start_price] = cryptos.filter((p) => p.gecko === coin);
+  if (!cryptoNames.has(coin)) start_price = { price: 0 };
+
+  const [price, setPrice] = useState(start_price.price);
   const [fn, setFunction] = useState('log_normal');
   const [mu, setMean] = useState(1000);
   const [sigma, setDeviation] = useState(100);
   const [X, setDomain] = useState(Simulation.initialize(50,log_normal,mu,sigma).domain);
   const [Y, setRange] = useState(Simulation.initialize(50,log_normal,mu,sigma).range);
+  const [Xr, setRDomain] = useState([]);
+  const [Yr, setRRange] = useState([]);
+
+  useEffect(() => setCoin("bitcoin"), []);
 
   useEffect(() => {
     const data = async (coin) => {
-      const res = await Market.initialize(coin,30);
-      const d = await res.json();
-      return d;
+      const res = await fetch(`/api/cryptocurrencies/${coin}`);
+      const history = await res.json();
+      setRDomain(history.prices.map(dp => dp[0]))
+      setRRange(history.prices.map(dp => [dp[1].toFixed(2)]))
+      return history.prices;
     }
-    const marketData = data(coin);
-    console.log(marketData);
-  }, [])
+    data(coin);
+  }, [coin])
 
   if (user) {
     return (
@@ -72,8 +78,8 @@ const Home = () => {
             </div>
             <div className="porfolio_chart_container">
               {cryptoNames.has(coin) ? (
-                <MarketPlot coin={coin} X={X} Y={Y}
-                            setRange={setRange} setDomain={setDomain}/>
+                <MarketPlot coin={coin} X={Xr} Y={Yr}
+                            setRange={setRRange} setDomain={setRDomain}/>
               ) : (
                 <SimPlot fn={fn} mu={mu} sigma={sigma} X={X} Y={Y}
                   setRange={setRange} setDomain={setDomain}/>
