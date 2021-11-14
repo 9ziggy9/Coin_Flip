@@ -29,10 +29,8 @@ export class Simulation {
     return {domain: this.domain, range: this.range}
   }
 
-  zip() {
-    return JSON.stringify(
-      this.domain.map((timestamp, t) => ({time:timestamp, price:this.range[t]}))
-    );
+  static zip(domain, range) {
+    return domain.map((timestamp, t) => ({time:timestamp, price:range[t]}))
   }
 }
 
