@@ -19,6 +19,10 @@ const AddFunds = () => {
       err.push("You are over the cash limit.");
     }
 
+    if (number <= 0) {
+      err.push("Please enter an amount greater than zero.");
+    }
+
     if (user?.cash + number >= 50000000) {
       err.push(
         `Adding $${number.toLocaleString(undefined, {
@@ -37,6 +41,11 @@ const AddFunds = () => {
 
   const changeAmount = (e) => {
     let count = 0;
+
+    if (e.target.value.includes("-")) {
+      return;
+    }
+
     if (amount?.includes(".")) {
       e.target.value.split("").filter((i) => (i === "." ? count++ : null));
     }
@@ -106,7 +115,7 @@ const AddFunds = () => {
       <div className="add-form">
         {errors?.length > 0 &&
           errors?.map((err) => <div className="add-error">• {err}</div>)}
-        <h2 className="add-title">Add Funds</h2>
+        <h2 className="add-title">Add Fake Funds</h2>
         <div className="add-inpt">
           <div className="add-amount">
             Amount{" "}

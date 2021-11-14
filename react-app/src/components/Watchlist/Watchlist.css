@@ -355,7 +355,7 @@
   border: 0.5px solid grey;
   background-color: rgb(48, 54, 58) !important;
   outline: grey;
-  width: 120px;
+  width: 356px;
   height: 34px;
   padding: 1px 10px 1px 10px;
   font-size: 14px;
@@ -368,6 +368,10 @@
 .watchlist-edit-input:hover,
 .watchlist-edit-input:focus {
   background-color: inherit !important;
+}
+
+.watchlist-edit-input:focus {
+  border: 0.5px solid #ff5000;
 }
 
 .edit-watchlist-main {
@@ -384,40 +388,87 @@
   display: flex;
   font-size: 14px;
   gap: 10px;
+  padding: 0px 20px;
 }
 
 .list-edit-yes {
-  height: 36px;
+  height: 48px;
   cursor: pointer;
   background-color: rgb(255, 80, 0);
   outline: none;
   border: none;
   border-radius: 4px;
   font-weight: 600;
-  color: rgb(48, 48, 48);
+  color: #1e2124;
   font-size: 14px;
-  width: 70px;
+  width: 378px;
   text-align: center;
 }
 
-.list-edit-no {
-  height: 36px;
-  cursor: pointer;
-  outline: none;
-  border: 0.5px solid rgb(255, 80, 0);
-  color: rgb(255, 80, 0);
-  background-color: rgb(48, 54, 58);
-  border-radius: 4px;
-  font-weight: 600;
-  text-align: center;
-  width: 60px;
-  font-size: 14px;
+.list-edit-yes:hover {
+  background-color: #ff6a26;
 }
 
 .red {
-  color: #FF5A87;
+  color: #ff5a87;
 }
 
 .green {
   color: #00c805;
+}
+
+.edit-modal {
+  padding: 16px 24px 24px 24px;
+  background-color: #1e2124;
+  border-radius: 4px;
+  height: 172px;
+  width: 444px;
+  animation: move-it 250ms linear;
+}
+
+.edit-list-name {
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.e-list-close {
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+}
+
+.edit-input-cont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.e-close-div {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.e-close-div:hover {
+  border-radius: 6px;
+  background-color: #35373a;
+}
+
+@keyframes move-it {
+  0% {
+    transform: translateY(10rem);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
