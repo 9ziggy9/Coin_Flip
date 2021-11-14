@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { logout } from "../../store/session";
 import { useListModal } from "../../context/ListModal";
+import AddFunds from "../AddFundsModal/AddFunds"
+import { Modal } from "../../context/Modal";
 
 const AccountNav = () => {
-  const { setBool } = useListModal();
+  const { bool, setBool } = useListModal();
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const [amount, setAmount] = useState(0);
@@ -48,7 +50,10 @@ const AccountNav = () => {
             setBool(true);
           }}
         >
-          <img className="settings-img" src="https://img.icons8.com/external-those-icons-fill-those-icons/24/ffffff/external-dollar-money-currency-those-icons-fill-those-icons-1.png" />
+          <img
+            className="settings-img"
+            src="https://img.icons8.com/external-those-icons-fill-those-icons/24/ffffff/external-dollar-money-currency-those-icons-fill-those-icons-1.png"
+          />
           Add Funds
         </div>
         <div className="account-link" onClick={() => history.push("/about")}>
@@ -77,6 +82,11 @@ const AccountNav = () => {
           Log Out
         </div>
       </div>
+      {bool && (
+        <Modal onClose={() => setBool(false)}>
+          <AddFunds />
+        </Modal>
+      )}
     </>
   );
 };
