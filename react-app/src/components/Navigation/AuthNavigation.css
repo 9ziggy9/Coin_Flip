@@ -7,6 +7,7 @@
   padding: 10px 0 10px 0;
   align-items: center;
   background-color: black;
+  z-index: 100;
 }
 
 .nav-coin-auth {
@@ -111,7 +112,7 @@ span {
   text-align: left;
   margin-right: 50px;
   margin-top: 10px;
-  z-index: 1;
+  z-index: 5;
 }
 
 .account-word {

@@ -227,7 +227,6 @@
   flex-direction: column;
   justify-content: center;
   gap: 20px;
-  z-index: 100;
 }
 
 .watchlist-cryptos {

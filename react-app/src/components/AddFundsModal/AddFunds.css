@@ -4,7 +4,7 @@
   background-color: rgb(16, 10, 32) !important;
   animation: move-it 500ms linear;
   padding-top: 2%;
-  z-index: 100 !important;  
+  z-index: 1;
 }
 
 .add-close {
