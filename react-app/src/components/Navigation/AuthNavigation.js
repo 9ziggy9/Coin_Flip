@@ -35,7 +35,7 @@ const AuthNavigation = () => {
       searchBar.current.style.borderBottom = "0.5px solid grey";
       addBorder();
     } else {
-      searchBar.current.style.backgroundColor = "rgb(42, 47, 51)";
+      searchBar.current.style.backgroundColor = "rgb(30,33,36)";
       searchBar.current.style.borderBottom = "none";
     }
   };
@@ -48,13 +48,13 @@ const AuthNavigation = () => {
       setSearch("");
       addBorder();
     } else {
-      searchBar.current.style.backgroundColor = "rgb(42, 47, 51)";
+      searchBar.current.style.backgroundColor = "rgb(30,33,36)";
       searchBar.current.style.borderBottom = "none";
     }
   };
 
   const show = (e) => {
-    searchBar.current.style.backgroundColor = "rgb(42, 47, 51)";
+    searchBar.current.style.backgroundColor = "rgb(30,33,36)";
     if (e.target.value.length > 0) {
       results.current.classList.remove("hidden");
       searchBar.current.style.borderBottom = "none";
@@ -136,7 +136,7 @@ const AuthNavigation = () => {
           onFocus={(e) => show(e)}
           ref={searchBar}
           onMouseEnter={() =>
-            (searchBar.current.style.backgroundColor = "rgb(42, 47, 51)")
+            (searchBar.current.style.backgroundColor = "rgb(30,33,36)")
           }
           onMouseLeave={colorChange}
         />
@@ -145,7 +145,7 @@ const AuthNavigation = () => {
           tabIndex={0}
           ref={results}
           onMouseEnter={() =>
-            (searchBar.current.style.backgroundColor = "rgb(42, 47, 51)")
+            (searchBar.current.style.backgroundColor = "rgb(30,33,36)")
           }
         >
           {searchResults?.length > 0 &&
@@ -158,6 +158,7 @@ const AuthNavigation = () => {
                 onClick={(e) => hideSearch(e)}
               >
                 <div
+                className="result-symbol"
                   dangerouslySetInnerHTML={{
                     __html: result.symbol.replace(
                       regex,
@@ -166,6 +167,7 @@ const AuthNavigation = () => {
                   }}
                 ></div>
                 <div
+                className="result-name"
                   dangerouslySetInnerHTML={{
                     __html: result.name.replace(
                       regex,
@@ -176,7 +178,7 @@ const AuthNavigation = () => {
               </NavLink>
             ))}
           {searchResults?.length === 0 && search?.length > 0 && (
-            <div className="result">
+            <div className="no-result">
               We were unable to find any results for your search.
             </div>
           )}
@@ -195,7 +197,7 @@ const AuthNavigation = () => {
             Account
           </div>
           <div className="account-dropdown hidden" ref={dropdown}>
-            <AccountNav dropdown={dropdown} />
+            <AccountNav />
           </div>
         </div>
       </div>

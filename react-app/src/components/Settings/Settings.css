@@ -1,0 +1,166 @@
+.settings_main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.settings_upper_container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border-bottom: 1px solid rgb(48,54,58);
+}
+
+
+.user_name_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 110px;
+    width: 800px;
+
+}
+
+.user_name_text {
+    font-size: 30px;
+    width: 15rem;
+    margin-bottom: 0px;
+}
+
+.settings_label_container {
+    border-bottom: 2px solid rgb(1, 200, 5);
+    width: 55px;
+    padding: 0;
+    margin-top: .5em;
+
+}
+
+.settings_label {
+    width: 55px;
+    font-size: 13px;
+    font-weight: 870;
+}
+
+.settings_lower_container {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    height: 100%;
+}
+
+.account_information_title_container{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid rgb(48,54,58)
+}
+
+.account_information_title {
+    width: 15rem;
+    margin-top: 3rem;
+    margin-bottom: 0;
+    font-size: 24px;
+}
+
+.account_username_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 3rem;
+    border-bottom: 1px solid rgb(48,54,58);
+}
+
+.username_label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.username {
+    font-size: 13px;
+}
+
+.account_number_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 3rem;
+    border-bottom: 1px solid rgb(48,54,58);
+}
+
+.account_number_label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.account_number {
+    font-size: 13px;
+}
+
+.account_email_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 3rem;
+    border-bottom: 1px solid rgb(48,54,58);
+}
+
+.account_email_label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.account_email {
+    font-size: 13px;
+}
+
+.account_password_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 3rem;
+    border-bottom: 1px solid rgb(48,54,58);
+}
+
+.account_password_label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.reset_password_button {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0,0,0,0);
+    border-style: none;
+    height: 2rem;
+    padding-right: 0;
+    cursor: pointer;
+}
+
+.reset_password_text {
+    color:rgb(1, 200, 5);
+    margin-right: 0;
+}
+
+.account_deactivation_container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 6rem;
+}
+
+.account_deactivation_button {
+    background-color: rgba(0,0,0,0);
+    border-style: none;
+    cursor: pointer;
+}
+
+.account_deactivation_text {
+    color: rgb(255, 80, 0);
+}

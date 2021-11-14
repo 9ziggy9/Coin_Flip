@@ -27,6 +27,17 @@ def authenticate():
         return current_user.to_dict()
     return {'errors': ['Unauthorized']}
 
+@auth_routes.route('/add', methods=['POST'])
+def add_funds():
+
+    user = User.query.filter(User.id==current_user.id).first()
+
+    user.cash += request.json['amt']
+
+    db.session.commit()
+
+    return current_user.to_dict()
+
 
 @auth_routes.route('/login', methods=['POST'])
 def login():

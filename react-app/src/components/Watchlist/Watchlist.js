@@ -1,6 +1,7 @@
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import { Modal } from "../../context/Modal";
 import { userPortfolios } from "../../store/portfolio";
 import {
   deleteUserList,
@@ -8,14 +9,18 @@ import {
   getUserList,
   newUserList,
 } from "../../store/watchlist";
+import EditListModal from "./EditListModal";
 import "./Watchlist.css";
+import { useListModal } from "../../context/ListModal";
 
 const Watchlist = () => {
   const history = useHistory();
+  const { shown, setShown } = useListModal();
   const [num, setNum] = useState(0);
   const [open, setOpen] = useState(0);
   const [input, setInput] = useState();
-  const [editInput, setEditInput] = useState("");
+  const [name, setName] = useState();
+  const [iden, setIden] = useState();
   const [imgUrl, setImgUrl] = useState(
     "https://img.icons8.com/material-outlined/24/ffffff/settings--v1.png"
   );
@@ -48,6 +53,12 @@ const Watchlist = () => {
       i.style.color = "white";
     });
   }, [num]);
+
+  useEffect(() => {
+    if (portfolio?.length > 0) {
+      document.querySelector(".watch-cryptos").classList.remove("hidden");
+    }
+  }, [portfolio]);
 
   const submit = (e) => {
     e.preventDefault();
@@ -93,20 +104,24 @@ const Watchlist = () => {
     }
   };
 
-  const negative = (num) => {
-    if (num < 0) {
+  const checkNum = (b, c, id) => {
+    let num = ((b - c) / b) * 100;
 
+    if (num > 0) {
+      document.querySelector(`.percentage-${id}`)?.classList.add("green");
+    } else if (num < 0) {
+      document.querySelector(`.percentage-${id}`)?.classList.add("red");
     }
-  }
+
+    return num.toFixed(2) + "%";
+  };
 
   const removal = (id) => {
     const main = document.querySelector(`.list-drop-${id}`);
     const del = document.querySelector(`.list-del-${id}`);
-    const edit = document.querySelector(`.edit-${id}`);
 
     main.classList.remove("hidden");
     del.classList.add("hidden");
-    edit.classList.add("hidden");
   };
 
   const RemoveOutside = (ref) => {
@@ -176,37 +191,9 @@ const Watchlist = () => {
     setNum((old) => old + 1);
   };
 
-  const showEditSettings = (id, name) => {
-    setEditInput(name);
-    const main = document.querySelector(`.list-drop-${id}`);
-    const edit = document.querySelector(`.edit-${id}`);
-
-    if (!main.classList.contains("hidden")) {
-      main.classList.add("hidden");
-      edit.classList.remove("hidden");
-    } else {
-      main.classList.remove("hidden");
-      edit.classList.add("hidden");
-    }
-  };
-
-  const editListName = (id) => {
-    const main = document.querySelector(`.list-drop-${id}`);
-    const edit = document.querySelector(`.edit-${id}`);
-
-    dispatch(editUserList(id, editInput)).then(() =>
-      dispatch(getUserList(user.id))
-    );
-
-    dropdown.current[id].classList.add("hidden");
-    main.classList.remove("hidden");
-    edit.classList.add("hidden");
-    setNum((old) => old + 1);
-  };
-
   return (
     <div className="watch-main">
-      <div className="watch-cryptos">Cryptocurrencies</div>
+      <div className="watch-cryptos hidden">Cryptocurrencies</div>
       <div className="watch-crypto">
         {portfolio &&
           portfolio?.map((p) => (
@@ -219,21 +206,22 @@ const Watchlist = () => {
                 <div className="watch-crypto-name">
                   {crypto.map((c) => (c.id === p.crypto_id ? c.name : null))}
                 </div>
-                <div className="watch-crypto-shares">{p.quantity} coins</div>
+                <div className="watch-crypto-shares">
+                  {p.quantity.toLocaleString()}{" "}
+                  {p.quantity === 1 ? "coin" : "coins"}
+                </div>
               </div>
               <div className="watch-crypto-card-right">
                 <div className="watch-crypto-price">
+                  $
                   {p.purchase_price > 1
                     ? p.purchase_price.toLocaleString()
                     : p.purchase_price.toFixed(3)}
                 </div>
-                <div className={`watch-crypto-percentage ${p.id}`}>
+                <div className={`watch-crypto-percentage percentage-${p.id}`}>
                   {crypto.map((c) =>
                     c.id === p.crypto_id
-                      ? (
-                         ((p.purchase_price - c.price) / p.purchase_price) *
-                          100
-                        ).toFixed(2) + "%"
+                      ? checkNum(p.purchase_price, c.price, p.id)
                       : null
                   )}
                 </div>
@@ -272,6 +260,11 @@ const Watchlist = () => {
         {watchlists &&
           watchlists?.map((w, i) => (
             <div className="watchlist-card">
+              {shown && (
+                <Modal onClose={() => setShown(false)}>
+                  <EditListModal editInput={name} num={iden} />
+                </Modal>
+              )}
               <div className="watchlist-details">
                 <div className="watchlist-name">
                   {w.name.slice(0, 16)}
@@ -303,7 +296,11 @@ const Watchlist = () => {
                               "https://img.icons8.com/material-outlined/24/ffffff/settings--v1.png"
                             )
                           }
-                          onClick={() => showEditSettings(w.id, w.name)}
+                          onClick={() => {
+                            setName(w.name);
+                            setIden(w.id);
+                            setShown(true);
+                          }}
                         >
                           <img className="list-settings-img" src={imgUrl} />{" "}
                           Edit list
@@ -324,32 +321,6 @@ const Watchlist = () => {
                         >
                           <img className="list-settings-img" src={delUrl} />{" "}
                           Delete list
-                        </div>
-                      </div>
-                      <div
-                        className={`edit-watchlist-main edit-${w.id} hidden`}
-                      >
-                        <input
-                          className="watchlist-edit-input"
-                          onKeyPress={(e) =>
-                            e.key === "Enter" && editListName(w.id)
-                          }
-                          value={editInput}
-                          onChange={(e) => setEditInput(e.target.value)}
-                        />
-                        <div className="edit-btns">
-                          <button
-                            className="list-edit-yes"
-                            onClick={() => editListName(w.id)}
-                          >
-                            Submit
-                          </button>
-                          <button
-                            className="list-edit-no"
-                            onClick={() => showEditSettings(w.id)}
-                          >
-                            Cancel
-                          </button>
                         </div>
                       </div>
                       <div

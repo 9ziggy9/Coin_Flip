@@ -1,32 +1,171 @@
 .add-to-list-modal {
-    background-color: #2a2f33;
-    height: 489px;
-    width: 368px;
-    border-radius: 6px;
-    padding: 20px 20px;
-    display: flex;
-    flex-direction: column;
+  z-index: 5;
+  background-color: #1E2124;
+  height: 489px;
+  width: 368px;
+  border-radius: 6px;
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  animation: move-it 300ms linear;
+}
+
+.add-to-list-modal::-webkit-scrollbar {
+  display: none;
+}
+
+.add-list-main::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+}
+
+.add-list-main::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+.add-list-main::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.192);
+  border-radius: 4px;
+}
+
+.add-list-main::-webkit-scrollbar-corner {
+  background-color: transparent;
+  width: 0px;
 }
 
 #modal-content {
-    background: none !important;
+  background: none !important;
 }
 
 .add-top {
-    font-size: 20px;
-    font-weight: 700;
+  font-size: 20px;
+  font-weight: 700;
+  margin-left: 30px;
 }
 
 .add-list-main {
-    margin: 30px 30px;
+  margin: 30px 22px 20px 30px;
+  overflow-y: auto;
+  overflow-x: auto;
+  height: 400px;
 }
 
 .add-list-card {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .list-name {
-    font-size: 16px;
-    font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
+  word-break: keep-all;
+  white-space: nowrap;
 }
+
+.list-create-img {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.list-img {
+  height: 18px;
+  width: 18px;
+  margin-left: 4px;
+  margin-right: 11px;
+}
+
+.list-amount {
+  font-size: 14px;
+  color: rgb(138, 137, 137);
+}
+
+.crypto-create-list {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.checkbox {
+  margin-right: 1rem;
+  border-radius: 4px;
+}
+
+.checkbox[type="checkbox"]:after {
+  position: relative;
+  display: block;
+  top: -20px;
+  width: 14px;
+  height: 14px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(255, 80, 0) !important;
+  content: "";
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.checkbox[type="checkbox"]:before {
+  content: "";
+  background: #1E2124;
+  position: relative;
+  display: block;
+  width: 15px;
+  height: 15px;
+}
+
+.checkbox[type="checkbox"]:checked:after {
+  background-size: cover;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNTAiIGhlaWdodD0iNTAiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGcgZmlsbD0iIzJhMmYzMyI+PHBhdGggZD0iTTE0NC4yNjUsMjkuNjdjLTIuMjg0MzcsMC4wODA2MyAtNC4zODA2MiwxLjI5IC01LjU5LDMuMjI1bC02NC43MTUsOTkuMDA3NWwtNDEuOTI1LC0zNi4yMjc1Yy0xLjgwMDYyLC0xLjg2NzgxIC00LjUwMTU2LC0yLjU2NjU2IC02Ljk4NzUsLTEuNzg3MTljLTIuNDcyNSwwLjc2NTk0IC00LjMxMzQ0LDIuODYyMTkgLTQuNzQzNDQsNS40MTUzMWMtMC40MywyLjU2NjU2IDAuNjA0NjksNS4xNDY1NiAyLjcwMDk0LDYuNjkxODdsNDcuOTQ1LDQxLjQ5NWMxLjUwNSwxLjI3NjU2IDMuNDkzNzUsMS44NDA5NCA1LjQ0MjE5LDEuNTU4NzVjMS45NjE4OCwtMC4yOTU2MiAzLjY5NTMxLC0xLjQxMDk0IDQuNzcwMzEsLTMuMDYzNzVsNjkuMTIyNSwtMTA1LjU2NWMxLjQ3ODEzLC0yLjE2MzQ0IDEuNTk5MDYsLTQuOTU4NDQgMC4zMjI1LC03LjI0MjgxYy0xLjI3NjU2LC0yLjI3MDk0IC0zLjczNTYyLC0zLjYyODEyIC02LjM0MjUsLTMuNTA3MTl6Ij48L3BhdGg+PC9nPjwvZz48L3N2Zz4=");
+  background-color: rgb(255, 80, 0) !important;
+}
+
+.checkbox.large {
+  height: 18px;
+  width: 18px;
+}
+
+.checkbox.large[type="checkbox"]:before {
+  width: 18px;
+  height: 18px;
+}
+.checkbox.large[type="checkbox"]:after {
+  top: -20px;
+  width: 16px;
+  height: 16px;
+}
+
+.add-list-submit {
+    background-color: rgb(255, 80, 0);
+    border: none;
+    cursor: pointer;
+    width: 360px;
+    height: 49px;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 0px 48px;
+    border-radius: 4px;
+}
+
+.add-list-submit:hover {
+    background-color: rgb(253, 116, 53);
+}
+
+@keyframes move-it {
+    0% {
+      transform: translateY(10rem);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
