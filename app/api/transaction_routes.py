@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Transaction
+from datetime import datetime
 
 transaction_routes = Blueprint('transactions', __name__)
 
@@ -14,12 +15,12 @@ def user_transactions(user_id):
     return {'transactions': [transaction.to_dict() for transaction in transactions]}
 
 # Create a new transaction
-@transaction_routes.route('/', methods=['POST'])
+@transaction_routes.route('/', methods=['POST'], strict_slashes=False)
 @login_required
 def create_transaction():
     new_transaction = request.json
     # print(f'=========================={new_transaction}')
-    transaction = Transaction(crypto_id = new_transaction["cryptoId"], user_id = new_transaction["userId"], type = new_transaction["type"], price = new_transaction["price"], quantity = new_transaction["quantity"], createdAt = new_transaction["createdAt"])
+    transaction = Transaction(crypto_id = new_transaction["cryptoId"], user_id = new_transaction["userId"], type = new_transaction["type"], price = new_transaction["price"], quantity = new_transaction["quantity"], createdAt = datetime.now())
     db.session.add(transaction)
     db.session.commit()
 
