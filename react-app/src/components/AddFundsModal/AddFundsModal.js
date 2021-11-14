@@ -12,28 +12,12 @@ const AddFundsModal = () => {
       <button
         type="button"
         className="add_funds_button"
-        onClick={() => {
-          setBool(true);
-          setTimeout(() => {
-            document
-              .getElementById("modal-background")
-              .classList.add("modal-change");
-          }, 1);
-          return;
-        }}
+        onClick={() => setBool(true)}
       >
         <h4 className="add_funds_button_text">Add Funds</h4>
       </button>
       {bool && (
-        <Modal
-          onClose={() => {
-            return
-            document
-              .getElementById("modal-background")
-              .classList.remove("modal-change");
-            setBool(false);
-          }}
-        >
+        <Modal onClose={() => setBool(false)}>
           <AddFunds />
         </Modal>
       )}

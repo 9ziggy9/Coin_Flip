@@ -1,18 +1,19 @@
-.modal-change {
+.add-funds-main {
+  width: 100vw;
+  height: 100vh;
   background-color: rgb(16, 10, 32) !important;
   animation: move-it 500ms linear;
 }
 
-.close {
-  position: absolute;
-  top: 0;
-  left: 100%;;
+.add-close {
+  padding-top: 2%;
+  margin-left: 96%;
+  font-size: 24px;
+  cursor: pointer;
 }
 
-.add-funds-main {
-  width: 100vw;
-  height: 100vh;
-  animation: move-it 500ms linear;
+.add-form {
+  margin: 0 auto !important;
 }
 
 .add-input:focus {

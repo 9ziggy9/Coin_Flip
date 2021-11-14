@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addFunds } from "../../store/session";
+import { useListModal } from "../../context/ListModal";
 import "./AddFunds.css";
 
 const AddFunds = () => {
@@ -8,6 +9,7 @@ const AddFunds = () => {
   const [amount, setAmount] = useState("");
   const [number, setNumber] = useState(0);
   const [errors, setErrors] = useState([]);
+  const { setBool } = useListModal();
   const user = useSelector((state) => state.session.user);
 
   const submit = () => {
@@ -93,24 +95,30 @@ const AddFunds = () => {
 
   return (
     <div className="add-funds-main">
-      <div className="close">X</div>
-      {errors?.length > 0 && errors?.map(err => (
-        <div className="add-error">{err}</div>
-      ))}
-      <div className="add-title">Add Funds</div>
-      <div className="add-amount">Amount</div>
-      <input
-        autoComplete="off"
-        autoFocus="on"
-        type="text"
-        value={amount}
-        placeholder="$0.00"
-        onChange={(e) => changeAmount(e)}
-        className="add-input"
-      />
-      <button onClick={submit} className="add-submit">
-        Submit
-      </button>
+      <div className="add-close" onClick={() => setBool(false)}>
+        <img
+          alt="svgImg"
+          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iMjQiIGhlaWdodD0iMjQiCnZpZXdCb3g9IjAgMCAyNCAyNCIKc3R5bGU9IiBmaWxsOiNmZmZmZmY7Ij48cGF0aCBkPSJNIDQuNzA3MDMxMiAzLjI5Mjk2ODggTCAzLjI5Mjk2ODggNC43MDcwMzEyIEwgMTAuNTg1OTM4IDEyIEwgMy4yOTI5Njg4IDE5LjI5Mjk2OSBMIDQuNzA3MDMxMiAyMC43MDcwMzEgTCAxMiAxMy40MTQwNjIgTCAxOS4yOTI5NjkgMjAuNzA3MDMxIEwgMjAuNzA3MDMxIDE5LjI5Mjk2OSBMIDEzLjQxNDA2MiAxMiBMIDIwLjcwNzAzMSA0LjcwNzAzMTIgTCAxOS4yOTI5NjkgMy4yOTI5Njg4IEwgMTIgMTAuNTg1OTM4IEwgNC43MDcwMzEyIDMuMjkyOTY4OCB6Ij48L3BhdGg+PC9zdmc+"
+        />
+      </div>
+      <div className="add-form">
+        {errors?.length > 0 &&
+          errors?.map((err) => <div className="add-error">{err}</div>)}
+        <div className="add-title">Add Funds</div>
+        <div className="add-amount">Amount</div>
+        <input
+          autoComplete="off"
+          autoFocus="on"
+          type="text"
+          value={amount}
+          placeholder="$0.00"
+          onChange={(e) => changeAmount(e)}
+          className="add-input"
+        />
+        <button onClick={submit} className="add-submit">
+          Submit
+        </button>
+      </div>
     </div>
   );
 };
