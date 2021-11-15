@@ -29,13 +29,13 @@
 
 /* DEBUGGING - ziggy */
 .pl-red {
-    color: red;
+  color: #ff5a87;
 }
 
 .pl-green {
-    color: green;
+  color: #00c805;
 }
-/*  */
+
 
 .cash {
     display:flex;
