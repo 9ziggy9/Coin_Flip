@@ -171,11 +171,23 @@ export const PortPlot = ()  => {
     const UNIX_DAY = 8640000;
     // const cryptos_owned = [];
     const total_invested = [];
+    const total_sold = [];
+    const daily_investment_total = [];
+    const daily_cashout = [];
     for (let t = 0; t < X.length; t++) {
-      total_invested.push(transactions?.map(T => {
+      total_invested.push(transactions?.filter((T) => {
         const uT = new Date(T.createdAt).getTime();
-        if (uT < X[t] + UNIX_DAY) return T.price * T.quantity;
-        else return 0;
+        if (uT < X[t] + UNIX_DAY && T.type === 'buy') {
+          return true;
+        }
+        else return false;
+      }))
+      total_sold.push(transactions?.filter((T) => {
+        const uT = new Date(T.createdAt).getTime();
+        if (uT < X[t] + UNIX_DAY && T.type === 'sell') {
+          return true;
+        }
+        else return false;
       }))
       // cryptos_owned.push(transactions?.map(T => {
       //   const uT = new Date(T.createdAt).getTime();
@@ -185,7 +197,14 @@ export const PortPlot = ()  => {
       //     return false;
       // }))
     }
-    console.log(total_invested);
+    total_invested.forEach(d => {
+      daily_investment_total.push((d.reduce((acc, n) => acc + n.price*n.quantity, 0)));
+    })
+    total_sold.forEach(d => {
+      daily_cashout.push((d.reduce((acc, n) => acc + n.price*n.quantity, 0)));
+    })
+    console.log(daily_investment_total);
+    console.log(daily_cashout);
   }
 
   computeProfitCurve();
