@@ -28,14 +28,14 @@
 }
 
 /* DEBUGGING - ziggy */
-.indicator1 {
-    background-color: red;
+.pl-red {
+  color: #ff5a87;
 }
 
-.indicator2 {
-    background-color: blue;
+.pl-green {
+  color: #00c805;
 }
-/*  */
+
 
 .cash {
     display:flex;

@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, forceUpdate } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory  } from "react-router-dom";
 import "./PurchaseCryptoPage.css";
 import { useParams } from "react-router";
+import {MarketPlot} from "../Plot/Plot";
 // import { getOneCryptocurrency, getAllCryptocurrency } from "../../store/purchaseCrypto";
 import { getOneCrypto } from "../../store/crypto";
 import {
@@ -18,6 +19,7 @@ import { confirm } from "react-confirm-box";
 import AddToList from "../AddToListModal/AddToList";
 import CryptoNews from "./CryptoNews";
 import Loading from "../Loading/Loading";
+import PurchaseCryptoModal from "../PurchaseCryptoModal.js/purchaseCryptoModal";
 
 const PurchaseCryptoPage = () => {
   const dispatch = useDispatch();
@@ -27,8 +29,6 @@ const PurchaseCryptoPage = () => {
   // const uniqueCryptoId = parseInt(pathname.split("/")[2])
   const [uniqueCryptoId, setUniqueCryptoId] = useState();
   const { id } = useParams();
-  let cryptoPortfolio;
-  let ports;
   let totalValue;
   let totalValueString;
 
@@ -38,12 +38,12 @@ const PurchaseCryptoPage = () => {
   const [textColor, setTextColor] = useState("white");
   const [price, setPrice] = useState(0);
   const [errors, setErrors] = useState([]);
+  const [hist, setHist] = useState([]);
 
   const completePortfolio = useSelector((state) => state.portfolio.portfolio);
 
   let singleCrypto;
 
-  let Portfolio;
 
   const userId = currentUser?.id;
 
@@ -56,8 +56,6 @@ const PurchaseCryptoPage = () => {
       dispatch(userPortfolios(userId));
     }
   }, [dispatch, userId]);
-
-  ports = useSelector((state) => state.portfolio);
 
   const colorChange = (history) => {
     document.querySelectorAll(".hisButt").forEach((button) => {
@@ -137,14 +135,15 @@ const PurchaseCryptoPage = () => {
       setAmount(0);
 
       if (hasPortfolio) {
-        console.log("!!!!!!in HP !!!");
-        dispatch(changePortfolio(newTransaction));
+        await dispatch(changePortfolio(newTransaction));
       } else {
-        console.log("in no hp!!!!!!");
-        dispatch(newPortfolio(newTransaction));
+        await dispatch(newPortfolio(newTransaction));
       }
-      dispatch(addFunds(newCashValue));
-      dispatch(createTransaction(creatingTransaction));
+
+      await dispatch(addFunds(newCashValue))
+      await dispatch(createTransaction(creatingTransaction));
+      history.go(0)
+    } else {
     }
   };
 
@@ -225,7 +224,7 @@ const PurchaseCryptoPage = () => {
     return (
       <div className="pageContainer">
         <div className="cryptoInfoContainer">
-          <div className="cryptoName">{singleCrypto[0]?.name}</div>
+          <div className="cryptoName">{singleCrypto[0]?.name.toLowerCase()}</div>
           <div className="cryptoPrice">
             $
             {singleCrypto[0]?.price > 1
@@ -233,7 +232,9 @@ const PurchaseCryptoPage = () => {
               : singleCrypto[0]?.price}
           </div>
         </div>
-        <div className="graph">plot graph</div>
+        <div className="graph">
+          <MarketPlot coin={singleCrypto[0]?.gecko} setHist={setHist}/>
+        </div>
         <div className="graphHistorySelect">
           <div className="graphButtonContainer">
             <button

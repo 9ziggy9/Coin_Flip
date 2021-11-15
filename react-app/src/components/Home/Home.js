@@ -28,17 +28,12 @@ const Home = () => {
   const [price, setPrice] = useState(0);
   const [hist, setHist] = useState([])
 
-  useEffect(() => {setCoin('bitcoin')}, []);
+  useEffect(() => {setCoin('ethereum')}, []);
   useEffect(() => {
     let [start_price] = cryptos.filter((p) => p.gecko === coin);
     if (!cryptoNames.has(coin)) start_price = { price: 0 };
     setPrice(start_price.price);
   }, [coin])
-
-  useEffect(() => {
-    console.log(hist);
-  }, [hist])
-
 
   if (user) {
     return (
@@ -83,11 +78,6 @@ const Home = () => {
               )}
             </div>
             <div className="porfolio_chart_container">
-              {cryptoNames.has(coin) ? (
-                <MarketPlot coin={coin} setHist={setHist}/>
-              ) : (
-                <SimPlot coin={coin} setPrice={setPrice} setHist={setHist}/>
-              )}
             </div>
             <div className="buying_power_container">
               <div className="buying_power_label_container">

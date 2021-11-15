@@ -71,6 +71,7 @@ export const SimPlot = ({coin, setPrice, setHist}) => {
 export const MarketPlot = ({coin, setHist}) => {
   const [X, setDomain] = useState([]);
   const [Y, setRange] = useState([]);
+  const lower_coin = coin.toLowerCase()
   // Setting day interval to 30 for debugging, implement as variable later
   const marketData = async (coin) => {
     const res = await fetch(`/api/cryptocurrencies/${coin}`);
@@ -89,11 +90,11 @@ export const MarketPlot = ({coin, setHist}) => {
   }
 
   useEffect(() => {
-    marketData(coin);
-  }, [coin])
+    marketData(lower_coin);
+  }, [lower_coin])
 
     const layout = {
-      title: coin,
+      title: lower_coin,
       autosize: true,
       plot_bgcolor: 'black',
       paper_bgcolor: 'black',
@@ -111,7 +112,7 @@ export const MarketPlot = ({coin, setHist}) => {
       y: Y,
       type: 'scatter',
       showlegend: true,
-      legendgrouptitle: {font: {color: 'white'}, text: 'hello world'},
+      legendgrouptitle: {font: {color: 'white'}, text: 'price'},
       mode: 'lines+markers',
       marker: {color: 'green'},
     }];
