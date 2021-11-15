@@ -28,7 +28,7 @@ const Home = () => {
   const [price, setPrice] = useState(0);
   const [hist, setHist] = useState([])
 
-  useEffect(() => {setCoin('bitcoin')}, []);
+  useEffect(() => {setCoin('ethereum')}, []);
   useEffect(() => {
     let [start_price] = cryptos.filter((p) => p.gecko === coin);
     if (!cryptoNames.has(coin)) start_price = { price: 0 };
@@ -36,20 +36,26 @@ const Home = () => {
   }, [coin])
 
   function assignColor(num, type) {
+    const tNum = Number(num);
     switch (type) {
       case 'daily':
-        if (num > 0) {
+        if (tNum > 0) {
+          document.querySelector('.today_values')?.classList.remove("pl-red");
           document.querySelector('.today_values')?.classList.add("pl-green");
-        } else if (num < 0) {
+        } else if (tNum < 0) {
+          document.querySelector('.today_values')?.classList.remove("pl-green");
           document.querySelector('.today_values')?.classList.add("pl-red");
         }
         break;
       case 'monthly':
-        if (num > 0) {
+        if (tNum > 0) {
+          document.querySelector('.after_hours_values')?.classList.remove("pl-red");
           document.querySelector('.after_hours_values')?.classList.add("pl-green");
-        } else if (num < 0) {
+        } else if (tNum < 0) {
+          document.querySelector('.after_hours_values')?.classList.remove("pl-green");
           document.querySelector('.after_hours_values')?.classList.add("pl-red");
         }
+        break;
     }
     return num;
   }
