@@ -1,9 +1,9 @@
 import { useEffect, useState, forceUpdate } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory  } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./PurchaseCryptoPage.css";
 import { useParams } from "react-router";
-import {MarketPlot} from "../Plot/Plot";
+import { MarketPlot } from "../Plot/Plot";
 // import { getOneCryptocurrency, getAllCryptocurrency } from "../../store/purchaseCrypto";
 import { getOneCrypto } from "../../store/crypto";
 import {
@@ -43,7 +43,6 @@ const PurchaseCryptoPage = () => {
   const completePortfolio = useSelector((state) => state.portfolio.portfolio);
 
   let singleCrypto;
-
 
   const userId = currentUser?.id;
 
@@ -140,9 +139,9 @@ const PurchaseCryptoPage = () => {
         await dispatch(newPortfolio(newTransaction));
       }
 
-      await dispatch(addFunds(newCashValue))
+      await dispatch(addFunds(newCashValue));
       await dispatch(createTransaction(creatingTransaction));
-      history.go(0)
+      history.go(0);
     } else {
     }
   };
@@ -224,7 +223,9 @@ const PurchaseCryptoPage = () => {
     return (
       <div className="pageContainer">
         <div className="cryptoInfoContainer">
-          <div className="cryptoName">{singleCrypto[0]?.name.toLowerCase()}</div>
+          <div className="cryptoName">
+            {singleCrypto[0]?.name.toLowerCase()}
+          </div>
           <div className="cryptoPrice">
             $
             {singleCrypto[0]?.price > 1
@@ -233,7 +234,7 @@ const PurchaseCryptoPage = () => {
           </div>
         </div>
         <div className="graph">
-          <MarketPlot coin={singleCrypto[0]?.gecko} setHist={setHist}/>
+          <MarketPlot coin={singleCrypto[0]?.gecko} setHist={setHist} />
         </div>
         <div className="graphHistorySelect">
           <div className="graphButtonContainer">
@@ -327,17 +328,17 @@ const PurchaseCryptoPage = () => {
                 {" "}
                 Submit{" "}
               </button>
+              <ul className="errors">
+                {errors.map((error) => (
+                  <li key={error}>{error}</li>
+                ))}
+              </ul>
             </div>
           </form>
           <div className="button-and-errors">
             <div className="add_to_list">
               <AddToList cryptoId={id} />
             </div>
-            <ul className="errors">
-              {errors.map((error) => (
-                <li key={error}>{error}</li>
-              ))}
-            </ul>
           </div>
         </div>
         <div className="about">About</div>
