@@ -157,15 +157,18 @@ export const PortPlot = ()  => {
     }
   }
 
-  const total_purchases = transactions?.filter(t => t.type==='buy');
-  const total_sold = transactions?.filter(t => t.type==='sell');
-
-  console.log(total_purchases, total_sold);
-
   const transaction_data = {
-    total_purchases: transactions?.length,
-    average_investment: 'blank',
+    number_purchases: transactions?.length,
+    total_purchases: transactions?.filter(t => t.type==='buy')
+                                  .map(t => t.price)
+                                  .reduce((t,n) => t + n, 0),
+    cashed_out: transactions?.filter(t => t.type==='sell')
+                              .map(t => t.price)
+                              .reduce((t,n) => t + n, 0),
+    average_investment: total_purchases / transactions?.length
   }
+
+  console.log(transaction_data);
 
 
   return (<>
