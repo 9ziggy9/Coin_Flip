@@ -96,47 +96,52 @@ const PurchaseCryptoPage = () => {
     );
 
     if (result) {
-        let hasPortfolio = false;
-        let portfolioId;
-        let currentAmount = 0;
-        let newCashValue = 0;
+      let hasPortfolio = false;
+      let portfolioId;
+      let currentAmount = 0;
+      let newCashValue = 0;
 
-        for (const portfolio in ports) {
-            if (ports[portfolio].crypto_id === uniqueCryptoId) {
-                portfolioId = ports[portfolio].id;
-                currentAmount = ports[portfolio].quantity;
-                hasPortfolio = true;
-            }
+      for (const portfolio in completePortfolio) {
+        if (completePortfolio[portfolio].crypto_id === uniqueCryptoId) {
+          portfolioId = completePortfolio[portfolio].id;
+          currentAmount = completePortfolio[portfolio].quantity;
+          hasPortfolio = true;
         }
+      }
+      console.log(completePortfolio)
 
-        if (transaction === "sell") {
-            amount = amount * -1;
-            newCashValue += totalValue;
-        } else if (transaction === "buy") {
-            newCashValue -= totalValue;
-        }
+      console.log(hasPortfolio)
 
-        amount = currentAmount + amount;
+      if (transaction === "sell") {
+        amount = amount * -1;
+        newCashValue += totalValue;
+      } else if (transaction === "buy") {
+        newCashValue -= totalValue;
+      }
 
-            const newTransaction = {
-            userId,
-            cryptoId: uniqueCryptoId,
-            quantity: amount,
-            purchasePrice: singleCrypto[0]?.price,
-        };
+      amount = currentAmount + amount;
 
-        const creatingTransaction = {
-            cryptoId: +uniqueCryptoId,
-            userId: +userId,
-            type: transaction.toString(),
-            price: +singleCrypto[0]?.price,
-            quantity: +amount,
-        };
+      const newTransaction = {
+        userId,
+        cryptoId: uniqueCryptoId,
+        quantity: amount,
+        purchasePrice: singleCrypto[0]?.price,
+      };
 
-        if (hasPortfolio) {
-          await dispatch(changePortfolio(newTransaction));
+      const creatingTransaction = {
+        cryptoId: +uniqueCryptoId,
+        userId: +userId,
+        type: transaction.toString(),
+        price: +singleCrypto[0]?.price,
+        quantity: +amount,
+      };
+
+      if (hasPortfolio) {
+        console.log("!!!!!!in HP !!!")
+        await dispatch(changePortfolio(newTransaction));
       } else {
-          await dispatch(newPortfolio(newTransaction));
+        console.log("in no hp!!!!!!")
+        await dispatch(newPortfolio(newTransaction));
       }
         await dispatch(addFunds(newCashValue))
         await dispatch(createTransaction(creatingTransaction));
@@ -150,61 +155,63 @@ const PurchaseCryptoPage = () => {
 
   const totalValueOfCoins = (amount) => {
     if (singleCrypto) {
-        return (singleCrypto[0]?.price * amount)
+      return (singleCrypto[0]?.price * amount)
     }
   }
 
-    if (singleCrypto && amount) {
-        totalValue = totalValueOfCoins(amount);
-        if (isNaN(totalValue)) {
-            totalValueString = "NaN";
-        } else if (transaction === "buy") {
-            totalValueString = `Estimated Cost: $${totalValue.toLocaleString("en-us")}`;
-        } else if (transaction === "sell") {
-            totalValueString = `Estimated Value: $${totalValue.toLocaleString("en-us")}`;
-        }
+  if (singleCrypto && amount) {
+      totalValue = totalValueOfCoins(amount);
+      if (isNaN(totalValue)) {
+          totalValueString = "NaN";
+      } else if (transaction === "buy") {
+          totalValueString = `Estimated Cost: $${totalValue.toLocaleString("en-us")}`;
+      } else if (transaction === "sell") {
+          totalValueString = `Estimated Value: $${totalValue.toLocaleString("en-us")}`;
+      }
+  }
+
+  useEffect(() => {
+      setUniqueCryptoId(+id);
+      dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
+  }, [dispatch, id]);
+
+  const [cryptoPort, setCryptoPort] = useState(0);
+
+  useEffect(() => {
+      let a = completePortfolio?.filter(c => c.crypto_id === +uniqueCryptoId)
+      setCryptoPort(a)
+      console.log("!!!!!!", cryptoPort)
+      console.log(completePortfolio)
+  },[completePortfolio]);
+
+  useEffect(() => {
+    const errors = [];
+    totalValue = totalValueOfCoins(amount);
+    let currentAmount;
+
+    if (isNaN(amount) || amount === "") {
+        errors.push("Please enter a number");
     }
 
-    useEffect(() => {
-        setUniqueCryptoId(+id);
-        dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
-    }, [dispatch, id]);
+    if (amount < 0) {
+        errors.push("Please enter a value greater than zero");
+    }
 
-    const [cryptoPort, setCryptoPort] = useState(0);
+    if (transaction === "buy" && (totalValue > currentUser?.cash)) {
+        errors.push("Not enough buying power")
+    }
 
-    useEffect(() => {
-        let a = completePortfolio?.filter(c => c.crypto_id === uniqueCryptoId)
-        setCryptoPort(a)
-    },[completePortfolio]);
+    if (transaction === "sell" && (cryptoPort[0]?.quantity < amount)) {
+        errors.push("Not enough coins")
+    }
 
-    useEffect(() => {
-      const errors = [];
-      totalValue = totalValueOfCoins(amount);
-      let currentAmount;
-
-      if (isNaN(amount) || amount === "") {
-          errors.push("Please enter a number");
-      }
-
-      if (amount < 0) {
-          errors.push("Please enter a value greater than zero");
-      }
-
-      if (transaction === "buy" && (totalValue > currentUser?.cash)) {
-          errors.push("Not enough buying power")
-      }
-
-      if (transaction === "sell" && (cryptoPort[0].quantity < amount)) {
-          errors.push("Not enough coins")
-      }
-
-        setErrors(errors);
-    }, [amount, transaction, totalValue]);
+      setErrors(errors);
+  }, [amount, transaction, totalValue, cryptoPort]);
 
 
-    useEffect(() => {
-        setUniqueCryptoId(+id);
-        dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
+  useEffect(() => {
+      setUniqueCryptoId(+id);
+      dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
   }, [dispatch, id]);
 
   if (loaded) {
