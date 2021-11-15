@@ -171,22 +171,6 @@ export const PortPlot = ()  => {
                                   / transactions?.filter(t => t.type==='buy').length
   }
 
-  const marketData = async (coin) => {
-    const res = await fetch(`/api/cryptocurrencies/${coin}`);
-    const history = await res.json();
-    const domain = history.prices.map(dp => dp[0]).slice(-30)
-    const range = history.prices.map(dp => dp[1].toFixed(2)).slice(-30)
-    setDomain([...domain]);
-    setRange([...range]);
-    const d_daily = range[range.length-1] - range[range.length-2];
-    const d_daily_p = 100*(d_daily / range[range.length-2])
-    const d_monthly = range[range.length-1] - range[0];
-    const d_monthly_p = 100*(d_monthly / range[0])
-    setHist({time: domain, price: range,
-             d_daily: d_daily, d_daily_p: d_daily_p,
-             d_monthly: d_monthly, d_monthly_p: d_monthly_p});
-  }
-
   return (<>
           </>);
 

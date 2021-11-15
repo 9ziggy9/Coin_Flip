@@ -34,41 +34,20 @@ const Home = () => {
         <div className="home_main">
           <div className="home_container_left">
             <div className="total_cash_container">
-              {cryptoNames.has(coin) ? (
-                <>
-                  <div className="cash_container">
-                    <div className="coin-title">{coin}</div>
-                    <div className="cash">{`$${price.toLocaleString("en-US")}`}</div>
-                  </div>
-                  <div className="today_tracker">
-                    <h5 className="today_values">${
-                      (parseInt(hist.d_daily?.toFixed(2), 10).toLocaleString("en-US"))
-                    } ({(hist.d_daily_p?.toFixed(2))}%)</h5>
-                      <h5 className="today_label">Today</h5>
-                  </div>
-                  <div className="this_month_tracker">
-                    <h5 className="this_month_values">${
-                      (parseInt(hist.d_monthly?.toFixed(2), 10).toLocaleString("en-US"))
-                    } ({(hist.d_monthly_p?.toFixed(2))}%)</h5>
-                    <h5 className="after_hours_label">This Month</h5>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="cash_container">
-                    <div className="coin-title">{coin}</div>
-                    <div className="cash">{`$${price}`}</div>
-                  </div>
-                  <div className="today_tracker">
-                    <h5 className="today_values">$0.00 (0.00%)</h5>
-                    <h5 className="today_label">Today</h5>
-                  </div>
-                  <div className="after_hours_tracker">
-                    <h5 className="after_hours_values">$0.00 (0.00%)</h5>
-                    <h5 className="after_hours_label">After Hours</h5>
-                  </div>
-                </>
-              )}
+              <div className="tc-greeting">{`Welcome back, ${user.username}`}</div>
+              <div className="tc-assets">{`$75,900`}</div>
+              <div className="tc-assets-label">total assets:</div>
+              <div className="tc-24-a">hello</div>
+              <div className="tc-24-p">hello</div>
+              <div className="tc-24-label">hello</div>
+              <div className="tc-m-a">hello</div>
+              <div className="tc-m-p">hello</div>
+              <div className="tc-m-label">hello</div>
+              <div className="tc-y-a">hello</div>
+              <div className="tc-y-p">hello</div>
+              <div className="tc-y-label">hello</div>
+              <div className="tc-cash-out-label">hello</div>
+              <div className="tc-cash-out-a">hello</div>
             </div>
             <div className="porfolio_chart_container">
               <PortPlot />
