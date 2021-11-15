@@ -82,8 +82,9 @@
 .submitButt {
   font-family: "Microsoft Sans Serif";
   text-align: center;
-  height: 48px;
-  width: 147.5px;
+  font-size: 19px;
+  height: 40px;
+  width: 127.5px;
   background-color: #ff5000;
   color: #2a2f33;
   font-weight: 600;
@@ -120,7 +121,7 @@
   font-family: "Microsoft Sans Serif";
   text-align: center;
   height: 48px;
-  width: 138px;
+  width: 128px;
   background-color: #2a2f33;
   color: #ff5000;
   border: 1px solid #ff5000;
