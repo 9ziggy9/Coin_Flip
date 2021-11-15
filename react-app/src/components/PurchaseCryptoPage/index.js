@@ -21,7 +21,6 @@ import CryptoNews from "./CryptoNews";
 import Loading from "../Loading/Loading";
 import PurchaseCryptoModal from "../PurchaseCryptoModal.js/purchaseCryptoModal";
 
-
 const PurchaseCryptoPage = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.session.user);
@@ -41,7 +40,7 @@ const PurchaseCryptoPage = () => {
   const [errors, setErrors] = useState([]);
   const [hist, setHist] = useState([]);
 
-  const completePortfolio = useSelector(state => state.portfolio.portfolio)
+  const completePortfolio = useSelector((state) => state.portfolio.portfolio);
 
   let singleCrypto;
 
@@ -107,7 +106,7 @@ const PurchaseCryptoPage = () => {
         }
       }
 
-      console.log(hasPortfolio)
+      console.log(hasPortfolio);
 
       if (transaction === "sell") {
         amount = amount * -1;
@@ -133,7 +132,7 @@ const PurchaseCryptoPage = () => {
         quantity: +amount,
       };
 
-      setAmount(0)
+      setAmount(0);
 
       if (hasPortfolio) {
         await dispatch(changePortfolio(newTransaction));
@@ -154,34 +153,38 @@ const PurchaseCryptoPage = () => {
 
   const totalValueOfCoins = (amount) => {
     if (singleCrypto) {
-      return (singleCrypto[0]?.price * amount)
+      return singleCrypto[0]?.price * amount;
     }
-  }
+  };
 
   if (singleCrypto && amount) {
     totalValue = totalValueOfCoins(amount);
     if (isNaN(totalValue)) {
-        totalValueString = "NaN";
+      totalValueString = "NaN";
     } else if (transaction === "buy") {
-        totalValueString = `Estimated Cost: $${totalValue.toLocaleString("en-us")}`;
+      totalValueString = `Estimated Cost: $${totalValue.toLocaleString(
+        "en-us"
+      )}`;
     } else if (transaction === "sell") {
-        totalValueString = `Estimated Value: $${totalValue.toLocaleString("en-us")}`;
+      totalValueString = `Estimated Value: $${totalValue.toLocaleString(
+        "en-us"
+      )}`;
     }
   }
 
   useEffect(() => {
-      setUniqueCryptoId(+id);
-      dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
+    setUniqueCryptoId(+id);
+    dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
   }, [dispatch, id]);
 
   const [cryptoPort, setCryptoPort] = useState(0);
 
   useEffect(() => {
-      let a = completePortfolio?.filter(c => c.crypto_id === +uniqueCryptoId)
-      setCryptoPort(a)
-      console.log("!!!!!!", cryptoPort)
-      console.log(completePortfolio)
-  },[completePortfolio]);
+    let a = completePortfolio?.filter((c) => c.crypto_id === +uniqueCryptoId);
+    setCryptoPort(a);
+    console.log("!!!!!!", cryptoPort);
+    console.log(completePortfolio);
+  }, [completePortfolio]);
 
   useEffect(() => {
     const errors = [];
@@ -189,29 +192,32 @@ const PurchaseCryptoPage = () => {
     let currentAmount;
 
     if (isNaN(amount) || amount === "") {
-        errors.push("Please enter a number");
+      errors.push("Please enter a number");
     }
 
     if (amount < 0) {
-        errors.push("Please enter a value greater than zero");
+      errors.push("Please enter a value greater than zero");
     }
 
-    if (transaction === "buy" && (totalValue > currentUser?.cash)) {
-        errors.push("Not enough buying power")
+    if (transaction === "buy" && totalValue > currentUser?.cash) {
+      errors.push("Not enough buying power");
     }
 
-    if (transaction === "sell" && ((cryptoPort[0]?.quantity < amount) || !cryptoPort[0]?.quantity || cryptoPort[0]?.quantity === 0)) {
-
-        errors.push("Not enough coins")
+    if (
+      transaction === "sell" &&
+      (cryptoPort[0]?.quantity < amount ||
+        !cryptoPort[0]?.quantity ||
+        cryptoPort[0]?.quantity === 0)
+    ) {
+      errors.push("Not enough coins");
     }
 
-      setErrors(errors);
+    setErrors(errors);
   }, [amount, transaction, totalValue, completePortfolio]);
 
-
   useEffect(() => {
-      setUniqueCryptoId(+id);
-      dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
+    setUniqueCryptoId(+id);
+    dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
   }, [dispatch, id]);
 
   if (loaded) {
@@ -220,7 +226,10 @@ const PurchaseCryptoPage = () => {
         <div className="cryptoInfoContainer">
           <div className="cryptoName">{singleCrypto[0]?.name.toLowerCase()}</div>
           <div className="cryptoPrice">
-            ${singleCrypto[0]?.price > 1 ? singleCrypto[0]?.price.toLocaleString() : singleCrypto[0]?.price}
+            $
+            {singleCrypto[0]?.price > 1
+              ? singleCrypto[0]?.price.toLocaleString()
+              : singleCrypto[0]?.price}
           </div>
         </div>
         <div className="graph">
@@ -275,52 +284,54 @@ const PurchaseCryptoPage = () => {
             </button>
           </div>
         </div>
-        <form className="formContainer" onSubmit={onSubmit}>
-          <div className="purchaseOrSell">
-            <input
-              className="buy"
-              type="radio"
-              value="buy"
-              name="transaction"
-              checked={transaction === "buy"}
-              onChange={(e) => setTransaction("buy")}
-            />
-            Purchase
-            <input
-              className="sell"
-              type="radio"
-              value="sell"
-              name="transaction"
-              checked={transaction === "sell"}
-              onChange={(e) => setTransaction("sell")}
-            />
-            Sell
-            <input
-              className="amount"
-              name="amount"
-              type="amount"
-              value={amount}
-              placeholder="amount"
-              onChange={(e) => setAmount(e.target.value)}
-            />
-                <div className="estValue">
-                    {totalValueString}
-                </div>
+        <div className="formContainer">
+          <form onSubmit={onSubmit}>
+            <div className="purchaseOrSell">
+              <input
+                className="buy"
+                type="radio"
+                value="buy"
+                name="transaction"
+                checked={transaction === "buy"}
+                onChange={(e) => setTransaction("buy")}
+              />
+              Purchase
+              <input
+                className="sell"
+                type="radio"
+                value="sell"
+                name="transaction"
+                checked={transaction === "sell"}
+                onChange={(e) => setTransaction("sell")}
+              />
+              Sell
+              <input
+                className="amount"
+                name="amount"
+                type="amount"
+                value={amount}
+                placeholder="amount"
+                onChange={(e) => setAmount(e.target.value)}
+              />
+              <div className="estValue">{totalValueString}</div>
             </div>
             <div className="purchasePower">
-                Buying Power: ${currentUser?.cash.toLocaleString("en-us")}
+              Buying Power: ${currentUser?.cash.toLocaleString("en-us")}
             </div>
             <div className="subButtContainer">
-            <button
-              disabled={errors.length > 0}
-              type="submit"
-              className="submitButt"
-            >
-              {" "}
-              Submit{" "}
-            </button>
+              <button
+                disabled={errors.length > 0}
+                type="submit"
+                className="submitButt"
+              >
+                {" "}
+                Submit{" "}
+              </button>
+            </div>
+          </form>
+          <div className="button-and-errors">
             <div className="add_to_list">
-                <AddToList cryptoId={id} />
+              <AddToList cryptoId={id} />
             </div>
             <ul className="errors">
               {errors.map((error) => (
@@ -328,7 +339,7 @@ const PurchaseCryptoPage = () => {
               ))}
             </ul>
           </div>
-        </form>
+        </div>
         <div className="about">About</div>
         <hr className="hr" />
         <div className="aboutContainer">
