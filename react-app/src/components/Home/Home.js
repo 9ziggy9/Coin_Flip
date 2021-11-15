@@ -60,6 +60,7 @@ const Home = () => {
     return num;
   }
 
+
   if (user) {
     return (
       <>
@@ -70,20 +71,18 @@ const Home = () => {
                 <>
                   <div className="cash_container">
                     <div className="coin-title">{coin}</div>
-                    <div className="cash">{`$${price}`}</div>
+                    <div className="cash">{`$${price.toLocaleString("en-US")}`}</div>
                   </div>
                   <div className="today_tracker">
-                    <h5 className="today_values">
-                      ${(assignColor(hist.d_daily?.toFixed(2), 'daily'))}
-                      ({(hist.d_daily_p?.toFixed(2))}%)
-                    </h5>
-                    <h5 className="today_label">Today</h5>
+                    <h5 className="today_values">${
+                      (parseInt(hist.d_daily?.toFixed(2), 10).toLocaleString("en-US"))
+                    } ({(hist.d_daily_p?.toFixed(2))}%)</h5>
+                      <h5 className="today_label">Today</h5>
                   </div>
-                  <div className="after_hours_tracker">
-                    <h5 className="after_hours_values">
-                      ${(assignColor(hist.d_monthly?.toFixed(2), 'monthly'))}
-                      ({(hist.d_monthly_p?.toFixed(2))}%)
-                    </h5>
+                  <div className="this_month_tracker">
+                    <h5 className="this_month_values">${
+                      (parseInt(hist.d_monthly?.toFixed(2), 10).toLocaleString("en-US"))
+                    } ({(hist.d_monthly_p?.toFixed(2))}%)</h5>
                     <h5 className="after_hours_label">This Month</h5>
                   </div>
                 </>
@@ -151,26 +150,6 @@ const Home = () => {
             <Watchlist hist={hist} />
           </div>
         </div>
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            const body = {
-              oldpassword: test,
-              newpassword: test2,
-            };
-            await fetch("/api/auth/password", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: body,
-            });
-          }}
-        >
-          <input value={test} onChange={(e) => setTest(e.target.value)} />
-          <input value={test2} onChange={(e) => setTest2(e.target.value)} />
-          <button>Submit</button>
-        </form>
       </>
     );
   } else {
