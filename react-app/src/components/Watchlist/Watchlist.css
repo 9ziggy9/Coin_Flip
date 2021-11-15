@@ -1,5 +1,5 @@
 .watch-main {
-  border: 0.5px solid grey;
+  border: 1px solid rgb(62, 66, 74);
   height: 80vh;
   width: 276px;
   background-color: rgb(30, 33, 36);
@@ -19,15 +19,16 @@
 
 .watch-cryptos {
   padding: 15px 20px;
-  font-weight: 600;
-  border-bottom: 0.5px solid grey;
+  font-size: 15px;
+  font-weight: 800;
+  border-bottom: 1px solid rgb(62, 66, 74);
 }
 
 .watch-crypto {
   font-size: 14px;
   display: flex;
   flex-direction: column;
-  border-bottom: 0.5px solid grey;
+  border-bottom: 1px solid rgb(62, 66, 74);
 }
 
 .watch-crypto-card:hover {
@@ -54,7 +55,8 @@
 
 .watch-crypto-name {
   margin-bottom: 3px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 900;
 }
 
 .watch-list {
@@ -64,12 +66,18 @@
   align-items: center;
   font-size: 16px;
   font-weight: 600;
-  border-bottom: 0.5px solid grey;
+  border-bottom: 1px solid rgb(62, 66, 74);
+}
+
+.watch-list-left {
+  font-size: 15px;
+  font-weight: 800;
 }
 
 .watch-list-right {
   margin-bottom: 20px;
   font-size: 24px;
+  font-weight: 400;
   height: 16px;
   width: 16px;
   cursor: pointer;

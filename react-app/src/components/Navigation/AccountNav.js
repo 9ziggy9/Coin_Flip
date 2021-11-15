@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { logout } from "../../store/session";
 import { useListModal } from "../../context/ListModal";
-import AddFunds from "../AddFundsModal/AddFunds";
+import AddFunds from "../AddFundsModal/AddFunds"
 import { Modal } from "../../context/Modal";
 
 const AccountNav = () => {
@@ -35,7 +35,7 @@ const AccountNav = () => {
       <div className="portfolio-details">
         <div className="portfolio-info">
           <h3 className="account-value">${Number(amount).toLocaleString()}</h3>
-          <div className="portfolio-value">Portfolio Value</div>
+          <div className="portfolio-value">Total Investment</div>
         </div>
         <div className="avail-cash">
           <h3 className="account-value">${user?.cash.toLocaleString()}</h3>
@@ -65,13 +65,7 @@ const AccountNav = () => {
         </div>
         <div
           className="account-link"
-          onClick={() => {
-            document.querySelector("div.account-word").style.textDecoration =
-              "none";
-            document.querySelector("div.account-word").style.color = "white";
-            document.querySelector(".account-dropdown").classList.add("hidden");
-            history.push("/account/settings");
-          }}
+          onClick={() => history.push("/account/settings")}
         >
           <img
             className="settings-img"

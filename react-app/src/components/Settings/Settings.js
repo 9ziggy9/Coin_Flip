@@ -1,21 +1,36 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useState } from "react";
+import { useSelector, useDispatch} from 'react-redux';
 import SettingsModal from "../SettingsModal/SettingsModal";
+import { confirm } from 'react-confirm-box';
 import './Settings.css';
 import { logout } from '../../store/session';
 
 const Settings = () => {
     const user = useSelector(state => state.session.user)
+    const [delTask, setDelTask] = useState(false)
 
     const dispatch = useDispatch();
 
-    const handleDeactivate = async(e) => {
-        e.preventDefault();
+    const handleDeactivate = async () => {
+        
         if (user) {
-            const data = await fetch(`/api/auth/${user.id}/delete`);
+            await fetch(`/api/auth/${user.id}/delete`);
             dispatch(logout());
         }
+    }
 
+    const handleConfirmationBox = (e) => {
+        e.preventDefault();
+
+        if (!delTask) {
+            document.querySelector(".confirm-background").style.display = "flex"
+            document.querySelector(".container").style.display = "flex"
+            setDelTask(true)
+        } else {
+            document.querySelector(".confirm-background").style.display = "none"
+            document.querySelector(".container").style.display = "none"
+            setDelTask(false)
+        }
     }
 
     if (user) {
@@ -47,15 +62,37 @@ const Settings = () => {
                             <p className="account_email_label">Email Address</p>
                             <p className="account_email">{user.email}</p>
                         </div>
-                        <div className="account_password_container">
+                        {/* <div className="account_password_container">
                             <p className="account_password_label">Password</p>
                             <SettingsModal user={user}/>
+                        </div> */}
+                        <div className="account_deactivation_container">
+                            <button type="button" className="account_deactivation_button" onClick={handleConfirmationBox}>
+                                <h4 className="account_deactivation_text">Deactivate your account</h4>
+                            </button>
                         </div>
-                    </div>
-                    <div className="account_deactivation_container">
-                        <button type="button" className="account_deactivation_button" onClick={handleDeactivate}>
-                            <h4 className="account_deactivation_text">Deactivate your account</h4>
-                        </button>
+                        {/* Confirmation Box */}
+                        <div className="container">
+                            <div className="confirmation-text">
+                                Are you sure you want to deactivate your account?
+                            </div>
+                            <div className="button-container">
+                                <button
+                                    className="cancel-button"
+                                    onClick={handleConfirmationBox}>
+                                    Cancel
+                                </button>
+                                <button
+                                    className="confirmation-button"
+                                    onClick={handleDeactivate}>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                        <div
+                            className="confirm-background">
+                            onClick={() => handleConfirmationBox()}
+                        </div>
                     </div>
                 </div>
             </div>
