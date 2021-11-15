@@ -129,26 +129,6 @@ const Home = () => {
             <Watchlist hist={hist} />
           </div>
         </div>
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            const body = {
-              oldpassword: test,
-              newpassword: test2,
-            };
-            await fetch("/api/auth/password", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: body,
-            });
-          }}
-        >
-          <input value={test} onChange={(e) => setTest(e.target.value)} />
-          <input value={test2} onChange={(e) => setTest2(e.target.value)} />
-          <button>Submit</button>
-        </form>
       </>
     );
   } else {
