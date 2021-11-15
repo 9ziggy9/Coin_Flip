@@ -40,7 +40,6 @@ const updateCrypto = (portfolios) => {
 export const userPortfolios = (userId) => async (dispatch) => {
     const res = await fetch(`/api/portfolios/${userId}`);
     const portfoliosData = await res.json();
-    // console.log(portfoliosData.portfolio);
     dispatch(getPortfolios(portfoliosData.portfolio));
 }
 
@@ -60,7 +59,6 @@ export const newPortfolio = (newPorfolioObj) => async (dispatch) => {
     });
     const portfolios = await res.json();
     dispatch(addPortfolio(portfolios));
-    console.log("POST", portfolios)
 }
 
 export const changePortfolio = (updatedPortfolioObj) => async (dispatch) => {
@@ -77,7 +75,6 @@ export const changePortfolio = (updatedPortfolioObj) => async (dispatch) => {
     })
     const portfolios = await res.json();
     dispatch(updatePortfolio(portfolios));
-    console.log("PUT", updatedPortfolioObj)
 }
 
 // export const updateSingleCrypto = (userId) => async (dispatch) => {

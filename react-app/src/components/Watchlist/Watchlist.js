@@ -57,6 +57,7 @@ const Watchlist = () => {
     if (portfolio?.length > 0) {
       document.querySelector(".watch-cryptos").classList.remove("hidden");
     }
+
   }, [portfolio]);
 
   const submit = (e) => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink, Redirect, Link } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import { signUp } from "../../store/session";
 import "./Signup.css";
 
@@ -120,7 +120,7 @@ const SignUpForm = () => {
               </div>
               <div className="signup-disclaimer">
                 <p>That being said, if you're stressing out over a fake trading account,
-                  <Link> here </Link>
+                  <a href="https://www.mayoclinic.org/healthy-lifestyle/stress-management/in-depth/stress-relievers/art-20047257"> here </a>
                   is something that might help you.
                 </p>
               </div>
