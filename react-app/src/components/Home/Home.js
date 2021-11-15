@@ -17,6 +17,7 @@ const Home = () => {
   const portfolios = useSelector((state) => state.portfolio.portfolio);
 
   const [sAssets, setAssets] = useState(0);
+  const [liabilities, setLiabilities] = useState(0)
 
   const fetchPrices = async () => {
     await fetch("/api/cryptocurrencies/prices");
@@ -48,7 +49,10 @@ const Home = () => {
     console.log(assets);
     const total_assets = assets.map(a => a.current_total)
                               .reduce((t, n) => t+n, 0)
+    const total_liabilities = assets.map(a => a.initial_investment)
+                                    .reduce((t,n) => t+n, 0)
     setAssets(total_assets.toFixed(2));
+    setLiabilities(total_liabilities.toFixed(2));
   }, [portfolios])
 
   const [coin, setCoin] = useState("fakecoin");
@@ -72,8 +76,8 @@ const Home = () => {
               <div className="tc-greeting">{`Welcome back, ${user.username}`}</div>
               <div className="tc-assets">{`$${Number(sAssets).toLocaleString()}`}</div>
               <div className="tc-assets-label">total crypto assets:</div>
-              {/* <div className="tc-24-a">{`$251.25 (1.52%) 24h`}</div> */}
-              <div className="tc-24-p"></div>
+              <div className="tc-24-a">{`$${(Number(sAssets)-Number(liabilities)).toLocaleString()} profit`}</div>
+              <div className="tc-m-a">{`${(100*((Number(sAssets)-Number(liabilities))/Number(liabilities))).toLocaleString()}% return`}</div>
               <div className="tc-24-label"></div>
               {/* <div className="tc-m-a">{`4141.25 (20.41%) monthly`}</div> */}
               <div className="tc-m-p"></div>
