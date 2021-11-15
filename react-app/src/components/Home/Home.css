@@ -39,8 +39,9 @@
 
 .cash {
     display:flex;
-    width: 4em;
-    font-size: 2em;
+    width: 4rem;
+    font-size: 32px;
+    font-weight: 700;
 }
 
 .today_tracker {
@@ -196,6 +197,7 @@
 
 .news_title {
     font-size: 24px;
+    font-weight: 700;
     margin-left: 10px;
     margin-bottom: 16px;
 }
