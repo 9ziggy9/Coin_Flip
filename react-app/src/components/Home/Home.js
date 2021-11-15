@@ -1,34 +1,49 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { Redirect } from "react-router";
-import { userPortfolios } from "../../store/portfolio";
-import { SimPlot, MarketPlot } from "../Plot/Plot";
-import { Market, Simulation, log_normal } from '../../utilities/statistics';
 import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
 import AddFundsModal from "../AddFundsModal/AddFundsModal";
 import "./Home.css";
+import {PortPlot} from "../Plot/Plot";
+import { userPortfolios } from "../../store/portfolio";
+import { getUserTransactions } from "../../store/transaction";
+import { useDispatch, useSelector } from 'react-redux';
 
 const Home = () => {
-  const [test, setTest] = useState();
-  const [test2, setTest2] = useState();
-
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
   const cryptos = useSelector((state) => state.crypto.list);
-  const portfolios = useSelector((state) => Object.values(state.portfolio));
   const cryptoNames = new Set(cryptos.map((c) => c.name.toLowerCase()));
+  const portfolios = useSelector((state) => state.portfolio.portfolio);
 
-  // const data = async (coin) => {
-  //   const res = await fetch("/api/cryptocurrencies/prices");
-  //   const d = await res.json();
-  //   setPrice(d.price[coin].usd);
-  // };
+  const fetchPrices = async () => {
+    await fetch("/api/cryptocurrencies/prices");
+  };
+
+  useEffect(() => {
+    fetchPrices();
+    dispatch(userPortfolios(user?.id));
+    dispatch(getUserTransactions(user?.id));
+  }, [dispatch]);
+
+  const assets = [];
+  for(let i = 0; i < portfolios?.length; i++) {
+    for(let j = 0; j < cryptos?.length; j++) {
+      if(portfolios[i].crypto_id === cryptos[j].id)
+        assets.push({
+          'purchase_price': portfolios[i].purchase_price,
+          'gecko': cryptos[j].gecko,
+          'quantity': portfolios[i].quantity,
+          'initial_investment': portfolios[i].purchase_price *
+                                portfolios[i].quantity
+        })
+    }
+  }
 
   const [coin, setCoin] = useState("fakecoin");
   const [price, setPrice] = useState(0);
   const [hist, setHist] = useState([])
 
-  useEffect(() => {setCoin('ethereum')}, []);
   useEffect(() => {
     let [start_price] = cryptos.filter((p) => p.gecko === coin);
     if (!cryptoNames.has(coin)) start_price = { price: 0 };
@@ -41,43 +56,20 @@ const Home = () => {
         <div className="home_main">
           <div className="home_container_left">
             <div className="total_cash_container">
-              {cryptoNames.has(coin) ? (
-                <>
-                  <div className="cash_container">
-                    <div className="coin-title">{coin}</div>
-                    <div className="cash">{`$${price.toLocaleString("en-US")}`}</div>
-                  </div>
-                  <div className="today_tracker">
-                    <h5 className="today_values">${
-                      (parseInt(hist.d_daily?.toFixed(2), 10).toLocaleString("en-US"))
-                    } ({(hist.d_daily_p?.toFixed(2))}%)</h5>
-                      <h5 className="today_label">Today</h5>
-                  </div>
-                  <div className="this_month_tracker">
-                    <h5 className="this_month_values">${
-                      (parseInt(hist.d_monthly?.toFixed(2), 10).toLocaleString("en-US"))
-                    } ({(hist.d_monthly_p?.toFixed(2))}%)</h5>
-                    <h5 className="after_hours_label">This Month</h5>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="cash_container">
-                    <div className="coin-title">{coin}</div>
-                    <div className="cash">{`$${price}`}</div>
-                  </div>
-                  <div className="today_tracker">
-                    <h5 className="today_values">$0.00 (0.00%)</h5>
-                    <h5 className="today_label">Today</h5>
-                  </div>
-                  <div className="after_hours_tracker">
-                    <h5 className="after_hours_values">$0.00 (0.00%)</h5>
-                    <h5 className="after_hours_label">After Hours</h5>
-                  </div>
-                </>
-              )}
+              <div className="tc-greeting">{`Welcome back, ${user.username}`}</div>
+              <div className="tc-assets">{`$75,900`}</div>
+              <div className="tc-assets-label">total assets:</div>
+              <div className="tc-24-a">{`$251.25 (1.52%) 24h`}</div>
+              <div className="tc-24-p"></div>
+              <div className="tc-24-label"></div>
+              <div className="tc-m-a">{`4141.25 (20.41%) monthly`}</div>
+              <div className="tc-m-p"></div>
+              <div className="tc-m-label"></div>
+              <div className="tc-cash-out-label"></div>
+              <div className="tc-cash-out-a"></div>
             </div>
             <div className="porfolio_chart_container">
+              <PortPlot />
             </div>
             <div className="buying_power_container">
               <div className="buying_power_label_container">
