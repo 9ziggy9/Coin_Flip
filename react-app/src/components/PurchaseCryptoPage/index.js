@@ -161,9 +161,11 @@ const PurchaseCryptoPage = () => {
     if (isNaN(totalValue)) {
       totalValueString = "NaN";
     } else if (transaction === "buy") {
-      totalValueString = `Estimated Cost: $${totalValue.toLocaleString(
-        "en-us"
-      )}`;
+      totalValueString = `Estimated Cost: ${
+        totalValue > 100000000000000.0
+          ? `Over $100,000,000,000,000`
+          : `$${totalValue.toLocaleString("en-us")}`
+      }`;
     } else if (transaction === "sell") {
       totalValueString = `Estimated Value: $${totalValue.toLocaleString(
         "en-us"
@@ -284,7 +286,7 @@ const PurchaseCryptoPage = () => {
           </div>
         </div>
         <div className="formContainer">
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} className="buy-form">
             <div className="purchaseOrSell">
               <input
                 className="buy"
@@ -333,12 +335,7 @@ const PurchaseCryptoPage = () => {
               </ul>
             </div>
           </form>
-          <div className="button-and-errors">
-            <div className="add_to_list">
-              <AddToList cryptoId={id} />
-            </div>
-          </div>
-        </form>
+            <AddToList cryptoId={id} />
         </div>
         <div className="aboutContainer">
           <CryptoNews crypto={singleCrypto[0]} />
