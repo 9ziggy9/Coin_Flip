@@ -167,6 +167,19 @@ export const PortPlot = ()  => {
                                   / transactions?.filter(t => t.type==='buy').length
   }
 
+  // function computeProfitCurve() {
+  //   for (let t = 0; t < X.length; t++) {
+  //     transactions.filter(T => {
+  //       const uT = new Date(T).getTime() / 1000
+  //       if (X[t])
+  //     })
+  //   }
+  //   const unix_purchase_time = new Date(purchase_date).getTime() / 1000
+  //   const unix_price_time =() / 1000
+  // }
+  console.log(X[0]/1000);
+
+
   const layout = {
     autosize: true,
     plot_bgcolor: 'black',

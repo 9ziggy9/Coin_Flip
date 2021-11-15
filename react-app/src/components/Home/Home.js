@@ -31,7 +31,6 @@ const Home = () => {
   // USER ASSETS AND CRUNCHING
   useEffect(() => {
     const assets = [];
-    console.log(cryptos);
     for(let i = 0; i < portfolios?.length; i++) {
       for(let j = 0; j < cryptos?.length; j++) {
         if(portfolios[i].crypto_id === cryptos[j].id)
