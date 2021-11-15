@@ -19,8 +19,6 @@ import { confirm } from "react-confirm-box";
 import AddToList from "../AddToListModal/AddToList";
 import CryptoNews from "./CryptoNews";
 import Loading from "../Loading/Loading";
-import PurchaseCryptoModal from "../PurchaseCryptoModal.js/purchaseCryptoModal";
-
 
 const PurchaseCryptoPage = () => {
   const dispatch = useDispatch();
