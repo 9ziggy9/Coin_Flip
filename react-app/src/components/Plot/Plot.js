@@ -165,7 +165,10 @@ export const PortPlot = ()  => {
     cashed_out: transactions?.filter(t => t.type==='sell')
                               .map(t => t.price)
                               .reduce((t,n) => t + n, 0),
-    average_investment: total_purchases / transactions?.length
+    average_investment: transactions?.filter(t => t.type==='buy')
+                                  .map(t => t.price)
+                                  .reduce((t,n) => t + n, 0)
+                                  / transactions?.filter(t => t.type==='buy').length
   }
 
   console.log(transaction_data);
