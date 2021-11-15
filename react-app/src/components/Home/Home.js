@@ -39,6 +39,7 @@ const Home = () => {
     console.log(hist);
   }, [hist])
 
+
   if (user) {
     return (
       <>
@@ -49,18 +50,18 @@ const Home = () => {
                 <>
                   <div className="cash_container">
                     <div className="coin-title">{coin}</div>
-                    <div className="cash">{`$${price}`}</div>
+                    <div className="cash">{`$${price.toLocaleString("en-US")}`}</div>
                   </div>
                   <div className="today_tracker">
                     <h5 className="today_values">${
-                      (hist.d_daily?.toFixed(2))
+                      (parseInt(hist.d_daily?.toFixed(2), 10).toLocaleString("en-US"))
                     } ({(hist.d_daily_p?.toFixed(2))}%)</h5>
                       <h5 className="today_label">Today</h5>
                   </div>
                   <div className="this_month_tracker">
                     <h5 className="this_month_values">${
-                      (hist.d_monthly?.toFixed(2))
-                    }( {(hist.d_monthly_p?.toFixed(2))}%)</h5>
+                      (parseInt(hist.d_monthly?.toFixed(2), 10).toLocaleString("en-US"))
+                    } ({(hist.d_monthly_p?.toFixed(2))}%)</h5>
                     <h5 className="after_hours_label">This Month</h5>
                   </div>
                 </>
