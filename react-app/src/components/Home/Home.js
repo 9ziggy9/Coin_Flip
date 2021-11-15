@@ -37,17 +37,17 @@ const Home = () => {
               <div className="tc-greeting">{`Welcome back, ${user.username}`}</div>
               <div className="tc-assets">{`$75,900`}</div>
               <div className="tc-assets-label">total assets:</div>
-              <div className="tc-24-a">hello</div>
-              <div className="tc-24-p">hello</div>
-              <div className="tc-24-label">hello</div>
-              <div className="tc-m-a">hello</div>
-              <div className="tc-m-p">hello</div>
-              <div className="tc-m-label">hello</div>
-              <div className="tc-y-a">hello</div>
-              <div className="tc-y-p">hello</div>
-              <div className="tc-y-label">hello</div>
-              <div className="tc-cash-out-label">hello</div>
-              <div className="tc-cash-out-a">hello</div>
+              <div className="tc-24-a">{`$251.25 (1.52%) 24h`}</div>
+              <div className="tc-24-p"></div>
+              <div className="tc-24-label"></div>
+              <div className="tc-m-a">{`4141.25 (20.41%) monthly`}</div>
+              <div className="tc-m-p"></div>
+              <div className="tc-m-label"></div>
+              <div className="tc-y-a">{`45201.25 (26.21%) yearly`}</div>
+              <div className="tc-y-p"></div>
+              <div className="tc-y-label"></div>
+              <div className="tc-cash-out-label"></div>
+              <div className="tc-cash-out-a"></div>
             </div>
             <div className="porfolio_chart_container">
               <PortPlot />
