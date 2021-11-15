@@ -29,7 +29,7 @@ def addPortfolio(user_id):
         db.session.commit()
 
     # return portfolios for current user
-    portfolios = Portfolio.query.filter_by(user_id= user_id).all()
+    portfolios = Portfolio.query.filter_by(user_id=user_id).all()
     return {"portfolio": [portfolio.to_dict() for portfolio in portfolios]}
 
 # Update Porfolio
@@ -41,13 +41,16 @@ def update_portfolio(user_id):
     updated_portfolio = request.json
     single_portfolio = Portfolio.query.filter_by(user_id=user_id, crypto_id=updated_portfolio["cryptoId"]).first()
 
-
     # check to see if portfolio exists
     if single_portfolio:
         single_portfolio.quantity = updated_portfolio["quantity"]
         single_portfolio.purchase_price = updated_portfolio["purchasePrice"]
         db.session.commit()
 
+    if single_portfolio.quantity == 0:
+        Portfolio.query.filter_by(user_id=user_id, crypto_id=updated_portfolio["cryptoId"]).delete()
+        db.session.commit()
+
     # return portfolios for current user
-    portfolios = Portfolio.query.filter_by(user_id= user_id).all()
+    portfolios = Portfolio.query.filter_by(user_id=user_id).all()
     return {"portfolio": [portfolio.to_dict() for portfolio in portfolios]}
