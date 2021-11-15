@@ -4,7 +4,7 @@ import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
 import AddFundsModal from "../AddFundsModal/AddFundsModal";
 import "./Home.css";
-import {PortPlot} from "../Plot/Plot";
+import {SimPlot} from "../Plot/Plot";
 import { userPortfolios } from "../../store/portfolio";
 import { getUserTransactions } from "../../store/transaction";
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +16,8 @@ const Home = () => {
   const cryptoNames = new Set(cryptos.map((c) => c.name.toLowerCase()));
   const portfolios = useSelector((state) => state.portfolio.portfolio);
 
+  const [sAssets, setAssets] = useState(0);
+
   const fetchPrices = async () => {
     await fetch("/api/cryptocurrencies/prices");
   };
@@ -26,23 +28,34 @@ const Home = () => {
     dispatch(getUserTransactions(user?.id));
   }, [dispatch]);
 
-  const assets = [];
-  for(let i = 0; i < portfolios?.length; i++) {
-    for(let j = 0; j < cryptos?.length; j++) {
-      if(portfolios[i].crypto_id === cryptos[j].id)
-        assets.push({
-          'purchase_price': portfolios[i].purchase_price,
-          'gecko': cryptos[j].gecko,
-          'quantity': portfolios[i].quantity,
-          'initial_investment': portfolios[i].purchase_price *
-                                portfolios[i].quantity
-        })
+  // USER ASSETS AND CRUNCHING
+  useEffect(() => {
+    const assets = [];
+    for(let i = 0; i < portfolios?.length; i++) {
+      for(let j = 0; j < cryptos?.length; j++) {
+        if(portfolios[i].crypto_id === cryptos[j].id)
+          assets.push({
+            'purchase_price': portfolios[i].purchase_price,
+            'gecko': cryptos[j].gecko,
+            'quantity': portfolios[i].quantity,
+            'initial_investment': portfolios[i].purchase_price *
+                                  portfolios[i].quantity,
+            'current_total': portfolios[i].quantity *
+                            cryptos[j].price,
+          })
+      }
     }
-  }
+    console.log(assets);
+    const total_assets = assets.map(a => a.current_total)
+                              .reduce((t, n) => t+n, 0)
+    setAssets(total_assets.toFixed(2));
+  }, [portfolios])
 
   const [coin, setCoin] = useState("fakecoin");
   const [price, setPrice] = useState(0);
-  const [hist, setHist] = useState([])
+  const [hist, setHist] = useState([]);
+
+  // Compute total assets
 
   useEffect(() => {
     let [start_price] = cryptos.filter((p) => p.gecko === coin);
@@ -57,19 +70,19 @@ const Home = () => {
           <div className="home_container_left">
             <div className="total_cash_container">
               <div className="tc-greeting">{`Welcome back, ${user.username}`}</div>
-              <div className="tc-assets">{`$75,900`}</div>
-              <div className="tc-assets-label">total assets:</div>
-              <div className="tc-24-a">{`$251.25 (1.52%) 24h`}</div>
+              <div className="tc-assets">{`$${Number(sAssets).toLocaleString()}`}</div>
+              <div className="tc-assets-label">total crypto assets:</div>
+              {/* <div className="tc-24-a">{`$251.25 (1.52%) 24h`}</div> */}
               <div className="tc-24-p"></div>
               <div className="tc-24-label"></div>
-              <div className="tc-m-a">{`4141.25 (20.41%) monthly`}</div>
+              {/* <div className="tc-m-a">{`4141.25 (20.41%) monthly`}</div> */}
               <div className="tc-m-p"></div>
               <div className="tc-m-label"></div>
-              <div className="tc-cash-out-label"></div>
+              <div className="tc-cash-out-label">{`Cash: $${user?.cash.toLocaleString()}`}</div>
               <div className="tc-cash-out-a"></div>
             </div>
             <div className="porfolio_chart_container">
-              <PortPlot />
+              <SimPlot />
             </div>
             <div className="buying_power_container">
               <div className="buying_power_label_container">

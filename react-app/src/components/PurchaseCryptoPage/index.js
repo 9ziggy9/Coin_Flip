@@ -232,55 +232,55 @@ const PurchaseCryptoPage = () => {
         <div className="graph">
           <MarketPlot coin={singleCrypto[0]?.gecko} setHist={setHist}/>
         </div>
-        <div className="graphHistorySelect">
-          <div className="graphButtonContainer">
-            <button
-              type="button"
-              className="hisButt"
-              id="1d"
-              onClick={() => colorChange("1d")}
-              style={{ color: textColor }}
-            >
-              1D
-            </button>
-            <button
-              type="button"
-              className="hisButt"
-              id="1w"
-              onClick={() => colorChange("1w")}
-              style={{ color: textColor }}
-            >
-              1W
-            </button>
-            <button
-              type="button"
-              className="hisButt"
-              id="1m"
-              onClick={() => colorChange("1m")}
-              style={{ color: textColor }}
-            >
-              1M
-            </button>
-            <button
-              type="button"
-              className="hisButt"
-              id="1y"
-              onClick={() => colorChange("1y")}
-              style={{ color: textColor }}
-            >
-              1Y
-            </button>
-            <button
-              type="button"
-              className="hisButt"
-              id="all"
-              onClick={() => colorChange("all")}
-              style={{ color: textColor }}
-            >
-              ALL
-            </button>
-          </div>
-        </div>
+        {/* <div className="graphHistorySelect"> */}
+        {/*   {/\* <div className="graphButtonContainer"> *\/} */}
+        {/*   {/\*   <button *\/} */}
+        {/*   {/\*     type="button" *\/} */}
+        {/*   {/\*     className="hisButt" *\/} */}
+        {/*   {/\*     id="1d" *\/} */}
+        {/*   {/\*     onClick={() => colorChange("1d")} *\/} */}
+        {/*   {/\*     style={{ color: textColor }} *\/} */}
+        {/*   {/\*   > *\/} */}
+        {/*   {/\*     1D *\/} */}
+        {/*   {/\*   </button> *\/} */}
+        {/*   {/\*   <button *\/} */}
+        {/*   {/\*     type="button" *\/} */}
+        {/*   {/\*     className="hisButt" *\/} */}
+        {/*   {/\*     id="1w" *\/} */}
+        {/*   {/\*     onClick={() => colorChange("1w")} *\/} */}
+        {/*   {/\*     style={{ color: textColor }} *\/} */}
+        {/*   {/\*   > *\/} */}
+        {/*   {/\*     1W *\/} */}
+        {/*   {/\*   </button> *\/} */}
+        {/*   {/\*   <button *\/} */}
+        {/*   {/\*     type="button" *\/} */}
+        {/*   {/\*     className="hisButt" *\/} */}
+        {/*   {/\*     id="1m" *\/} */}
+        {/*   {/\*     onClick={() => colorChange("1m")} *\/} */}
+        {/*   {/\*     style={{ color: textColor }} *\/} */}
+        {/*   {/\*   > *\/} */}
+        {/*   {/\*     1M *\/} */}
+        {/*   {/\*   </button> *\/} */}
+        {/*   {/\*   <button *\/} */}
+        {/*   {/\*     type="button" *\/} */}
+        {/*   {/\*     className="hisButt" *\/} */}
+        {/*   {/\*     id="1y" *\/} */}
+        {/*   {/\*     onClick={() => colorChange("1y")} *\/} */}
+        {/*   {/\*     style={{ color: textColor }} *\/} */}
+        {/*   {/\*   > *\/} */}
+        {/*   {/\*     1Y *\/} */}
+        {/*   {/\*   </button> *\/} */}
+        {/*   {/\*   <button *\/} */}
+        {/*   {/\*     type="button" *\/} */}
+        {/*   {/\*     className="hisButt" *\/} */}
+        {/*   {/\*     id="all" *\/} */}
+        {/*   {/\*     onClick={() => colorChange("all")} *\/} */}
+        {/*   {/\*     style={{ color: textColor }} *\/} */}
+        {/*   {/\*   > *\/} */}
+        {/*   {/\*     ALL *\/} */}
+        {/*   {/\*   </button> *\/} */}
+        {/*   {/\* </div> *\/} */}
+        {/* </div> */}
         <div className="formContainer">
           <form onSubmit={onSubmit} className="buy-form">
             <div className="purchaseOrSell">

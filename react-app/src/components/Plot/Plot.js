@@ -6,7 +6,7 @@ import {useState, useEffect} from 'react';
 import Plot from 'react-plotly.js';
 import { Simulation, log_normal } from "../../utilities/statistics.js";
 
-export const SimPlot = ({coin, setPrice, setHist}) => {
+export const SimPlot = ({}) => {
   let distribution = log_normal;
   let test_sim;
   let data;
@@ -19,7 +19,6 @@ export const SimPlot = ({coin, setPrice, setHist}) => {
   useEffect(() => {
     data = Simulation.zip(X,Y,distribution)
     test_sim = new Simulation(data, distribution, mu, sigma);
-    setPrice(test_sim.range[49].toFixed(2))
   }, []);
 
   // NOTE: useEffect ensures that simulation will not run again needlessly.
@@ -28,7 +27,6 @@ export const SimPlot = ({coin, setPrice, setHist}) => {
       test_sim.proceed();
       setDomain([...test_sim.domain]);
       setRange([...test_sim.range]);
-      setPrice(test_sim.range[49].toFixed(2))
     }, 1000)
     return () => clearInterval(intervalPointer);
   }, [])
@@ -38,7 +36,7 @@ export const SimPlot = ({coin, setPrice, setHist}) => {
       autosize: true,
       plot_bgcolor: 'black',
       paper_bgcolor: 'black',
-      title: coin,
+      title: 'market simulation',
       font: {color: 'white'},
       xaxis: {
         type:'date',
@@ -57,7 +55,7 @@ export const SimPlot = ({coin, setPrice, setHist}) => {
             y: Y,
             type: 'scatter',
             showlegend: true,
-            legendgrouptitle: {font: {color: 'white'}, text: 'hello world'},
+            legendgrouptitle: {font: {color: 'white'}, text: 'lognormal'},
             mode: 'lines+markers',
             marker: {color: 'green'},
           },
@@ -135,41 +133,18 @@ export const PortPlot = ()  => {
   const cryptos = useSelector((state) => state.crypto.list);
   const dispatch = useDispatch();
   const transactions = useSelector(state => Object.values(state.transaction));
+  const [X, setDomain] = useState([]);
+  const [Y, setRange] = useState([]);
+  const [invest, setInvest] = useState([]);
+  const [cashout, setCashout] = useState([]);
 
-  // const marketData = async (coin) => {
-  //   const res = await fetch(`/api/cryptocurrencies/${coin}`);
-  //   const history = await res.json();
-  //   const domain = history.prices.map(dp => dp[0]).slice(-30)
-  //   const range = history.prices.map(dp => dp[1].toFixed(2)).slice(-30)
-  //   setDomain([...domain]);
-  //   setRange([...range]);
-  //   const d_daily = range[range.length-1] - range[range.length-2];
-  //   const d_daily_p = 100*(d_daily / range[range.length-2])
-  //   const d_monthly = range[range.length-1] - range[0];
-  //   const d_monthly_p = 100*(d_monthly / range[0])
-  //   setHist({time: domain, price: range,
-  //            d_daily: d_daily, d_daily_p: d_daily_p,
-  //            d_monthly: d_monthly, d_monthly_p: d_monthly_p});
-  // }
-
-  useEffect(() => {
-    (async () => await dispatch(userPortfolios(user?.id)))();
-    (async () => await dispatch(getUserTransactions(user?.id)))();
-  }, [dispatch]);
-
-  // lol, give me a for loop and you can do anything
-  const assets = [];
-  for(let i = 0; i < portfolios?.length; i++) {
-    for(let j = 0; j < cryptos?.length; j++) {
-      if(portfolios[i].crypto_id === cryptos[j].id)
-        assets.push({
-          'purchase_price': portfolios[i].purchase_price,
-          'gecko': cryptos[j].gecko,
-          'quantity': portfolios[i].quantity,
-          'initial_investment': portfolios[i].purchase_price *
-                                portfolios[i].quantity
-        })
-    }
+  const marketData = async () => {
+    const res = await fetch(`/api/cryptocurrencies/bitcoin`);
+    const history = await res.json();
+    const domain = history.prices.map(dp => dp[0]).slice(-30)
+    const range = history.prices.map(dp => dp[1].toFixed(2)).slice(-30)
+    setDomain([...domain]);
+    setRange([...range]);
   }
 
   const transaction_data = {
@@ -186,7 +161,90 @@ export const PortPlot = ()  => {
                                   / transactions?.filter(t => t.type==='buy').length
   }
 
-  return (<>
-          </>);
+  function computeProfitCurve() {
+    const UNIX_DAY = 8640000;
+    // const cryptos_owned = [];
+    const total_invested = [];
+    const total_sold = [];
+    const daily_investment_total = [];
+    const daily_cashout = [];
+    for (let t = 0; t < X.length; t++) {
+      total_invested.push(transactions?.filter((T) => {
+        const uT = new Date(T.createdAt).getTime();
+        if (uT < X[t] + UNIX_DAY && T.type === 'buy') {
+          return true;
+        }
+        else return false;
+      }))
+      total_sold.push(transactions?.filter((T) => {
+        const uT = new Date(T.createdAt).getTime();
+        if (uT < X[t] + UNIX_DAY && T.type === 'sell') {
+          return true;
+        }
+        else return false;
+      }))
+      // cryptos_owned.push(transactions?.map(T => {
+      //   const uT = new Date(T.createdAt).getTime();
+      //   if (Math.abs(uT - X[t]) < 8640000)
+      //     return (Y[t] - T.price)*T.quantity;
+      //   else
+      //     return false;
+      // }))
+    }
+    total_invested.forEach(d => {
+      daily_investment_total.push((d.reduce((acc, n) => acc + n.price*n.quantity, 0)));
+    })
+    total_sold.forEach(d => {
+      daily_cashout.push((d.reduce((acc, n) => acc + Math.abs(n.price*n.quantity), 0)));
+    })
+    setInvest([...daily_investment_total]);
+    setCashout([...daily_cashout]);
+  }
 
+  useEffect(() => {
+    marketData();
+    computeProfitCurve();
+    dispatch(userPortfolios(user?.id));
+    dispatch(getUserTransactions(user?.id));
+  }, [dispatch]);
+
+  const layout = {
+    autosize: true,
+    plot_bgcolor: 'black',
+    paper_bgcolor: 'black',
+    font: {color: 'white'},
+    xaxis: {
+      type:'date',
+    },
+    yaxis: {
+      type: 'linear'
+    },
+  }
+
+  const data=[{
+    x: X,
+    y: cashout,
+    type: 'scatter',
+    showlegend: true,
+    legendgrouptitle: {font: {color: 'white'}, text: 'cashout'},
+    mode: 'lines+markers',
+    marker: {color: 'green'},
+  }, {
+    x: X,
+    y: invest,
+    type: 'scatter',
+    showlegend: true,
+    legendgrouptitle: {font: {color: 'white'}, text: 'investments'},
+    mode: 'lines+markers',
+    marker: {color: 'orange'},
+  }];
+
+  return (
+    <Plot
+      data={data}
+      layout={layout}
+      style={{'width':'100%', height:'100%'}}
+      config={{scrollZoom: true}}
+      useResizeHandler={true}
+    />);
 }

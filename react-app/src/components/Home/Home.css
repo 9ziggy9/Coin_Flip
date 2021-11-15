@@ -35,13 +35,17 @@
 }
 
 .tc-assets-label {grid-area: 2 / 1 / 3 / 3; }
+.tc-cash-out-label {
+    display: flex;
+    justify-content: right;
+    grid-area: 2 / 3 / 3 / 4;
+}
 
  /* USE AS NEEDED */
 /* .tc-24-p { background-color: orange; grid-area: 4 / 2 / 5 / 3; } */
 /* .tc-24-label { background-color: yellow; grid-area: 4 / 3 / 5 / 4; } */
 /* .tc-m-p { background-color: teal; grid-area: 5 / 2 / 6 / 3; } */
 /* .tc-m-label { background-color: darkcyan; grid-area: 5 / 3 / 6 / 4; } */
-/* .tc-cash-out-label { background-color: limegreen; grid-area: 2 / 3 / 3 / 4; } */
 /* .tc-cash-out-a { background-color: crimson; grid-area: 3 / 3 / 4 / 4; } */
 
 .coin-title {
