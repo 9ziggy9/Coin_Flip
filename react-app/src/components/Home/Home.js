@@ -1,21 +1,15 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router";
-import { userPortfolios } from "../../store/portfolio";
-import { SimPlot, MarketPlot } from "../Plot/Plot";
-import { Market, Simulation, log_normal } from '../../utilities/statistics';
 import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
 import AddFundsModal from "../AddFundsModal/AddFundsModal";
 import "./Home.css";
+import {PortPlot} from "../Plot/Plot";
 
 const Home = () => {
-  const [test, setTest] = useState();
-  const [test2, setTest2] = useState();
-
   const user = useSelector((state) => state.session.user);
   const cryptos = useSelector((state) => state.crypto.list);
-  const portfolios = useSelector((state) => Object.values(state.portfolio));
   const cryptoNames = new Set(cryptos.map((c) => c.name.toLowerCase()));
 
   // const data = async (coin) => {
@@ -28,7 +22,6 @@ const Home = () => {
   const [price, setPrice] = useState(0);
   const [hist, setHist] = useState([])
 
-  useEffect(() => {setCoin('ethereum')}, []);
   useEffect(() => {
     let [start_price] = cryptos.filter((p) => p.gecko === coin);
     if (!cryptoNames.has(coin)) start_price = { price: 0 };
@@ -78,6 +71,7 @@ const Home = () => {
               )}
             </div>
             <div className="porfolio_chart_container">
+              <PortPlot />
             </div>
             <div className="buying_power_container">
               <div className="buying_power_label_container">

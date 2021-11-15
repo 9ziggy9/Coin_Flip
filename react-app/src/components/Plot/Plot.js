@@ -1,6 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 import Plot from 'react-plotly.js';
+import { useSelector } from "react-redux";
 import { Simulation, log_normal } from "../../utilities/statistics.js";
 
 export const SimPlot = ({coin, setPrice, setHist}) => {
@@ -125,4 +126,26 @@ export const MarketPlot = ({coin, setHist}) => {
         config={{scrollZoom: true}}
         useResizeHandler={true}
       />);
+}
+
+export const PortPlot = ()  => {
+  const portfolios = useSelector((state) => Object.values(state.portfolio))[0];
+  const cryptos = useSelector((state) => state.crypto.list);
+  console.log(cryptos);
+  console.log(portfolios);
+  const assets = [];
+  for(let i = 0; i < portfolios.length; i++) {
+    for(let j = 0; j < cryptos.length; j++) {
+      if(portfolios[i].crypto_id === cryptos[j].id)
+        assets.push({
+          'purchase_price': portfolios[i].purchase_price,
+          'gecko': cryptos[j].gecko,
+          'quantity': portfolios[i].quantity
+        })
+    }
+  }
+  console.log(assets);
+  return (<>
+          </>);
+
 }
