@@ -6,7 +6,6 @@ import PurchaseCryptoModal from "../PurchaseCryptoModal.js/purchaseCryptoModal.j
 const Navigation = () => {
   const nav = useRef(null);
   const arrow1 = useRef(null);
-  const arrow2 = useRef(null);
   const arrow3 = useRef(null);
   const [num, setNum] = useState(0);
   const user = useSelector((state) => state.session.user);
@@ -22,34 +21,24 @@ const Navigation = () => {
   const arrowUp = (n) => {
     if (num === n) {
       arrow1.current.innerText = "▼";
-      arrow2.current.innerText = "▼";
       arrow3.current.innerText = "▼";
       return setNum(0);
     }
 
     if (n === 1) {
       arrow1.current.innerText = "▲";
-      arrow2.current.innerText = "▼";
       arrow3.current.innerText = "▼";
       return setNum(1);
-    }
-
-    if (n === 2) {
-      arrow2.current.innerText = "▲";
-      arrow1.current.innerText = "▼";
-      arrow3.current.innerText = "▼";
-      return setNum(2);
     }
 
     if (n === 3) {
       arrow3.current.innerText = "▲";
       arrow1.current.innerText = "▼";
-      arrow2.current.innerText = "▼";
       return setNum(3);
     }
   };
 
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector((state) => state.session.user);
 
   let sessionLinks;
   if (sessionUser) {
@@ -79,18 +68,11 @@ const Navigation = () => {
         />
         <div className="navlinks">
           <p className="links products" onClick={() => arrowUp(1)}>
-            Products{" "}
+            What we offer{" "}
             <p className="arrow" ref={arrow1}>
               ▼
             </p>
           </p>
-          <p className="links learn" onClick={() => arrowUp(2)}>
-            Learn{" "}
-            <p className="arrow" ref={arrow2}>
-              ▼
-            </p>
-          </p>
-          <p className="links">Support</p>
           <p className="links who" onClick={() => arrowUp(3)}>
             Who we are{" "}
             <p className="arrow" ref={arrow3}>
@@ -101,18 +83,36 @@ const Navigation = () => {
         <div className="nav-right">
           {!user ? (
             <>
-              <NavLink to="/login" className="login">Log In</NavLink>
-              <NavLink to="/signup" className="signup">Sign Up</NavLink>
+              <NavLink to="/login" className="login">
+                Log In
+              </NavLink>
+              <NavLink to="/signup" className="signup">
+                Sign Up
+              </NavLink>
             </>
           ) : (
-            <NavLink to="/home" className="signup">My Account</NavLink>
+            <NavLink to="/home" className="signup">
+              My Account
+            </NavLink>
           )}
         </div>
       </div>
       <div className="bottom-nav" ref={nav}>
-        {num === 1 && <div>Test</div>}
-        {num === 2 && <div>Test2</div>}
-        {num === 3 && <div>Test3</div>}
+        {num === 1 && (
+          <div className="nav-offer">
+            <div>• Simulated Crypto Purchases</div>
+            <div>• Crypto Information</div>
+            <div>• Simulated Fund Deposits</div>
+          </div>
+        )}
+        {num === 3 && (
+          <div className="nav-offer">
+            <div>• Created by App Academy Students</div>
+            <NavLink className="links" to="/about">
+              About the site creators
+            </NavLink>
+          </div>
+        )}
       </div>
     </div>
   );

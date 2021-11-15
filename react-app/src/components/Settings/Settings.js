@@ -6,7 +6,6 @@ import { logout } from '../../store/session';
 
 const Settings = () => {
     const user = useSelector(state => state.session.user)
-    console.log(user);
 
     const dispatch = useDispatch();
 

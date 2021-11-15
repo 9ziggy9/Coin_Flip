@@ -24,20 +24,20 @@ const Home = () => {
   //   setPrice(d.price[coin].usd);
   // };
 
-  // //NOTE: API calls seemed to have been stacking up, 8 seconds is an additional
-  // // security measure. Simulating prices still seems relevant.
-
-  // useEffect(() => {const pInterval = setInterval(() => data(coin), 8000);
-  //                  return () => clearInterval(pInterval)}, []);
-
-  // // const [entry] = crypto_list.filter(b => b.gecko === 'bitcoin')
-  // // const price = entry.price
   const [coin, setCoin] = useState("fakecoin");
-  let [start_price] = cryptos.filter((p) => p.gecko === coin);
-  if (!cryptoNames.has(coin)) start_price = { price: 0 };
-  const [price, setPrice] = useState(start_price.price);
+  const [price, setPrice] = useState(0);
+  const [hist, setHist] = useState([])
 
   useEffect(() => {setCoin('bitcoin')}, []);
+  useEffect(() => {
+    let [start_price] = cryptos.filter((p) => p.gecko === coin);
+    if (!cryptoNames.has(coin)) start_price = { price: 0 };
+    setPrice(start_price.price);
+  }, [coin])
+
+  useEffect(() => {
+    console.log(hist);
+  }, [hist])
 
   if (user) {
     return (
@@ -45,24 +45,47 @@ const Home = () => {
         <div className="home_main">
           <div className="home_container_left">
             <div className="total_cash_container">
-              <div className="cash_container">
-                <div className="coin-title">{coin}</div>
-                <div className="cash">{`$${price}`}</div>
-              </div>
-              <div className="today_tracker">
-                <h5 className="today_values">$0.00 (0.00%)</h5>
-                <h5 className="today_label">Today</h5>
-              </div>
-              <div className="after_hours_tracker">
-                <h5 className="after_hours_values">$0.00 (0.00%)</h5>
-                <h5 className="after_hours_label">After Hours</h5>
-              </div>
+              {cryptoNames.has(coin) ? (
+                <>
+                  <div className="cash_container">
+                    <div className="coin-title">{coin}</div>
+                    <div className="cash">{`$${price}`}</div>
+                  </div>
+                  <div className="today_tracker">
+                    <h5 className="today_values">${
+                      (hist.d_daily?.toFixed(2))
+                    } ({(hist.d_daily_p?.toFixed(2))}%)</h5>
+                    <h5 className="today_label">Today</h5>
+                  </div>
+                  <div className="after_hours_tracker">
+                    <h5 className="after_hours_values">${
+                      (hist.d_monthly?.toFixed(2))
+                    }( {(hist.d_monthly_p?.toFixed(2))}%)</h5>
+                    <h5 className="after_hours_label">This Month</h5>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="cash_container">
+                    <div className="coin-title">{coin}</div>
+                    <div className="cash">{`$${price}`}</div>
+                  </div>
+                  <div className="today_tracker">
+                    <h5 className="today_values">$0.00 (0.00%)</h5>
+                    <h5 className="today_label">Today</h5>
+                  </div>
+                  <div className="after_hours_tracker">
+                    <h5 className="after_hours_values">$0.00 (0.00%)</h5>
+                    <h5 className="after_hours_label">After Hours</h5>
+                  </div>
+                </>
+              )}
             </div>
             <div className="porfolio_chart_container">
               {cryptoNames.has(coin) ? (
-                <MarketPlot coin={coin}/>
+                <MarketPlot coin={coin} setHist={setHist}/>
               ) : (
-                <SimPlot coin={coin}/>
+                <SimPlot coin={coin} setPrice={setPrice} setHist={setHist}/>
               )}
             </div>
             <div className="buying_power_container">
@@ -102,7 +125,7 @@ const Home = () => {
             </div>
           </div>
           <div className="home_container_right">
-            <Watchlist />
+            <Watchlist hist={hist} />
           </div>
         </div>
         <form
