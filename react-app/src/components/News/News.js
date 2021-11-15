@@ -21,7 +21,7 @@ const News = () => {
           <div className="news-card-main">
             <a href={n.url} target="_blank" className="news-card">
               <div className="news-text">
-                <p className="news-source">{n.source}</p>
+                <p className="news-source">⚡︎ {n.source}</p>
                 <p className="news-title">{n.headline}</p>
               </div>
               <img className="news-img" src={n.image} />

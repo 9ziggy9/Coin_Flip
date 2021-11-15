@@ -25,7 +25,8 @@
 }
 
 .news-card:hover {
-  background-color: rgb(48,54,58);
+  border-style: none;
+  background-color: rgb(30, 33, 36);
 }
 
 .news-img {
@@ -34,6 +35,13 @@
   border-radius: 4px;
 }
 
+.news-source {
+  font-size: 13px;
+  font-weight: 800;
+}
+
 .news-title {
   width: 520px;
+  font-size: 15px;
+  font-weight: 500;
 }
