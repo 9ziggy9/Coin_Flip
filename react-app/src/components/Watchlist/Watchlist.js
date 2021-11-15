@@ -386,6 +386,7 @@ const Watchlist = () => {
                       <div
                         className={`watchlist-crypto-change master-${w.id}-${crypto.id}`}
                       >
+                        {/* {rng(w.id, crypto.id)}% */}
                       </div>
                     </div>
                   </div>
