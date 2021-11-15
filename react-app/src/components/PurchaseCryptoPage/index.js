@@ -325,19 +325,7 @@ const PurchaseCryptoPage = () => {
             </ul>
           </div>
         </form>
-        <div className="about">About</div>
-        <hr className="hr" />
         <div className="aboutContainer">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget
-          sem posuere, cursus magna vitae, dapibus ex. Praesent tincidunt porta
-          auctor. Pellentesque vestibulum dui sed iaculis iaculis. Quisque sed
-          magna mollis, commodo libero ac, tristique eros. Maecenas dapibus orci
-          vitae interdum ultrices. Nam luctus lorem ligula, in iaculis metus
-          scelerisque ac. Donec ac bibendum neque. Vivamus ut turpis vel libero
-          vulputate lacinia sed at est. Pellentesque ultrices efficitur ligula
-          non tristique. Pellentesque porta urna justo, venenatis fermentum dui
-          lobortis vel. Curabitur et aliquet eros. Aenean pulvinar semper augue
-          et mollis.
           <CryptoNews crypto={singleCrypto[0]} />
         </div>
       </div>
