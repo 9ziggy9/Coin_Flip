@@ -31,6 +31,7 @@ const Home = () => {
   // USER ASSETS AND CRUNCHING
   useEffect(() => {
     const assets = [];
+    console.log(cryptos);
     for(let i = 0; i < portfolios?.length; i++) {
       for(let j = 0; j < cryptos?.length; j++) {
         if(portfolios[i].crypto_id === cryptos[j].id)
@@ -40,12 +41,13 @@ const Home = () => {
             'quantity': portfolios[i].quantity,
             'initial_investment': portfolios[i].purchase_price *
                                   portfolios[i].quantity,
-            'current_value': portfolios[i].quantity *
+            'current_total': portfolios[i].quantity *
                             cryptos[j].price,
           })
       }
     }
-    const total_assets = assets.map(a => a.current_value)
+    console.log(assets);
+    const total_assets = assets.map(a => a.current_total)
                               .reduce((t, n) => t+n, 0)
     setAssets(total_assets.toFixed(2));
   }, [portfolios])
@@ -70,14 +72,14 @@ const Home = () => {
             <div className="total_cash_container">
               <div className="tc-greeting">{`Welcome back, ${user.username}`}</div>
               <div className="tc-assets">{`$${Number(sAssets).toLocaleString()}`}</div>
-              <div className="tc-assets-label">total assets:</div>
+              <div className="tc-assets-label">total crypto assets:</div>
               <div className="tc-24-a">{`$251.25 (1.52%) 24h`}</div>
               <div className="tc-24-p"></div>
               <div className="tc-24-label"></div>
               <div className="tc-m-a">{`4141.25 (20.41%) monthly`}</div>
               <div className="tc-m-p"></div>
               <div className="tc-m-label"></div>
-              <div className="tc-cash-out-label"></div>
+              <div className="tc-cash-out-label">{`Cash: $${user?.cash}`}</div>
               <div className="tc-cash-out-a"></div>
             </div>
             <div className="porfolio_chart_container">
