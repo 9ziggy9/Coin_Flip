@@ -14,8 +14,6 @@
 .purchaseOrSell {
   display: flex;
   flex-direction: row;
-  margin-top: 15px;
-  margin-left: 5px;
 }
 
 .graph {
@@ -35,6 +33,7 @@
 .amount {
   display: flex;
   margin-left: 20px;
+  height: 18px;
 }
 
 .hr {
@@ -82,10 +81,21 @@
 }
 
 .submitButt {
-  width: 60px;
-  height: 24px;
-  text-align: center;
   font-family: "Microsoft Sans Serif";
+  text-align: center;
+  height: 48px;
+  width: 147.5px;
+  background-color: #ff5000;
+  color: #2a2f33;
+  font-weight: 600;
+  border: 1px solid #ff5000;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: none !important;
+}
+
+.submitButt:hover {
+    background-color: #FF6A26;
 }
 
 .subButtContainer {
@@ -97,22 +107,30 @@
   margin-left: 10px;
 }
 
-.errors {
-  margin-top: 0px;
+.buy-form {
+ width: 800px;
+ display: flex;
+ flex-direction: column;
 }
 
-.add_to_list {
-  display: flex;
-  flex-direction: row;
-  height: 20px;
+.errors {
   margin-top: 0px;
-  margin-left: 10px;
 }
 
 .add-to-list {
   font-family: "Microsoft Sans Serif";
   text-align: center;
-  width: 80px;
+  height: 48px;
+  width: 138px;
+  background-color: #2a2f33;
+  color: #ff5000;
+  border: 1px solid #ff5000;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-to-list:hover {
+  background-color: #331000;
 }
 
 .estValue {
@@ -128,25 +146,18 @@
   border: 0.5px solid grey;
   margin-left: 10%;
   margin-top: 10px;
-  width: 50%;
+  width: calc(50% - 38px);
   height: 150px;
   border-radius: 6px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: nowrap;
   padding: 20px 20px;
   gap: 20px;
+  justify-content: space-between;
 }
 
 .purchasePower {
   margin-top: 5px;
   margin-left: 10px;
-}
-
-.button-and-errors {
-  display: flex;
-  flex-direction: row;
-  width: inherit;
-  vertical-align: top;
-  align-content: inherit;
 }

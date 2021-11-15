@@ -163,7 +163,11 @@ const PurchaseCryptoPage = () => {
     if (isNaN(totalValue)) {
         totalValueString = "NaN";
     } else if (transaction === "buy") {
-        totalValueString = `Estimated Cost: $${totalValue.toLocaleString("en-us")}`;
+      totalValueString = `Estimated Cost: ${
+        totalValue > 100000000000000.0
+          ? `Over $100,000,000,000,000`
+          : `$${totalValue.toLocaleString("en-us")}`
+      }`;
     } else if (transaction === "sell") {
         totalValueString = `Estimated Value: $${totalValue.toLocaleString("en-us")}`;
     }
@@ -273,60 +277,58 @@ const PurchaseCryptoPage = () => {
             </button>
           </div>
         </div>
-        <form className="formContainer" onSubmit={onSubmit}>
-          <div className="purchaseOrSell">
-            <input
-              className="buy"
-              type="radio"
-              value="buy"
-              name="transaction"
-              checked={transaction === "buy"}
-              onChange={(e) => setTransaction("buy")}
-            />
-            Purchase
-            <input
-              className="sell"
-              type="radio"
-              value="sell"
-              name="transaction"
-              checked={transaction === "sell"}
-              onChange={(e) => setTransaction("sell")}
-            />
-            Sell
-            <input
-              className="amount"
-              name="amount"
-              type="amount"
-              value={amount}
-              placeholder="amount"
-              onChange={(e) => setAmount(e.target.value)}
-            />
-                <div className="estValue">
-                    {totalValueString}
-                </div>
+        <div className="formContainer">
+          <form onSubmit={onSubmit} className="buy-form">
+            <div className="purchaseOrSell">
+              <input
+                className="buy"
+                type="radio"
+                value="buy"
+                name="transaction"
+                checked={transaction === "buy"}
+                onChange={(e) => setTransaction("buy")}
+              />
+              Purchase
+              <input
+                className="sell"
+                type="radio"
+                value="sell"
+                name="transaction"
+                checked={transaction === "sell"}
+                onChange={(e) => setTransaction("sell")}
+              />
+              Sell
+              <input
+                className="amount"
+                name="amount"
+                type="amount"
+                value={amount}
+                placeholder="amount"
+                onChange={(e) => setAmount(e.target.value)}
+              />
+              <div className="estValue">{totalValueString}</div>
             </div>
             <div className="purchasePower">
                 Buying Power: ${currentUser?.cash.toLocaleString("en-us")}
             </div>
             <div className="subButtContainer">
-            <button
-              disabled={errors.length > 0}
-              type="submit"
-              className="submitButt"
-            >
-              {" "}
-              Submit{" "}
-            </button>
-            <div className="add_to_list">
-                <AddToList cryptoId={id} />
+              <button
+                disabled={errors.length > 0}
+                type="submit"
+                className="submitButt"
+              >
+                {" "}
+                Submit{" "}
+              </button>
+              <ul className="errors">
+                {errors.map((error) => (
+                  <li key={error}>{error}</li>
+                ))}
+              </ul>
             </div>
-            <ul className="errors">
-              {errors.map((error) => (
-                <li key={error}>{error}</li>
-              ))}
-            </ul>
-          </div>
-        </form>
+          </form>
+            <AddToList cryptoId={id} />
+        </div>
         <div className="aboutContainer">
           <CryptoNews crypto={singleCrypto[0]} />
         </div>
