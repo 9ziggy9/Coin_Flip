@@ -168,13 +168,15 @@ export const PortPlot = ()  => {
   }
 
   function computeProfitCurve() {
+    const UNIX_DAY = 8640000;
     // const cryptos_owned = [];
-    let total_invested = [];
+    const total_invested = [];
     for (let t = 0; t < X.length; t++) {
-      total_invested = transactions?.map(T => {
-        console.log(T.createdAt, X[t]);
-        if (t.createdAt < X[t]) return true;
-      })
+      total_invested.push(transactions?.map(T => {
+        const uT = new Date(T.createdAt).getTime();
+        if (uT < X[t] + UNIX_DAY) return T.price * T.quantity;
+        else return 0;
+      }))
       // cryptos_owned.push(transactions?.map(T => {
       //   const uT = new Date(T.createdAt).getTime();
       //   if (Math.abs(uT - X[t]) < 8640000)

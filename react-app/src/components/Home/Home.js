@@ -78,7 +78,7 @@ const Home = () => {
               <div className="tc-m-a">{`4141.25 (20.41%) monthly`}</div>
               <div className="tc-m-p"></div>
               <div className="tc-m-label"></div>
-              <div className="tc-cash-out-label">{`Cash: $${user?.cash}`}</div>
+              <div className="tc-cash-out-label">{`Cash: $${user?.cash.toLocaleString()}`}</div>
               <div className="tc-cash-out-a"></div>
             </div>
             <div className="porfolio_chart_container">
