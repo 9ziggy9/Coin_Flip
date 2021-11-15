@@ -226,7 +226,7 @@ const PurchaseCryptoPage = () => {
           </div>
         </div>
         <div className="graph">
-          <MarketPlot coin={singleCrypto[0]?.name} setHist={setHist}/>
+          <MarketPlot coin={singleCrypto[0]?.gecko} setHist={setHist}/>
         </div>
         <div className="graphHistorySelect">
           <div className="graphButtonContainer">
