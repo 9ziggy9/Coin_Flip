@@ -101,8 +101,11 @@ def unauthorized():
 
 @auth_routes.route('/<int:user_id>/delete')
 def delete_user(user_id):
+    print("\n\n\n\n\n")
+    print(user_id, current_user.id)
+    print("\n\n\n\n\n")
     if user_id != current_user.id:
-        return 'wtf are you doing?'
+        return 'Unauthorized User'
     user = User.query.filter(User.id==current_user.id).first()
     db.session.delete(user)
     db.session.commit()

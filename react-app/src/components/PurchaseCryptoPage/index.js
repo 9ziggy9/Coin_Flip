@@ -56,7 +56,7 @@ const PurchaseCryptoPage = () => {
     if (userId) {
       dispatch(userPortfolios(userId));
     }
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   ports = useSelector((state) => state.portfolio);
 
@@ -108,7 +108,6 @@ const PurchaseCryptoPage = () => {
           hasPortfolio = true;
         }
       }
-      console.log(completePortfolio)
 
       console.log(hasPortfolio)
 
@@ -136,16 +135,17 @@ const PurchaseCryptoPage = () => {
         quantity: +amount,
       };
 
+      setAmount(0)
+
       if (hasPortfolio) {
         console.log("!!!!!!in HP !!!")
-        await dispatch(changePortfolio(newTransaction));
+        dispatch(changePortfolio(newTransaction));
       } else {
         console.log("in no hp!!!!!!")
-        await dispatch(newPortfolio(newTransaction));
+        dispatch(newPortfolio(newTransaction));
       }
-        await dispatch(addFunds(newCashValue))
-        await dispatch(createTransaction(creatingTransaction));
-    } else {
+        dispatch(addFunds(newCashValue))
+        dispatch(createTransaction(creatingTransaction));
     }
   };
 
@@ -202,11 +202,12 @@ const PurchaseCryptoPage = () => {
     }
 
     if (transaction === "sell" && ((cryptoPort[0]?.quantity < amount) || !cryptoPort[0]?.quantity || cryptoPort[0]?.quantity === 0)) {
+
         errors.push("Not enough coins")
     }
 
       setErrors(errors);
-  }, [amount, transaction, totalValue, cryptoPort]);
+  }, [amount, transaction, totalValue, completePortfolio]);
 
 
   useEffect(() => {
@@ -220,7 +221,7 @@ const PurchaseCryptoPage = () => {
         <div className="cryptoInfoContainer">
           <div className="cryptoName">{singleCrypto[0]?.name}</div>
           <div className="cryptoPrice">
-            ${singleCrypto[0]?.price}
+            ${singleCrypto[0]?.price > 1 ? singleCrypto[0]?.price.toLocaleString() : singleCrypto[0]?.price}
           </div>
         </div>
         <div className="graph">plot graph</div>
