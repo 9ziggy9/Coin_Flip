@@ -47,26 +47,28 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    width: 8.8em;
-    height: 1.5em;
+    justify-content: flex-start;
+    width: 15rem;
+    height: 2em;
 }
 
 .today_label {
-    color:grey;
+    color: grey;
+    margin-left: .5rem;
 }
 
-.after_hours_tracker {
+.this_month_tracker {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    width: 11.2em;
+    justify-content: flex-start;
+    width: 15rem;
     height: 1.5em;
 }
 
 .after_hours_label{
     color:grey;
+    margin-left: .5rem;
 }
 
 .porfolio_chart_container{
