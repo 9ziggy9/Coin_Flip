@@ -55,10 +55,10 @@ const Home = () => {
                     <h5 className="today_values">${
                       (hist.d_daily?.toFixed(2))
                     } ({(hist.d_daily_p?.toFixed(2))}%)</h5>
-                    <h5 className="today_label">Today</h5>
+                      <h5 className="today_label">Today</h5>
                   </div>
-                  <div className="after_hours_tracker">
-                    <h5 className="after_hours_values">${
+                  <div className="this_month_tracker">
+                    <h5 className="this_month_values">${
                       (hist.d_monthly?.toFixed(2))
                     }( {(hist.d_monthly_p?.toFixed(2))}%)</h5>
                     <h5 className="after_hours_label">This Month</h5>
