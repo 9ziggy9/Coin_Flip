@@ -281,6 +281,7 @@ body {
   width: 591px;
   user-select: none;
   object-fit: contain;
+  margin-right: 20px;
 }
 
 .lmr-header {
@@ -326,4 +327,38 @@ a {
 .nav-offer {
   display: flex;
   gap: 50px;
+}
+
+.lwr-1 {
+  display: flex;
+  align-items: center;
+  height: 88px;
+  margin-bottom: 25px;
+}
+
+.lwr-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.lwr-desc {
+  font-size: 18px;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: -0.25px;
+  line-height: 28px;
+}
+
+.lwr-img {
+  width: 68px;
+  height: 48px;
+  margin-right: 10px;
+}
+
+.lwr-lwr {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

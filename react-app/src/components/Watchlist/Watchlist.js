@@ -57,7 +57,6 @@ const Watchlist = () => {
     if (portfolio?.length > 0) {
       document.querySelector(".watch-cryptos").classList.remove("hidden");
     }
-
   }, [portfolio]);
 
   const submit = (e) => {
@@ -189,6 +188,23 @@ const Watchlist = () => {
     main.classList.remove("hidden");
     del.classList.add("hidden");
     setNum((old) => old + 1);
+  };
+
+  const rng = (id, cid) => {
+    let num = Math.random() * 4 - 2;
+    //   if (num >= 0) {
+    //     document.querySelector(`.master-${id}-${cid}`)?.classList.remove("red");
+    //     document.querySelector(`.master-${id}-${cid}`)?.classList.add("green");
+    //     return num.toFixed(2);
+    //   } else if (num < 0) {
+    //     document
+    //       .querySelector(`.master-${id}-${cid}`)
+    //       ?.classList.remove("green");
+    //     document.querySelector(`.master-${id}-${cid}`)?.classList.add("red");
+    //     return num.toFixed(2);
+    //   }
+    // }
+    return num.toFixed(2);
   };
 
   return (
@@ -367,7 +383,11 @@ const Watchlist = () => {
                           ? crypto.price.toLocaleString()
                           : crypto.price}
                       </div>
-                      <div className="watchlist-crypto-change">0.25%</div>
+                      <div
+                        className={`watchlist-crypto-change master-${w.id}-${crypto.id}`}
+                      >
+                        {/* {rng(w.id, crypto.id)}% */}
+                      </div>
                     </div>
                   </div>
                 ))}
