@@ -342,7 +342,6 @@ const PurchaseCryptoPage = () => {
           lobortis vel. Curabitur et aliquet eros. Aenean pulvinar semper augue
           et mollis.
           <CryptoNews crypto={singleCrypto[0]} />
-
         </div>
       </div>
     );
