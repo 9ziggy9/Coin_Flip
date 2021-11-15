@@ -4,7 +4,7 @@ import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
 import AddFundsModal from "../AddFundsModal/AddFundsModal";
 import "./Home.css";
-import {PortPlot} from "../Plot/Plot";
+import {SimPlot} from "../Plot/Plot";
 import { userPortfolios } from "../../store/portfolio";
 import { getUserTransactions } from "../../store/transaction";
 import { useDispatch, useSelector } from 'react-redux';
@@ -82,7 +82,7 @@ const Home = () => {
               <div className="tc-cash-out-a"></div>
             </div>
             <div className="porfolio_chart_container">
-              <PortPlot />
+              <SimPlot />
             </div>
             <div className="buying_power_container">
               <div className="buying_power_label_container">

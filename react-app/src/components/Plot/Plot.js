@@ -6,7 +6,7 @@ import {useState, useEffect} from 'react';
 import Plot from 'react-plotly.js';
 import { Simulation, log_normal } from "../../utilities/statistics.js";
 
-export const SimPlot = ({coin, setPrice, setHist}) => {
+export const SimPlot = ({}) => {
   let distribution = log_normal;
   let test_sim;
   let data;
@@ -19,7 +19,6 @@ export const SimPlot = ({coin, setPrice, setHist}) => {
   useEffect(() => {
     data = Simulation.zip(X,Y,distribution)
     test_sim = new Simulation(data, distribution, mu, sigma);
-    setPrice(test_sim.range[49].toFixed(2))
   }, []);
 
   // NOTE: useEffect ensures that simulation will not run again needlessly.
@@ -28,7 +27,6 @@ export const SimPlot = ({coin, setPrice, setHist}) => {
       test_sim.proceed();
       setDomain([...test_sim.domain]);
       setRange([...test_sim.range]);
-      setPrice(test_sim.range[49].toFixed(2))
     }, 1000)
     return () => clearInterval(intervalPointer);
   }, [])
@@ -38,7 +36,7 @@ export const SimPlot = ({coin, setPrice, setHist}) => {
       autosize: true,
       plot_bgcolor: 'black',
       paper_bgcolor: 'black',
-      title: coin,
+      title: 'market simulation',
       font: {color: 'white'},
       xaxis: {
         type:'date',
@@ -57,7 +55,7 @@ export const SimPlot = ({coin, setPrice, setHist}) => {
             y: Y,
             type: 'scatter',
             showlegend: true,
-            legendgrouptitle: {font: {color: 'white'}, text: 'hello world'},
+            legendgrouptitle: {font: {color: 'white'}, text: 'lognormal'},
             mode: 'lines+markers',
             marker: {color: 'green'},
           },
@@ -135,8 +133,10 @@ export const PortPlot = ()  => {
   const cryptos = useSelector((state) => state.crypto.list);
   const dispatch = useDispatch();
   const transactions = useSelector(state => Object.values(state.transaction));
-  const [X, setDomain] = useState([])
-  const [Y, setRange] = useState([])
+  const [X, setDomain] = useState([]);
+  const [Y, setRange] = useState([]);
+  const [invest, setInvest] = useState([]);
+  const [cashout, setCashout] = useState([]);
 
   const marketData = async () => {
     const res = await fetch(`/api/cryptocurrencies/bitcoin`);
@@ -146,12 +146,6 @@ export const PortPlot = ()  => {
     setDomain([...domain]);
     setRange([...range]);
   }
-
-  useEffect(() => {
-    marketData()
-    dispatch(userPortfolios(user?.id));
-    dispatch(getUserTransactions(user?.id));
-  }, [dispatch]);
 
   const transaction_data = {
     number_purchases: transactions?.length,
@@ -201,13 +195,18 @@ export const PortPlot = ()  => {
       daily_investment_total.push((d.reduce((acc, n) => acc + n.price*n.quantity, 0)));
     })
     total_sold.forEach(d => {
-      daily_cashout.push((d.reduce((acc, n) => acc + n.price*n.quantity, 0)));
+      daily_cashout.push((d.reduce((acc, n) => acc + Math.abs(n.price*n.quantity), 0)));
     })
-    console.log(daily_investment_total);
-    console.log(daily_cashout);
+    setInvest([...daily_investment_total]);
+    setCashout([...daily_cashout]);
   }
 
-  computeProfitCurve();
+  useEffect(() => {
+    marketData();
+    computeProfitCurve();
+    dispatch(userPortfolios(user?.id));
+    dispatch(getUserTransactions(user?.id));
+  }, [dispatch]);
 
   const layout = {
     autosize: true,
@@ -224,12 +223,20 @@ export const PortPlot = ()  => {
 
   const data=[{
     x: X,
-    y: Y,
+    y: cashout,
     type: 'scatter',
     showlegend: true,
-    legendgrouptitle: {font: {color: 'white'}, text: 'price'},
+    legendgrouptitle: {font: {color: 'white'}, text: 'cashout'},
     mode: 'lines+markers',
     marker: {color: 'green'},
+  }, {
+    x: X,
+    y: invest,
+    type: 'scatter',
+    showlegend: true,
+    legendgrouptitle: {font: {color: 'white'}, text: 'investments'},
+    mode: 'lines+markers',
+    marker: {color: 'orange'},
   }];
 
   return (
