@@ -1,7 +1,9 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { userPortfolios } from "../../store/portfolio";
+import { getUserTransactions } from "../../store/transaction";
 import {useState, useEffect} from 'react';
 import Plot from 'react-plotly.js';
-import { useSelector } from "react-redux";
 import { Simulation, log_normal } from "../../utilities/statistics.js";
 
 export const SimPlot = ({coin, setPrice, setHist}) => {
@@ -129,22 +131,34 @@ export const MarketPlot = ({coin, setHist}) => {
 }
 
 export const PortPlot = ()  => {
-  const portfolios = useSelector((state) => Object.values(state.portfolio))[0];
+  const user = useSelector(state => state.session.user);
+  const portfolios = useSelector((state) => state.portfolio.portfolio);
   const cryptos = useSelector((state) => state.crypto.list);
-  console.log(cryptos);
-  console.log(portfolios);
+  const dispatch = useDispatch();
+  const transactions = useSelector(state => Object.values(state.transaction));
+
+  useEffect(() => {
+      dispatch(userPortfolios(user?.id))
+      dispatch(getUserTransactions(user?.id))
+  }, [dispatch]);
+
+  // lol, give me a for loop and you can do anything
   const assets = [];
-  for(let i = 0; i < portfolios.length; i++) {
-    for(let j = 0; j < cryptos.length; j++) {
+  for(let i = 0; i < portfolios?.length; i++) {
+    for(let j = 0; j < cryptos?.length; j++) {
       if(portfolios[i].crypto_id === cryptos[j].id)
         assets.push({
           'purchase_price': portfolios[i].purchase_price,
           'gecko': cryptos[j].gecko,
-          'quantity': portfolios[i].quantity
+          'quantity': portfolios[i].quantity,
+          'initial_investment': portfolios[i].purchase_price *
+                                portfolios[i].quantity
         })
     }
   }
   console.log(assets);
+  console.log(transactions);
+
   return (<>
           </>);
 
