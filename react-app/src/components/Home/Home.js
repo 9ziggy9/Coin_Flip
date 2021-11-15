@@ -75,14 +75,14 @@ const Home = () => {
             <div className="total_cash_container">
               <div className="tc-greeting">{`Welcome back, ${user.username}`}</div>
               <div className="tc-assets">{`$${Number(sAssets).toLocaleString()}`}</div>
-              <div className="tc-assets-label">total crypto assets:</div>
+              <div className="tc-assets-label">Total Crypto Assets:</div>
               <div className="tc-24-a">{`$${(Number(sAssets)-Number(liabilities)).toLocaleString()} profit`}</div>
               <div className="tc-m-a">{`${(100*((Number(sAssets)-Number(liabilities))/Number(liabilities))).toLocaleString()}% return`}</div>
               <div className="tc-24-label"></div>
               {/* <div className="tc-m-a">{`4141.25 (20.41%) monthly`}</div> */}
               <div className="tc-m-p"></div>
               <div className="tc-m-label"></div>
-              <div className="tc-cash-out-label">{`Cash: $${user?.cash.toLocaleString()}`}</div>
+                {/* <div className="tc-cash-out-label">{`Cash: $${user?.cash.toLocaleString()}`}</div> */}
               <div className="tc-cash-out-a"></div>
             </div>
             <div className="porfolio_chart_container">

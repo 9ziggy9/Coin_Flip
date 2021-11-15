@@ -20,14 +20,21 @@ const Splash = () => {
           <div className="landing-signup">
             <div className="landing-signup-left">
               {!user ? (
-                <NavLink to="/signup" className="landing-signup-btn">Sign Up</NavLink>
+                <NavLink to="/signup" className="landing-signup-btn">
+                  Sign Up
+                </NavLink>
               ) : (
-                <NavLink to="/home" className="landing-signup-btn">Learn More</NavLink>
+                <NavLink to="/home" className="landing-signup-btn">
+                  Learn More
+                </NavLink>
               )}
             </div>
             <div className="landing-signup-right">
               <p className="landing-right-scan">Scan to get the app</p>
-              <img className="landing-right-img" src="https://i.imgur.com/diym3m5.png" />
+              <img
+                className="landing-right-img"
+                src="https://i.imgur.com/diym3m5.png"
+              />
             </div>
           </div>
           <div className="landing-disclosure">
@@ -55,6 +62,35 @@ const Splash = () => {
             Simulate crypto trading to learn more about the market before you
             invest.
           </p>
+          <div className="lwr-main">
+            <div className="lwr-1">
+              <img className="lwr-img" src="https://robinhood.com/us/en/_next/static/images/comeall__c29b103566f44e51d624989e65ecf3be.svg" />
+              <div className="lwr-lwr">
+                <div className="lwr-title">It's your turn</div>
+                <div className="lwr-desc">
+                  Get up to $50,000,000 in simulated cash.
+                </div>
+              </div>
+            </div>
+            <div className="lwr-1">
+              <img className="lwr-img" src="https://robinhood.com/us/en/_next/static/images/one-first__d86b9ee63a8475364159f2d21ea5f01f.svg" />
+              <div className="lwr-lwr">
+                <div className="lwr-title">Be one of the first</div>
+                <div className="lwr-desc">
+                  It's a brand new application. Go ahead and try it!
+                </div>
+              </div>
+            </div>
+            <div className="lwr-1">
+              <img className="lwr-img" src="https://robinhood.com/us/en/_next/static/images/fair-shot__fb09db580d0ada2e8626a6e46094bb27.svg" />
+              <div className="lwr-lwr">
+                <div className="lwr-title">Get a fair shot</div>
+                <div className="lwr-desc">
+                  Risk-free trading. Get the opportunity to learn about the cryptocurrency market.
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

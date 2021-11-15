@@ -36,7 +36,7 @@ export const SimPlot = ({}) => {
       autosize: true,
       plot_bgcolor: 'black',
       paper_bgcolor: 'black',
-      title: 'market simulation',
+      title: 'Market Simulation',
       font: {color: 'white'},
       xaxis: {
         type:'date',
