@@ -72,10 +72,10 @@ const Home = () => {
               <div className="tc-greeting">{`Welcome back, ${user.username}`}</div>
               <div className="tc-assets">{`$${Number(sAssets).toLocaleString()}`}</div>
               <div className="tc-assets-label">total crypto assets:</div>
-              <div className="tc-24-a">{`$251.25 (1.52%) 24h`}</div>
+              {/* <div className="tc-24-a">{`$251.25 (1.52%) 24h`}</div> */}
               <div className="tc-24-p"></div>
               <div className="tc-24-label"></div>
-              <div className="tc-m-a">{`4141.25 (20.41%) monthly`}</div>
+              {/* <div className="tc-m-a">{`4141.25 (20.41%) monthly`}</div> */}
               <div className="tc-m-p"></div>
               <div className="tc-m-label"></div>
               <div className="tc-cash-out-label">{`Cash: $${user?.cash.toLocaleString()}`}</div>
