@@ -179,8 +179,6 @@ const PurchaseCryptoPage = () => {
   useEffect(() => {
       let a = completePortfolio?.filter(c => c.crypto_id === +uniqueCryptoId)
       setCryptoPort(a)
-      console.log("!!!!!!", cryptoPort)
-      console.log(completePortfolio)
   },[completePortfolio]);
 
   useEffect(() => {
