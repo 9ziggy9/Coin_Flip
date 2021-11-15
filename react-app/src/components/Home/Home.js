@@ -35,32 +35,6 @@ const Home = () => {
     setPrice(start_price.price);
   }, [coin])
 
-  function assignColor(num, type) {
-    const tNum = Number(num);
-    switch (type) {
-      case 'daily':
-        if (tNum > 0) {
-          document.querySelector('.today_values')?.classList.remove("pl-red");
-          document.querySelector('.today_values')?.classList.add("pl-green");
-        } else if (tNum < 0) {
-          document.querySelector('.today_values')?.classList.remove("pl-green");
-          document.querySelector('.today_values')?.classList.add("pl-red");
-        }
-        break;
-      case 'monthly':
-        if (tNum > 0) {
-          document.querySelector('.after_hours_values')?.classList.remove("pl-red");
-          document.querySelector('.after_hours_values')?.classList.add("pl-green");
-        } else if (tNum < 0) {
-          document.querySelector('.after_hours_values')?.classList.remove("pl-green");
-          document.querySelector('.after_hours_values')?.classList.add("pl-red");
-        }
-        break;
-    }
-    return num;
-  }
-
-
   if (user) {
     return (
       <>
@@ -104,11 +78,7 @@ const Home = () => {
               )}
             </div>
             <div className="porfolio_chart_container">
-              {cryptoNames.has(coin) ? (
-                <MarketPlot coin={coin} setHist={setHist}/>
-              ) : (
-                <SimPlot coin={coin} setPrice={setPrice} setHist={setHist}/>
-              )}
+              <PortfolioPlot user={user}/>
             </div>
             <div className="buying_power_container">
               <div className="buying_power_label_container">
