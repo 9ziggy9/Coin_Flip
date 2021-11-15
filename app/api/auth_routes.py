@@ -110,3 +110,10 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     return user.to_dict()
+
+@auth_routes.route('/<int:user_id>/pass')
+def change_pass(user_id):
+    if user_id != current_user.id:
+        return 'Unauthorized'
+    user = User.query.filter(User.id==current_user.id).first()
+    return user.password
