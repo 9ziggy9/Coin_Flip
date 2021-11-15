@@ -216,7 +216,7 @@ const PurchaseCryptoPage = () => {
         <div className="cryptoInfoContainer">
           <div className="cryptoName">{singleCrypto[0]?.name}</div>
           <div className="cryptoPrice">
-            ${singleCrypto[0]?.price}
+            ${singleCrypto[0]?.price > 1 ? singleCrypto[0]?.price.toLocaleString() : singleCrypto[0]?.price}
           </div>
         </div>
         <div className="graph">plot graph</div>
