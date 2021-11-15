@@ -78,7 +78,6 @@ const Home = () => {
               )}
             </div>
             <div className="porfolio_chart_container">
-              <PortfolioPlot user={user}/>
             </div>
             <div className="buying_power_container">
               <div className="buying_power_label_container">
