@@ -167,18 +167,26 @@ export const PortPlot = ()  => {
                                   / transactions?.filter(t => t.type==='buy').length
   }
 
-  // function computeProfitCurve() {
-  //   for (let t = 0; t < X.length; t++) {
-  //     transactions.filter(T => {
-  //       const uT = new Date(T).getTime() / 1000
-  //       if (X[t])
-  //     })
-  //   }
-  //   const unix_purchase_time = new Date(purchase_date).getTime() / 1000
-  //   const unix_price_time =() / 1000
-  // }
-  console.log(X[0]/1000);
+  function computeProfitCurve() {
+    // const cryptos_owned = [];
+    let total_invested = [];
+    for (let t = 0; t < X.length; t++) {
+      total_invested = transactions?.map(T => {
+        console.log(T.createdAt, X[t]);
+        if (t.createdAt < X[t]) return true;
+      })
+      // cryptos_owned.push(transactions?.map(T => {
+      //   const uT = new Date(T.createdAt).getTime();
+      //   if (Math.abs(uT - X[t]) < 8640000)
+      //     return (Y[t] - T.price)*T.quantity;
+      //   else
+      //     return false;
+      // }))
+    }
+    console.log(total_invested);
+  }
 
+  computeProfitCurve();
 
   const layout = {
     autosize: true,
