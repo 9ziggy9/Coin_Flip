@@ -138,8 +138,8 @@ export const PortPlot = ()  => {
   const transactions = useSelector(state => Object.values(state.transaction));
 
   useEffect(() => {
-      dispatch(userPortfolios(user?.id))
-      dispatch(getUserTransactions(user?.id))
+    (async () => await dispatch(userPortfolios(user?.id)))();
+    (async () => await dispatch(getUserTransactions(user?.id)))();
   }, [dispatch]);
 
   // lol, give me a for loop and you can do anything
@@ -156,8 +156,17 @@ export const PortPlot = ()  => {
         })
     }
   }
-  console.log(assets);
-  console.log(transactions);
+
+  const total_purchases = transactions?.filter(t => t.type==='buy');
+  const total_sold = transactions?.filter(t => t.type==='sell');
+
+  console.log(total_purchases, total_sold);
+
+  const transaction_data = {
+    total_purchases: transactions?.length,
+    average_investment: 'blank',
+  }
+
 
   return (<>
           </>);
