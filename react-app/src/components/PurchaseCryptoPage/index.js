@@ -56,7 +56,7 @@ const PurchaseCryptoPage = () => {
     if (userId) {
       dispatch(userPortfolios(userId));
     }
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   ports = useSelector((state) => state.portfolio);
 
@@ -108,7 +108,6 @@ const PurchaseCryptoPage = () => {
           hasPortfolio = true;
         }
       }
-      console.log(completePortfolio)
 
       console.log(hasPortfolio)
 
@@ -136,16 +135,17 @@ const PurchaseCryptoPage = () => {
         quantity: +amount,
       };
 
+      setAmount(0)
+
       if (hasPortfolio) {
         console.log("!!!!!!in HP !!!")
-        await dispatch(changePortfolio(newTransaction));
+        dispatch(changePortfolio(newTransaction));
       } else {
         console.log("in no hp!!!!!!")
-        await dispatch(newPortfolio(newTransaction));
+        dispatch(newPortfolio(newTransaction));
       }
-        await dispatch(addFunds(newCashValue))
-        await dispatch(createTransaction(creatingTransaction));
-    } else {
+        dispatch(addFunds(newCashValue))
+        dispatch(createTransaction(creatingTransaction));
     }
   };
 
@@ -201,12 +201,12 @@ const PurchaseCryptoPage = () => {
         errors.push("Not enough buying power")
     }
 
-    if (transaction === "sell" && (cryptoPort[0]?.quantity < amount)) {
+    if (transaction === "sell" && (cryptoPort[0]?.quantity < amount) || cryptoPort === undefined) {
         errors.push("Not enough coins")
     }
 
       setErrors(errors);
-  }, [amount, transaction, totalValue, cryptoPort]);
+  }, [amount, transaction, totalValue, completePortfolio]);
 
 
   useEffect(() => {
