@@ -161,7 +161,7 @@ const PurchaseCryptoPage = () => {
   if (singleCrypto && amount) {
     totalValue = totalValueOfCoins(amount);
     if (isNaN(totalValue)) {
-        totalValueString = "NaN";
+        totalValueString = "";
     } else if (transaction === "buy") {
       totalValueString = `Estimated Cost: ${
         totalValue > 100000000000000.0
