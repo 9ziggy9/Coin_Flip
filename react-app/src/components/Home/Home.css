@@ -10,11 +10,11 @@
 /*     flex-direction:column; */
 /* } */
 .total_cash_container {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-grid-template-rows: 0.3fr 0.2fr 1fr repeat(3, 0.2fr);
-grid-column-gap: 0px;
-grid-row-gap: 0px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 0.3fr 0.2fr 1fr repeat(2, 0.2fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
 }
 
 .tc-greeting {
@@ -25,18 +25,22 @@ grid-row-gap: 0px;
     grid-area: 3 / 1 / 4 / 3;
     font-size: 36px;
 }
-.tc-24-a { grid-area: 4 / 1 / 5 / 2; }
-.tc-m-a {  grid-area: 5 / 1 / 6 / 2; }
-.tc-y-a {  grid-area: 6 / 1 / 7 / 2; }
+.tc-24-a {
+    font-size:12px;
+    grid-area: 4 / 1 / 5 / 2;
+}
+.tc-m-a {
+    font-size:12px;
+    grid-area: 5 / 1 / 6 / 2;
+}
 
 .tc-assets-label {grid-area: 2 / 1 / 3 / 3; }
 
+ /* USE AS NEEDED */
 /* .tc-24-p { background-color: orange; grid-area: 4 / 2 / 5 / 3; } */
 /* .tc-24-label { background-color: yellow; grid-area: 4 / 3 / 5 / 4; } */
 /* .tc-m-p { background-color: teal; grid-area: 5 / 2 / 6 / 3; } */
 /* .tc-m-label { background-color: darkcyan; grid-area: 5 / 3 / 6 / 4; } */
-/* .tc-y-p { background-color: pink; grid-area: 6 / 2 / 7 / 3; } */
-/* .tc-y-label { background-color: chartreuse; grid-area: 6 / 3 / 7 / 4; } */
 /* .tc-cash-out-label { background-color: limegreen; grid-area: 2 / 3 / 3 / 4; } */
 /* .tc-cash-out-a { background-color: crimson; grid-area: 3 / 3 / 4 / 4; } */
 

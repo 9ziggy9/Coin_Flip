@@ -1,22 +1,44 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { Redirect } from "react-router";
 import News from "../News/News";
 import Watchlist from "../Watchlist/Watchlist";
 import AddFundsModal from "../AddFundsModal/AddFundsModal";
 import "./Home.css";
 import {PortPlot} from "../Plot/Plot";
+import { userPortfolios } from "../../store/portfolio";
+import { getUserTransactions } from "../../store/transaction";
+import { useDispatch, useSelector } from 'react-redux';
 
 const Home = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
   const cryptos = useSelector((state) => state.crypto.list);
   const cryptoNames = new Set(cryptos.map((c) => c.name.toLowerCase()));
+  const portfolios = useSelector((state) => state.portfolio.portfolio);
 
-  // const data = async (coin) => {
-  //   const res = await fetch("/api/cryptocurrencies/prices");
-  //   const d = await res.json();
-  //   setPrice(d.price[coin].usd);
-  // };
+  const fetchPrices = async () => {
+    await fetch("/api/cryptocurrencies/prices");
+  };
+
+  useEffect(() => {
+    fetchPrices();
+    dispatch(userPortfolios(user?.id));
+    dispatch(getUserTransactions(user?.id));
+  }, [dispatch]);
+
+  const assets = [];
+  for(let i = 0; i < portfolios?.length; i++) {
+    for(let j = 0; j < cryptos?.length; j++) {
+      if(portfolios[i].crypto_id === cryptos[j].id)
+        assets.push({
+          'purchase_price': portfolios[i].purchase_price,
+          'gecko': cryptos[j].gecko,
+          'quantity': portfolios[i].quantity,
+          'initial_investment': portfolios[i].purchase_price *
+                                portfolios[i].quantity
+        })
+    }
+  }
 
   const [coin, setCoin] = useState("fakecoin");
   const [price, setPrice] = useState(0);
@@ -43,9 +65,6 @@ const Home = () => {
               <div className="tc-m-a">{`4141.25 (20.41%) monthly`}</div>
               <div className="tc-m-p"></div>
               <div className="tc-m-label"></div>
-              <div className="tc-y-a">{`45201.25 (26.21%) yearly`}</div>
-              <div className="tc-y-p"></div>
-              <div className="tc-y-label"></div>
               <div className="tc-cash-out-label"></div>
               <div className="tc-cash-out-a"></div>
             </div>
