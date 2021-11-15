@@ -161,7 +161,7 @@ const PurchaseCryptoPage = () => {
   if (singleCrypto && amount) {
     totalValue = totalValueOfCoins(amount);
     if (isNaN(totalValue)) {
-        totalValueString = "NaN";
+        totalValueString = "";
     } else if (transaction === "buy") {
       totalValueString = `Estimated Cost: ${
         totalValue > 100000000000000.0
@@ -212,15 +212,19 @@ const PurchaseCryptoPage = () => {
 
 
   useEffect(() => {
-      setUniqueCryptoId(+id);
-      dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
+    setUniqueCryptoId(+id);
+    dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
   }, [dispatch, id]);
+
+  function capitalizeFirstLetter(string) {
+    return string[0].toUpperCase() + string.slice(1);
+  }
 
   if (loaded) {
     return (
       <div className="pageContainer">
         <div className="cryptoInfoContainer">
-          <div className="cryptoName">{singleCrypto[0]?.name.toLowerCase()}</div>
+          <div className="cryptoName">{capitalizeFirstLetter(singleCrypto[0]?.name)}</div>
           <div className="cryptoPrice">
             ${singleCrypto[0]?.price > 1 ? singleCrypto[0]?.price.toLocaleString() : singleCrypto[0]?.price}
           </div>
