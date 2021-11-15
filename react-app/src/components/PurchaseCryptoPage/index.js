@@ -160,14 +160,14 @@ const PurchaseCryptoPage = () => {
   }
 
   if (singleCrypto && amount) {
-      totalValue = totalValueOfCoins(amount);
-      if (isNaN(totalValue)) {
-          totalValueString = "NaN";
-      } else if (transaction === "buy") {
-          totalValueString = `Estimated Cost: $${totalValue.toLocaleString("en-us")}`;
-      } else if (transaction === "sell") {
-          totalValueString = `Estimated Value: $${totalValue.toLocaleString("en-us")}`;
-      }
+    totalValue = totalValueOfCoins(amount);
+    if (isNaN(totalValue)) {
+        totalValueString = "NaN";
+    } else if (transaction === "buy") {
+        totalValueString = `Estimated Cost: $${totalValue.toLocaleString("en-us")}`;
+    } else if (transaction === "sell") {
+        totalValueString = `Estimated Value: $${totalValue.toLocaleString("en-us")}`;
+    }
   }
 
   useEffect(() => {
@@ -201,7 +201,8 @@ const PurchaseCryptoPage = () => {
         errors.push("Not enough buying power")
     }
 
-    if (transaction === "sell" && (cryptoPort[0]?.quantity < amount) || cryptoPort === undefined) {
+    if (transaction === "sell" && ((cryptoPort[0]?.quantity < amount) || !cryptoPort[0]?.quantity || cryptoPort[0]?.quantity === 0)) {
+
         errors.push("Not enough coins")
     }
 
