@@ -181,11 +181,9 @@ const PurchaseCryptoPage = () => {
   const [cryptoPort, setCryptoPort] = useState(0);
 
   useEffect(() => {
-    let a = completePortfolio?.filter((c) => c.crypto_id === +uniqueCryptoId);
-    setCryptoPort(a);
-    console.log("!!!!!!", cryptoPort);
-    console.log(completePortfolio);
-  }, [completePortfolio]);
+      let a = completePortfolio?.filter(c => c.crypto_id === +uniqueCryptoId)
+      setCryptoPort(a)
+  },[completePortfolio]);
 
   useEffect(() => {
     const errors = [];
@@ -339,19 +337,7 @@ const PurchaseCryptoPage = () => {
           </form>
             <AddToList cryptoId={id} />
         </div>
-        <div className="about">About</div>
-        <hr className="hr" />
         <div className="aboutContainer">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget
-          sem posuere, cursus magna vitae, dapibus ex. Praesent tincidunt porta
-          auctor. Pellentesque vestibulum dui sed iaculis iaculis. Quisque sed
-          magna mollis, commodo libero ac, tristique eros. Maecenas dapibus orci
-          vitae interdum ultrices. Nam luctus lorem ligula, in iaculis metus
-          scelerisque ac. Donec ac bibendum neque. Vivamus ut turpis vel libero
-          vulputate lacinia sed at est. Pellentesque ultrices efficitur ligula
-          non tristique. Pellentesque porta urna justo, venenatis fermentum dui
-          lobortis vel. Curabitur et aliquet eros. Aenean pulvinar semper augue
-          et mollis.
           <CryptoNews crypto={singleCrypto[0]} />
         </div>
       </div>
