@@ -14,7 +14,7 @@
 .purchaseOrSell {
     display: flex;
     flex-direction: row;
-    margin-top: 20px;
+    margin-top: 15px;
     margin-left: 5px;
 }
 
@@ -110,7 +110,7 @@
 .add-to-list {
     font-family: "Microsoft Sans Serif";
     text-align: center;
-
+    width: 80px;
 }
 
 .estValue {
