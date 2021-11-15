@@ -1,9 +1,9 @@
 import { useEffect, useState, forceUpdate } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory  } from "react-router-dom";
 import "./PurchaseCryptoPage.css";
 import { useParams } from "react-router";
-import { MarketPlot } from "../Plot/Plot";
+import {MarketPlot} from "../Plot/Plot";
 // import { getOneCryptocurrency, getAllCryptocurrency } from "../../store/purchaseCrypto";
 import { getOneCrypto } from "../../store/crypto";
 import {
@@ -20,6 +20,7 @@ import AddToList from "../AddToListModal/AddToList";
 import CryptoNews from "./CryptoNews";
 import Loading from "../Loading/Loading";
 import PurchaseCryptoModal from "../PurchaseCryptoModal.js/purchaseCryptoModal";
+
 
 const PurchaseCryptoPage = () => {
   const dispatch = useDispatch();
@@ -40,9 +41,10 @@ const PurchaseCryptoPage = () => {
   const [errors, setErrors] = useState([]);
   const [hist, setHist] = useState([]);
 
-  const completePortfolio = useSelector((state) => state.portfolio.portfolio);
+  const completePortfolio = useSelector(state => state.portfolio.portfolio)
 
   let singleCrypto;
+
 
   const userId = currentUser?.id;
 
@@ -105,7 +107,7 @@ const PurchaseCryptoPage = () => {
         }
       }
 
-      console.log(hasPortfolio);
+      console.log(hasPortfolio)
 
       if (transaction === "sell") {
         amount = amount * -1;
@@ -131,7 +133,7 @@ const PurchaseCryptoPage = () => {
         quantity: +amount,
       };
 
-      setAmount(0);
+      setAmount(0)
 
       if (hasPortfolio) {
         await dispatch(changePortfolio(newTransaction));
@@ -139,9 +141,9 @@ const PurchaseCryptoPage = () => {
         await dispatch(newPortfolio(newTransaction));
       }
 
-      await dispatch(addFunds(newCashValue));
+      await dispatch(addFunds(newCashValue))
       await dispatch(createTransaction(creatingTransaction));
-      history.go(0);
+      history.go(0)
     } else {
     }
   };
@@ -152,28 +154,24 @@ const PurchaseCryptoPage = () => {
 
   const totalValueOfCoins = (amount) => {
     if (singleCrypto) {
-      return singleCrypto[0]?.price * amount;
+      return (singleCrypto[0]?.price * amount)
     }
-  };
+  }
 
   if (singleCrypto && amount) {
     totalValue = totalValueOfCoins(amount);
     if (isNaN(totalValue)) {
-      totalValueString = "NaN";
+        totalValueString = "NaN";
     } else if (transaction === "buy") {
-      totalValueString = `Estimated Cost: $${totalValue.toLocaleString(
-        "en-us"
-      )}`;
+        totalValueString = `Estimated Cost: $${totalValue.toLocaleString("en-us")}`;
     } else if (transaction === "sell") {
-      totalValueString = `Estimated Value: $${totalValue.toLocaleString(
-        "en-us"
-      )}`;
+        totalValueString = `Estimated Value: $${totalValue.toLocaleString("en-us")}`;
     }
   }
 
   useEffect(() => {
-    setUniqueCryptoId(+id);
-    dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
+      setUniqueCryptoId(+id);
+      dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
   }, [dispatch, id]);
 
   const [cryptoPort, setCryptoPort] = useState(0);
@@ -189,50 +187,42 @@ const PurchaseCryptoPage = () => {
     let currentAmount;
 
     if (isNaN(amount) || amount === "") {
-      errors.push("Please enter a number");
+        errors.push("Please enter a number");
     }
 
     if (amount < 0) {
-      errors.push("Please enter a value greater than zero");
+        errors.push("Please enter a value greater than zero");
     }
 
-    if (transaction === "buy" && totalValue > currentUser?.cash) {
-      errors.push("Not enough buying power");
+    if (transaction === "buy" && (totalValue > currentUser?.cash)) {
+        errors.push("Not enough buying power")
     }
 
-    if (
-      transaction === "sell" &&
-      (cryptoPort[0]?.quantity < amount ||
-        !cryptoPort[0]?.quantity ||
-        cryptoPort[0]?.quantity === 0)
-    ) {
-      errors.push("Not enough coins");
+    if (transaction === "sell" && ((cryptoPort[0]?.quantity < amount) || !cryptoPort[0]?.quantity || cryptoPort[0]?.quantity === 0)) {
+
+        errors.push("Not enough coins")
     }
 
-    setErrors(errors);
+      setErrors(errors);
   }, [amount, transaction, totalValue, completePortfolio]);
 
+
   useEffect(() => {
-    setUniqueCryptoId(+id);
-    dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
+      setUniqueCryptoId(+id);
+      dispatch(getOneCrypto(+id)).then(() => setLoaded(true));
   }, [dispatch, id]);
 
   if (loaded) {
     return (
       <div className="pageContainer">
         <div className="cryptoInfoContainer">
-          <div className="cryptoName">
-            {singleCrypto[0]?.name.toLowerCase()}
-          </div>
+          <div className="cryptoName">{singleCrypto[0]?.name.toLowerCase()}</div>
           <div className="cryptoPrice">
-            $
-            {singleCrypto[0]?.price > 1
-              ? singleCrypto[0]?.price.toLocaleString()
-              : singleCrypto[0]?.price}
+            ${singleCrypto[0]?.price > 1 ? singleCrypto[0]?.price.toLocaleString() : singleCrypto[0]?.price}
           </div>
         </div>
         <div className="graph">
-          <MarketPlot coin={singleCrypto[0]?.gecko} setHist={setHist} />
+          <MarketPlot coin={singleCrypto[0]?.gecko} setHist={setHist}/>
         </div>
         <div className="graphHistorySelect">
           <div className="graphButtonContainer">
@@ -283,63 +273,60 @@ const PurchaseCryptoPage = () => {
             </button>
           </div>
         </div>
-        <div className="formContainer">
-          <form onSubmit={onSubmit}>
-            <div className="purchaseOrSell">
-              <input
-                className="buy"
-                type="radio"
-                value="buy"
-                name="transaction"
-                checked={transaction === "buy"}
-                onChange={(e) => setTransaction("buy")}
-              />
-              Purchase
-              <input
-                className="sell"
-                type="radio"
-                value="sell"
-                name="transaction"
-                checked={transaction === "sell"}
-                onChange={(e) => setTransaction("sell")}
-              />
-              Sell
-              <input
-                className="amount"
-                name="amount"
-                type="amount"
-                value={amount}
-                placeholder="amount"
-                onChange={(e) => setAmount(e.target.value)}
-              />
-              <div className="estValue">{totalValueString}</div>
+        <form className="formContainer" onSubmit={onSubmit}>
+          <div className="purchaseOrSell">
+            <input
+              className="buy"
+              type="radio"
+              value="buy"
+              name="transaction"
+              checked={transaction === "buy"}
+              onChange={(e) => setTransaction("buy")}
+            />
+            Purchase
+            <input
+              className="sell"
+              type="radio"
+              value="sell"
+              name="transaction"
+              checked={transaction === "sell"}
+              onChange={(e) => setTransaction("sell")}
+            />
+            Sell
+            <input
+              className="amount"
+              name="amount"
+              type="amount"
+              value={amount}
+              placeholder="amount"
+              onChange={(e) => setAmount(e.target.value)}
+            />
+                <div className="estValue">
+                    {totalValueString}
+                </div>
             </div>
             <div className="purchasePower">
-              Buying Power: ${currentUser?.cash.toLocaleString("en-us")}
+                Buying Power: ${currentUser?.cash.toLocaleString("en-us")}
             </div>
             <div className="subButtContainer">
-              <button
-                disabled={errors.length > 0}
-                type="submit"
-                className="submitButt"
-              >
-                {" "}
-                Submit{" "}
-              </button>
-              <ul className="errors">
-                {errors.map((error) => (
-                  <li key={error}>{error}</li>
-                ))}
-              </ul>
-            </div>
-          </form>
-          <div className="button-and-errors">
+            <button
+              disabled={errors.length > 0}
+              type="submit"
+              className="submitButt"
+            >
+              {" "}
+              Submit{" "}
+            </button>
             <div className="add_to_list">
-              <AddToList cryptoId={id} />
+                <AddToList cryptoId={id} />
             </div>
+            <ul className="errors">
+              {errors.map((error) => (
+                <li key={error}>{error}</li>
+              ))}
+            </ul>
           </div>
         </form>
-        </div>
         <div className="aboutContainer">
           <CryptoNews crypto={singleCrypto[0]} />
         </div>
