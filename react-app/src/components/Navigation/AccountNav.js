@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { logout } from "../../store/session";
 import { useListModal } from "../../context/ListModal";
-import AddFunds from "../AddFundsModal/AddFunds"
+import AddFunds from "../AddFundsModal/AddFunds";
 import { Modal } from "../../context/Modal";
 
 const AccountNav = () => {
@@ -65,7 +65,13 @@ const AccountNav = () => {
         </div>
         <div
           className="account-link"
-          onClick={() => history.push("/account/settings")}
+          onClick={() => {
+            document.querySelector("div.account-word").style.textDecoration =
+              "none";
+            document.querySelector("div.account-word").style.color = "white";
+            document.querySelector(".account-dropdown").classList.add("hidden");
+            history.push("/account/settings");
+          }}
         >
           <img
             className="settings-img"
