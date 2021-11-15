@@ -120,7 +120,8 @@ span {
 }
 
 .account-word {
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 800;
   cursor: pointer;
   text-underline-offset: 10.5px;
   text-decoration-color: rgb(255, 80, 0) !important;
