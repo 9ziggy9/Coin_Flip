@@ -1,23 +1,22 @@
-import { useState, useEffect } from "react"
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 import SettingsModal from "../SettingsModal/SettingsModal";
 import './Settings.css';
+import { logout } from '../../store/session';
 
 const Settings = () => {
-    const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
     console.log(user);
 
-    const handleButton = (e) => {
+    const dispatch = useDispatch();
 
-        switch(e.target.innerText) {
-            case 'Reset Password':
-
-                break
-            case 'Deactivate your account':
-                console.log("deactivate")
-                break
+    const handleDeactivate = async(e) => {
+        e.preventDefault();
+        if (user) {
+            const data = await fetch(`/api/auth/${user.id}/delete`);
+            dispatch(logout());
         }
+
     }
 
     if (user) {
@@ -55,7 +54,7 @@ const Settings = () => {
                         </div>
                     </div>
                     <div className="account_deactivation_container">
-                        <button type="button" className="account_deactivation_button" onClick={handleButton}>
+                        <button type="button" className="account_deactivation_button" onClick={handleDeactivate}>
                             <h4 className="account_deactivation_text">Deactivate your account</h4>
                         </button>
                     </div>
