@@ -135,42 +135,23 @@ export const PortPlot = ()  => {
   const cryptos = useSelector((state) => state.crypto.list);
   const dispatch = useDispatch();
   const transactions = useSelector(state => Object.values(state.transaction));
+  const [X, setDomain] = useState([])
+  const [Y, setRange] = useState([])
 
-  // const marketData = async (coin) => {
-  //   const res = await fetch(`/api/cryptocurrencies/${coin}`);
-  //   const history = await res.json();
-  //   const domain = history.prices.map(dp => dp[0]).slice(-30)
-  //   const range = history.prices.map(dp => dp[1].toFixed(2)).slice(-30)
-  //   setDomain([...domain]);
-  //   setRange([...range]);
-  //   const d_daily = range[range.length-1] - range[range.length-2];
-  //   const d_daily_p = 100*(d_daily / range[range.length-2])
-  //   const d_monthly = range[range.length-1] - range[0];
-  //   const d_monthly_p = 100*(d_monthly / range[0])
-  //   setHist({time: domain, price: range,
-  //            d_daily: d_daily, d_daily_p: d_daily_p,
-  //            d_monthly: d_monthly, d_monthly_p: d_monthly_p});
-  // }
+  const marketData = async () => {
+    const res = await fetch(`/api/cryptocurrencies/bitcoin`);
+    const history = await res.json();
+    const domain = history.prices.map(dp => dp[0]).slice(-30)
+    const range = history.prices.map(dp => dp[1].toFixed(2)).slice(-30)
+    setDomain([...domain]);
+    setRange([...range]);
+  }
 
   useEffect(() => {
-    (async () => await dispatch(userPortfolios(user?.id)))();
-    (async () => await dispatch(getUserTransactions(user?.id)))();
+    marketData()
+    dispatch(userPortfolios(user?.id));
+    dispatch(getUserTransactions(user?.id));
   }, [dispatch]);
-
-  // lol, give me a for loop and you can do anything
-  const assets = [];
-  for(let i = 0; i < portfolios?.length; i++) {
-    for(let j = 0; j < cryptos?.length; j++) {
-      if(portfolios[i].crypto_id === cryptos[j].id)
-        assets.push({
-          'purchase_price': portfolios[i].purchase_price,
-          'gecko': cryptos[j].gecko,
-          'quantity': portfolios[i].quantity,
-          'initial_investment': portfolios[i].purchase_price *
-                                portfolios[i].quantity
-        })
-    }
-  }
 
   const transaction_data = {
     number_purchases: transactions?.length,
@@ -186,7 +167,35 @@ export const PortPlot = ()  => {
                                   / transactions?.filter(t => t.type==='buy').length
   }
 
-  return (<>
-          </>);
+  const layout = {
+    autosize: true,
+    plot_bgcolor: 'black',
+    paper_bgcolor: 'black',
+    font: {color: 'white'},
+    xaxis: {
+      type:'date',
+    },
+    yaxis: {
+      type: 'linear'
+    },
+  }
 
+  const data=[{
+    x: X,
+    y: Y,
+    type: 'scatter',
+    showlegend: true,
+    legendgrouptitle: {font: {color: 'white'}, text: 'price'},
+    mode: 'lines+markers',
+    marker: {color: 'green'},
+  }];
+
+  return (
+    <Plot
+      data={data}
+      layout={layout}
+      style={{'width':'100%', height:'100%'}}
+      config={{scrollZoom: true}}
+      useResizeHandler={true}
+    />);
 }
