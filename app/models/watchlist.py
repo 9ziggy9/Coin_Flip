@@ -1,8 +1,8 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 association_table = db.Table('Watchlist_Crypto', db.Model.metadata,
-    db.Column('watchlist_id', db.Integer, db.ForeignKey(add_prefix_for_prod('watchlist.id')), primary_key=True),
-    db.Column('crypto_id', db.Integer, db.ForeignKey(add_prefix_for_prod('cryptocurrency.id')), primary_key=True)
+    db.Column('watchlist_id', db.Integer, db.ForeignKey('watchlist.id'), primary_key=True),
+    db.Column('crypto_id', db.Integer, db.ForeignKey('cryptocurrency.id'), primary_key=True)
 )
 
 class Watchlist(db.Model):
