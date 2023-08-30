@@ -1,14 +1,16 @@
-from .db import db
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 class Transaction(db.Model):
     __tablename__ = 'transactions'
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
     crypto_id = db.Column(db.Integer,
-                        db.ForeignKey("cryptocurrency.id"),
+                        db.ForeignKey(add_prefix_for_prod("cryptocurrency.id")),
                         nullable=False)
     user_id = db.Column(db.Integer,
-                        db.ForeignKey("users.id"),
+                        db.ForeignKey(add_prefix_for_prod("users.id")),
                         nullable=False)
     type = db.Column(db.String(4), nullable=False)
     price = db.Column(db.Float, nullable=False)
