@@ -46,7 +46,7 @@ const Home = () => {
           })
       }
     }
-    console.log(assets);
+
     const total_assets = assets.map(a => a.current_total)
                               .reduce((t, n) => t+n, 0)
     const total_liabilities = assets.map(a => a.initial_investment)
