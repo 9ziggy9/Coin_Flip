@@ -6,7 +6,7 @@ export class Simulation {
     this.fn = fn;
     this.domain = this.realtime.map(datapoint => datapoint.time);
     this.range = this.realtime.map(datapoint => datapoint.price);
-    console.log('\n\n\n\n\n simulation created \n\n\n\n\n\n');
+
   }
 
   static initialize(length, fn, mu, sigma) {
@@ -40,7 +40,6 @@ export class Market {
     this.name = name
     this.domain = domain;
     this.range = range;
-    console.log('\n\n\n Market initialized \n\n\n')
   }
 
   async fetchHistory() {
@@ -51,13 +50,13 @@ export class Market {
 
   async proceed(interval) {
     if (interval > 365) {
-      console.log('Error: desired time length out of bounds')
-      console.log('Pleae supply a number of days less than 365')
+      // console.log('Error: desired time length out of bounds')
+      // console.log('Pleae supply a number of days less than 365')
       return {domain: 0, range: 0}
     }
     const res = await this.fetchHistory();
     const past = res.slice(-interval);
-    console.log('retrieved history')
+    // console.log('retrieved history')
     this.domain = past.map(datapoint => datapoint[0]);
     this.range = past.map(datapoint => Number(datapoint[1].toFixed(2)));
     return {domain: this.domain, range: this.ranger}
@@ -65,14 +64,14 @@ export class Market {
 
   static async intialize(name, interval) {
     if (interval > 365) {
-      console.log('Error: desired time length out of bounds')
-      console.log('Pleae supply a number of days less than 365')
+      // console.log('Error: desired time length out of bounds')
+      // console.log('Pleae supply a number of days less than 365')
       return {domain: 0, range: 0}
     }
     const res = await fetch(`/api/cryptocurrencies/${name}`)
     const history = await res.json();
     const past = history.slice(-interval);
-    console.log('retrieved history')
+    // console.log('retrieved history')
     this.domain = past.map(datapoint => datapoint[0]);
     this.range = past.map(datapoint => Number(datapoint[1].toFixed(2)));
     return {domain: this.domain, range: this.ranger}

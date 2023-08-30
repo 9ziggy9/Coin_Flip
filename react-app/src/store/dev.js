@@ -27,7 +27,7 @@ const initialState = { transaction: null };
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case POST_TRANSACTION:
-      console.log('hello from post transaction')
+
       return { ...state, transaction: action.transaction };
     default:
       return state;

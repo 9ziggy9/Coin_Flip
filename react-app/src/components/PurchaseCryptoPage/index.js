@@ -105,7 +105,6 @@ const PurchaseCryptoPage = () => {
         }
       }
 
-      console.log(hasPortfolio)
 
       if (transaction === "sell") {
         amount = amount * -1;
