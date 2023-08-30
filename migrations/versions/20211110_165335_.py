@@ -8,6 +8,11 @@ Create Date: 2021-11-10 16:53:35.847170
 from alembic import op
 import sqlalchemy as sa
 
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
+
+
 
 # revision identifiers, used by Alembic.
 revision = '64f789c014c4'
@@ -25,6 +30,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['watchlist_id'], ['watchlist.id'], ),
     sa.PrimaryKeyConstraint('watchlist_id', 'crypto_id')
     )
+
+    if environment == "production":
+            op.execute(f"ALTER TABLE Watchlist_Crypto SET SCHEMA {SCHEMA};")
+
     op.drop_table('association')
     op.add_column('cryptocurrency', sa.Column('history', sa.String(), nullable=True))
     # ### end Alembic commands ###
