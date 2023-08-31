@@ -4,6 +4,8 @@ association_table = db.Table('Watchlist_Crypto', db.Model.metadata,
     db.Column('watchlist_id', db.Integer, db.ForeignKey('watchlist.id'), primary_key=True),
     db.Column('crypto_id', db.Integer, db.ForeignKey('cryptocurrency.id'), primary_key=True)
 )
+if environment == "production":
+    association_table.schema = SCHEMA
 
 class Watchlist(db.Model):
     __tablename__ = "watchlist"
