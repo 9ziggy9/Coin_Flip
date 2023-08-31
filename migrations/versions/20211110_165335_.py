@@ -31,8 +31,8 @@ def upgrade():
     sa.PrimaryKeyConstraint('watchlist_id', 'crypto_id')
     )
 
-    if environment == "production":
-            op.execute(f"ALTER TABLE Watchlist_Crypto SET SCHEMA {SCHEMA};")
+    # if environment == "production":
+    #         op.execute(f"ALTER TABLE Watchlist_Crypto SET SCHEMA {SCHEMA};")
 
     op.drop_table('association')
     op.add_column('cryptocurrency', sa.Column('history', sa.String(), nullable=True))
