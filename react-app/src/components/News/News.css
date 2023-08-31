@@ -25,8 +25,7 @@
 }
 
 .news-card:hover {
-  border-style: none;
-  background-color: rgb(30, 33, 36);
+  background-color: rgb(48,54,58);
 }
 
 .news-img {
